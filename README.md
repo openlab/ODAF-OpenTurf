@@ -5,6 +5,8 @@ OpenTurf
 
 OpenTurf  can “mash up” location-aware open data sets in KML format. A key feature of OpenTurf is that it enables **social sharing and commenting** that makes the data interactive. This way a government organization can share data & gather feedback on specific data points.
 Citizens can:
+
+
 * Visualize multiple datasets in one centralized location
 * **Rate, comment & tag** individual data points in multiple datasets
 * Upload your own data points (mash up your data with other datasets)
