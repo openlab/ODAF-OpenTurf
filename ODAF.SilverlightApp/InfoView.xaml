@@ -1,0 +1,54 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ODAF.SilverlightApp.InfoView"
+    d:DesignWidth="476" d:DesignHeight="218">
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid  Margin="4">
+        	<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                            
+        		<Image x:Name="imgCreator" 
+        			Width="32" Height="32" 
+        			Source="{Binding CreatorProfileImageUrl}"/>
+        		<TextBlock x:Name="tbTitle" 
+        			FontWeight="Bold" 
+        			Margin="8,0"
+        			TextAlignment="Left" 
+        			TextWrapping="Wrap"
+        			MaxHeight="36"
+        			ToolTipService.ToolTip="{Binding Name}"
+        			DataContext="{Binding Data}"
+        			HorizontalAlignment="Left"><Run Text="Info"/></TextBlock>
+        	</StackPanel>
+                        
+
+        	<ScrollViewer BorderBrush="Transparent" Margin="0,32,0,35" d:LayoutOverrides="Height">
+        		<StackPanel Orientation="Vertical"  HorizontalAlignment="Left" >
+        			<TextBlock x:Name="tbDescription" TextWrapping="Wrap"><Run Text="Description:"/></TextBlock>
+        		</StackPanel>
+        	</ScrollViewer>
+
+        	<StackPanel Orientation="Horizontal" x:Name="spOwnerButtons" HorizontalAlignment="Right" VerticalAlignment="Bottom"  d:LayoutOverrides="VerticalAlignment" Visibility="Collapsed"  >
+
+        		<Button x:Name="btnEdit" 
+        			Width="60" 
+        			VerticalAlignment="Bottom" 
+        			Margin="2"
+        			HorizontalAlignment="Right"
+        			Click="btnEdit_Click"
+        			Content="Edit"/>
+
+        		<Button x:Name="btnDelete" 
+        			Width="60" 
+        			VerticalAlignment="Bottom" 
+        			Margin="2"
+        			HorizontalAlignment="Right" 
+        			Click="btnDelete_Click"
+        			Content="Delete"/>
+
+        	</StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
+
+

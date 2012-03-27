@@ -1,0 +1,21 @@
+﻿<controls:ChildWindow x:Class="ODAF.SilverlightApp.UserControls.SignInPrompt"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"   
+           Title="Sign in to do that...">
+    
+    
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Height="80" TextWrapping="Wrap" >Oops, you need to Sign in to your account to do this.  Please sign in with your Twitter account.</TextBlock>
+
+        <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" HorizontalAlignment="Center"  Grid.Row="1" />
+    </Grid>
+    
+    
+</controls:ChildWindow>
+ 

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ServiceConfiguration serviceName="ODAF.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration">
+  <Role name="ODAF.Website.Mvc">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DiagnosticsConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="ODAF" value="Server=tcp:xxx.database.windows.net;Database=xxx;User ID=xxx;Password=xxx;Trusted_Connection=False;Encrypt=True;" />
+      <Setting name="AppName" value="OpenTurf from settings" />
+      <Setting name="BitlyLogin" value="xxx" />
+      <Setting name="BitlyAPIKey" value="xxx" />
+      <Setting name="tokenExpiryMinutes" value="10080" />
+      <Setting name="UseTokenExpiry" value="false" />
+      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=http;AccountName=xxx;AccountKey=xxx" />
+      <Setting name="AdminTwitterUser" value="xxx" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="ODAF.SearchIndexRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DiagnosticsConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=http;AccountName=xxx;AccountKey=xxx" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

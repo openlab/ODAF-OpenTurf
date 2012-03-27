@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="System.Net.HttpWebRequest">
+    <Position X="0.5" Y="0.75" Width="3" />
+    <Members>
+      <Method Name="Abort" Hidden="true" />
+      <Method Name="AddRange" Hidden="true" />
+      <Property Name="Address" Hidden="true" />
+      <Property Name="AllowAutoRedirect" Hidden="true" />
+      <Property Name="AllowWriteStreamBuffering" Hidden="true" />
+      <Property Name="AutomaticDecompression" Hidden="true" />
+      <Method Name="BeginGetRequestStream" Hidden="true" />
+      <Method Name="BeginGetResponse" Hidden="true" />
+      <Property Name="ClientCertificates" Hidden="true" />
+      <Property Name="ConnectionGroupName" Hidden="true" />
+      <Property Name="ContinueDelegate" Hidden="true" />
+      <Property Name="CookieContainer" Hidden="true" />
+      <Property Name="Credentials" Hidden="true" />
+      <Property Name="DefaultCachePolicy" Hidden="true" />
+      <Property Name="DefaultMaximumErrorResponseLength" Hidden="true" />
+      <Property Name="DefaultMaximumResponseHeadersLength" Hidden="true" />
+      <Method Name="EndGetRequestStream" Hidden="true" />
+      <Method Name="EndGetResponse" Hidden="true" />
+      <Method Name="GetObjectData" Hidden="true" />
+      <Method Name="GetRequestStream" Hidden="true" />
+      <Method Name="GetResponse" Hidden="true" />
+      <Property Name="HaveResponse" Hidden="true" />
+      <Method Name="HttpWebRequest" Hidden="true" />
+      <Property Name="MaximumAutomaticRedirections" Hidden="true" />
+      <Property Name="MaximumResponseHeadersLength" Hidden="true" />
+      <Property Name="Pipelined" Hidden="true" />
+      <Property Name="PreAuthenticate" Hidden="true" />
+      <Property Name="ProtocolVersion" Hidden="true" />
+      <Property Name="Proxy" Hidden="true" />
+      <Property Name="ReadWriteTimeout" Hidden="true" />
+      <Property Name="SendChunked" Hidden="true" />
+      <Property Name="ServicePoint" Hidden="true" />
+      <Property Name="UnsafeAuthenticatedConnectionSharing" Hidden="true" />
+      <Property Name="UseDefaultCredentials" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

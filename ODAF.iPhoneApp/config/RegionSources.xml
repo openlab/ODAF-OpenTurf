@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>City of Vancouver - Open Data Catalogue</title>
+	<subtitle></subtitle>
+	<link href="http://data.vancouver.ca/datacatalogue/index.htm" rel="self" />
+	<link href="http://data.vancouver.ca/termsOfUse.htm" rel="related" />
+	<link href="http://data.vancouver.ca/dataFormats.htm" rel="related" />
+	<id>4EDF9A51-4676-4fd2-BE27-8707875BA5BA</id>
+	<updated>2009-07-01T08:00:00Z</updated>
+	<author>
+		<name>City of Vancouver Open Data</name>
+		<email>opendata@vancouver.ca</email>
+	</author>
+ 
+	<entry>
+		<title>Facet Grid Boundaries</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/facetGridBoundaries.htm" />
+		<link rel="related" href="http://vancouver.ca/vanmap/f/facetGridLayout.htm"/>		
+		<link rel="related" href="http://vancouver.ca/vanmap/f/facetGridPolygon.htm"/>		
+		<link rel="enclosure" type="application/octet-stream" href="http://data.vancouver.ca/download/shape/facetGridBoundaries.zip"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://data.vancouver.ca/download/kml/cov_facet_grids.kml"/>
+		<id>1F07104C-65EA-40d7-BD21-73D1EB524726</id>
+		<updated></updated>
+		<summary>Facet is the name given to a grid of 500 metre by 800 metre rectangles covering the entire City as well as UBC and the University Endowment Lands. These boundaries are often used when paper maps are plotted. They are also used for the delivery of orthophotos so that file sizes are manageable.These boundaries never change.</summary>
+	</entry>
+ 
+	<entry>
+		<title>Garbage Collection Schedule Zones</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/garbageCollectionSchedule.htm" />
+		<link rel="related" href="http://vancouver.ca/garbageschedule"/>		
+		<link rel="related" href="http://vancouver.ca/vanmap/g/garbageSchedule.htm"/>		
+		<link rel="enclosure" type="application/octet-stream" href="http://data.vancouver.ca/download/shape/garbageCollectionZones.zip"/>
+		<id>7B7956B7-D864-4a10-9B42-C9CF11997EAF</id>
+		<updated>2009-06-21T08:00:00Z</updated>
+		<summary>This data set includes the boundaries of the garbage collection zones.  Each zone has pick up on a designated day.</summary>
+	</entry>
+
+	<entry>
+		<title>Local Area Boundary Data</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/localAreaBoundary.htm" />
+		<link rel="related" href="http://vancouver.ca/vanmap/l/localAreas.htm" />		
+		<link rel="enclosure" type="application/octet-stream" href="http://data.vancouver.ca/download/shape/localAreaBoundary.zip"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://data.vancouver.ca/download/kml/cov_localareas.kml"/>
+		<id>3DEF7AA9-982E-47fc-8815-10C2C19F091F</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This package of data contains the boundaries for the City’s 22 local areas.</summary>
+	</entry>
+	
+	<entry>
+		<title>Parks</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/parks.htm" />
+		<link rel="related" href="http://vancouver.ca/parks/parks/index.htm" />		
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/parks.csv"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/parks.xls"/>
+		<id>059AEBD2-4960-4500-868D-E57AC8DBE329</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This data file provides the name and address of the parks in Vancouver along with their latitude and longitude.</summary>
+	</entry>
+
+
+</feed>

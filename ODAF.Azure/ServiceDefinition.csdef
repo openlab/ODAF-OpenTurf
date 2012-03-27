@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="ODAF.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WebRole name="ODAF.Website.Mvc" vmsize="ExtraSmall">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="HttpIn" endpointName="HttpIn" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="DiagnosticsConnectionString" />
+      <Setting name="ODAF" />
+      <Setting name="AppName" />
+      <Setting name="BitlyLogin" />
+      <Setting name="BitlyAPIKey" />
+      <Setting name="tokenExpiryMinutes" />
+      <Setting name="UseTokenExpiry" />
+      <Setting name="BlobStorageEndpoint" />
+      <Setting name="AdminTwitterUser" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="HttpIn" protocol="http" port="80" />
+    </Endpoints>
+  </WebRole>
+  <WorkerRole name="ODAF.SearchIndexRole">
+    <ConfigurationSettings>
+      <Setting name="DiagnosticsConnectionString" />
+      <Setting name="BlobStorageEndpoint" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>

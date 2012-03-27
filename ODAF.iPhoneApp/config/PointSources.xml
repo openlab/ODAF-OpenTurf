@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>City of Vancouver - Open Data Catalogue</title>
+	<subtitle></subtitle>
+	<link href="http://data.vancouver.ca/datacatalogue/index.htm" rel="self" />
+	<link href="http://data.vancouver.ca/termsOfUse.htm" rel="related" />
+	<link href="http://data.vancouver.ca/dataFormats.htm" rel="related" />
+	<id>4EDF9A51-4676-4fd2-BE27-8707875BA5BA</id>
+	<updated>2009-07-01T08:00:00Z</updated>
+	<author>
+		<name>City of Vancouver Open Data</name>
+		<email>opendata@vancouver.ca</email>
+	</author>
+ 
+	<entry>
+		<title>Community Centres</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/communityCentres.htm" />
+		<link rel="related" href="http://vancouver.ca/parks/cc/index.htm"/>
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/communityCentres.csv"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/communityCentres.xls"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/vancouver/CommunityCentres/?&amp;format=kml"/>
+		<!--
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://data.vancouver.ca/download/kml/cov_community_centres.kml"/>
+		-->
+		<id>2C8B8CF2-90DB-45f0-B8B4-A3D96DBEAFC3</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This spreadsheet contains the names and addresses of all of the Parks Board community centres in the City.  It also includes the Carnegie Centre which is administered by the Community Services Group rather than Parks and Recreation. The spreadsheet contains the name, address, and latitude and longitude of each community centre.</summary>
+	</entry>
+
+	<entry>
+		<title>Drinking Fountains</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/drinkingFountains.htm" />
+		<link rel="related" href="http://vancouver.ca/parks/cc/index.htm"/>
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/drinkingFountains.csv"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/vancouver/DrinkingFountains/?&amp;format=kml"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/drinkingFountains.xls"/>
+		<id>F29526CF-9A53-44c8-B71A-2D4EAA739F2F</id>
+		<updated>2009-01-01T08:00:00Z</updated>
+		<summary>This dataset includes the locations of public water fountains in City parks as of 2007. It does not include other public drinking fountains.Latitude and longitude.</summary>
+	</entry>
+
+	<entry>
+		<title>Fire Halls</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/fireHalls.htm" />
+		<link rel="related" href="http://vancouver.ca/fire/about/map.html"/>		
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/fireHalls.csv"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/fireHalls.xls"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/vancouver/fireHalls/?&amp;format=kml"/>
+		<!--
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://data.vancouver.ca/download/kml/cov_firehalls.kml"/>
+		-->
+		<id>0C244261-26E3-49f9-8EE5-140145E90B6C</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This spreadsheet contains the name, address and latitude and longitude of each of the City’s fire halls including one in the University Endowment Lands that serves the UEL and UBC.</summary>
+	</entry>
+
+	<entry>
+		<title>Libraries</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/libraries.htm" />
+		<link rel="related" href="http://www.vpl.vancouver.bc.ca/branches" />
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/libraries.csv"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/libraries.xls"/>
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/vancouver/libraries/?&amp;format=kml"/>
+		<!--
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://data.vancouver.ca/download/kml/cov_libraries.kml"/>
+		-->
+		<id>25259A77-E237-4701-9213-69A8AC5A87DA</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This spreadsheet contains the name, address and latitude and longitude of each of the City’s public libraries.</summary>
+	</entry>
+
+	<entry>
+		<title>Schools</title>
+		<link rel="self" href="http://data.vancouver.ca/datacatalogue/schools.htm" />
+		<link rel="related" href="http://www.bced.gov.bc.ca/apps/imcl/imclWeb/SchoolContactSelector.do" />
+		<link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/vancouver/VancouverSchools/?&amp;format=kml"/>
+		<link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/schools.csv"/>
+		<link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/schools.xls"/>
+		<id>0D06E24C-C8F7-4236-94BF-64A06760B4A1</id>
+		<updated>2009-07-01T08:00:00Z</updated>
+		<summary>This data set includes the name, address, latitude and longitude and a variety of attributes for each included school.</summary>
+	</entry>
+	
+   <entry>
+     <title>Translink Stops</title>
+     <link rel="self" href="http://data.vancouver.ca/datacatalogue/schools.htm" />
+     <link rel="related" href="http://www.bced.gov.bc.ca/apps/imcl/imclWeb/SchoolContactSelector.do" />
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/translink/TransLinkStops/?&amp;format=kml"/>
+     <link rel="enclosure" type="text/csv" href="http://data.vancouver.ca/download/csv/schools.csv"/>
+     <link rel="enclosure" type="application/vnd.ms-excel" href="http://data.vancouver.ca/download/xls/schools.xls"/>
+
+     <id>0D06E24C-C8F7-4236-94BF-64A06760B421</id>
+     <updated>2009-07-01T08:00:00Z</updated>
+     <summary>This data set includes the name, address, latitude and longitude and a variety of attributes for each included school.</summary>
+   </entry>
+	
+   <entry>
+     <title>All Impark Parking Lots</title>
+     <link rel="self" href="" />
+     <link rel="related" href="" />
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/impark/AllImparkLots/?format=kml"/>
+     <link rel="enclosure" type="text/csv" href=""/>
+     <link rel="enclosure" type="application/vnd.ms-excel" href=""/>
+
+     <link rel="enclosure" type="image/png" href="images/impark.png"/>
+     <id>8C4A5ECA-9A7F-4274-919E-A22D02BE9C71</id>
+     <updated>2010-02-16T08:00:00Z</updated>
+     <summary>Parking lot info for greater Vancouver area.</summary>
+   </entry>
+
+   <entry>
+     <title>Metro Impark Parking Lots</title>
+     <link rel="self" href="" />
+     <link rel="related" href="" />
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://vancouverdataservice.cloudapp.net/v1/impark/VancouverMetroLots/?format=kml"/>
+     <link rel="enclosure" type="text/csv" href=""/>
+     <link rel="enclosure" type="application/vnd.ms-excel" href=""/>
+
+     <link rel="enclosure" type="image/png" href="images/impark.png"/>
+     <id>89BBDE65-B700-4473-8370-7239DA5CC98B</id>
+     <updated>2010-02-16T08:00:00Z</updated>
+     <summary>Parking lot info for greater Vancouver area.</summary>
+   </entry>
+
+</feed>

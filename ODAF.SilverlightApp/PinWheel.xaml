@@ -1,0 +1,44 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ODAF.SilverlightApp.PinWheel">
+    
+    
+	<Grid Background="{StaticResource ControlBackgroundBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Border x:Name="LinksBorder" Style="{StaticResource NavLinksBorderStyle}" Grid.Row="0" Margin="0" Height="Auto">
+			<StackPanel x:Name="LinksStackPanel" Orientation="Horizontal" VerticalAlignment="Top" Style="{StaticResource LinksStackPanelStyle}" Margin="10,0,20,0" >
+				<StackPanel Orientation="Horizontal" x:Name="imgInfo" Style="{StaticResource LinksStackPanelStyle}">
+					<Image x:Name="upInfoImg" Source="Images/icon_info.png" Stretch="None"/>
+					<Image x:Name="hoverInfoImg" Source="Images/icon_info_hover.png" Stretch="None" Visibility="Collapsed"/>
+					<HyperlinkButton x:Name="linkInfo" Style="{StaticResource LinkStyle}" Content="info" d:LayoutOverrides="Width" Click="linkInfo_Click" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" x:Name="imgTag" Style="{StaticResource LinksStackPanelStyle}">
+					<Image x:Name="upTagImg" Source="Images/icon_tag.png" Stretch="None"/>
+					<Image x:Name="hoverTagImg" Source="Images/icon_tag_hover.png" Stretch="None" Visibility="Collapsed"/>
+					<HyperlinkButton x:Name="linkTags" Style="{StaticResource LinkStyle}" Content="tags" Click="linkTags_Click" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" x:Name="imgComment" Style="{StaticResource LinksStackPanelStyle}">
+					<Image x:Name="upCommentImg" Source="Images/icon_comment.png" Stretch="None"/>
+					<Image x:Name="hoverCommentImg" Source="Images/icon_comment_hover.png" Stretch="None" Visibility="Collapsed"/>
+					<HyperlinkButton x:Name="linkComments" Style="{StaticResource LinkStyle}" Content="comments" Click="linkComments_Click" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" x:Name="imgStar" Style="{StaticResource LinksStackPanelStyle}">
+					<Image x:Name="upStarImg" Source="Images/icon_star.png" Stretch="None"/>
+					<Image x:Name="hoverStarImg" Source="Images/icon_star_hover.png" Stretch="None" Visibility="Collapsed"/>
+					<HyperlinkButton x:Name="linkratings" Style="{StaticResource LinkStyle}" Content="ratings" Click="linkratings_Click" />
+				</StackPanel>
+			</StackPanel>
+		</Border>
+		<Image x:Name="btnClose" 
+			Source="Images/CancelButton.png" 
+			Stretch="None" 
+			Margin="0,4,5,0"
+			HorizontalAlignment="Right" 
+			MouseLeftButtonUp="OnCloseButton"
+			VerticalAlignment="Top"/>
+	</Grid>
+</UserControl>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b06769ac-f9a0-4264-8252-68d00aabc212" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="geocode.wsdl" MetadataType="Wsdl" ID="6a56f34f-2b96-4e34-a09e-8968aac9682a" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="contracts.wsdl" MetadataType="Wsdl" ID="5438f5fb-246b-4078-9b55-a2846a79fff1" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="43bf043a-25f6-4629-b925-bff756ba04e3" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="geocode.xsd" MetadataType="Schema" ID="23ee0c9a-82b6-4ef2-b013-64de1f1b3211" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="common.xsd" MetadataType="Schema" ID="2f52f45f-30e3-4fa1-8fdb-684443798611" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="f2e93699-1b90-403c-9636-c30850e4721c" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+    <MetadataFile FileName="contracts.xsd" MetadataType="Schema" ID="91822f72-9dc9-42b3-8d11-7f8e83aab1df" SourceId="1" SourceUrl="http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

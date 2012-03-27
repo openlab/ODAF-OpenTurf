@@ -1,0 +1,316 @@
+﻿<UserControl xmlns:layoutToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
+    x:Class="ODAF.SilverlightApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:m="clr-namespace:Microsoft.Maps.MapControl;assembly=Microsoft.Maps.MapControl"
+    xmlns:mCore="clr-namespace:Microsoft.Maps.MapControl.Core;assembly=Microsoft.Maps.MapControl"
+    xmlns:local="clr-namespace:ODAF.SilverlightApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:uc="local.UserControls"
+    xmlns:rb="clr-namespace:Net.SyntaxC4.RedBitSoftware.ODAF.SearchComponent"
+    mc:Ignorable="d" d:DesignWidth="1221" d:DesignHeight="651">
+
+
+
+
+    <Grid x:Name="LayoutRoot" Height="Auto">
+    	<Grid.Background>
+<!-- UNIVERSAL CONTROL BRUSHES -->
+    		<SolidColorBrush Color="#FFCCCCCC"/>
+    	</Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240" MinWidth="200"/>
+            <ColumnDefinition MinWidth="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+    	<Border Grid.Row="0" Grid.ColumnSpan="2" x:Name="LinksBorder" Style="{StaticResource NavLinksBorderStyle}" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFCCCCCC" Margin="0">
+ 
+    		<Border x:Name="BrandingBorder" Style="{StaticResource NavBrandingBorderStyle}" Margin="0,0,47,0">
+    			<StackPanel x:Name="BrandingStackPanel" Style="{StaticResource BrandingStackPanelStyle}" >
+    				<Image HorizontalAlignment="Left" Source="/Images/openTurfLogo.png" Stretch="UniformToFill" Margin="14,0,0,0" Height="60" Width="108" VerticalAlignment="Center" Visibility="Collapsed"/>
+    				<TextBlock TextWrapping="Wrap" Text="OpenTurf Canada" x:Name="txtTitle" FontSize="38.667" Margin="11,4,0,0">
+    					<TextBlock.Effect>
+    						<DropShadowEffect Opacity="0.515" BlurRadius="7"/>
+    					</TextBlock.Effect>
+    				</TextBlock>
+    			</StackPanel>
+    		</Border>
+
+            	
+    	</Border>
+    	<StackPanel Grid.ColumnSpan="2" Margin="837,0,25,0"  Grid.Row="0" MinHeight="61" Orientation="Horizontal" HorizontalAlignment="Right" >
+    		<local:TwitterUserBadge x:Name="currentUserBadge" 
+    			BorderThickness="1"
+    			Margin="0,9,2,0" Height="Auto" Width="Auto" HorizontalAlignment="Right" d:LayoutOverrides="HorizontalAlignment" />
+    		<rb:SearchView Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    	</StackPanel>
+
+    	<StackPanel Grid.Row="1" Width="240" Margin="1">
+    		<!-- Spacer -->
+    		<Canvas Height="32">
+    			<Path Stretch="Fill" Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    						<GradientStop Color="#FF57585A" Offset="0"/>
+    						<GradientStop Color="#FF221E1F" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+
+    			<TextBlock Foreground="White" Text="REGION" Margin="5,0,0,0"/>
+    		</Canvas>
+
+
+    		<ComboBox x:Name="comboLocales"
+    			SelectionChanged="comboLocales_SelectionChanged"
+    			Margin="4">
+    			<ComboBox.ItemTemplate>
+    				<DataTemplate>
+    					<TextBlock Text="{Binding Title}" ToolTipService.ToolTip="{Binding Description}"/>
+    				</DataTemplate>
+
+    			</ComboBox.ItemTemplate>
+
+    		</ComboBox>
+    		<!-- Spacer -->
+    		<Canvas Background="Transparent" Height="20"/>
+
+    		<Canvas Height="32">
+    			<Path Stretch="Fill" Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    						<GradientStop Color="#FF57585A" Offset="0"/>
+    						<GradientStop Color="#FF221E1F" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+
+    			<TextBlock Foreground="White" Text="LANDMARKS" Margin="5,0,0,0"/>
+    		</Canvas>
+
+    		<ItemsControl x:Name="lbPointFeeds" 
+    			Margin="0" Padding="0" 
+    			BorderThickness="0">
+    			<ItemsControl.ItemTemplate>
+    				<DataTemplate>
+    					<CheckBox Height="25" Width="230" 
+    						Click="cb1_Click" 
+    						VerticalContentAlignment="Center" Content="{Binding Title}" />
+    				</DataTemplate>
+    			</ItemsControl.ItemTemplate>
+    		</ItemsControl>
+    		<!-- Spacer -->
+    		<Canvas Background="Transparent" Height="20"/>
+
+
+
+
+    		<StackPanel x:Name="socialStackPanel">
+    			<Canvas Height="32">
+    				<Path Stretch="UniformToFill"  Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+    					<Path.Fill>
+    						<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    							<GradientStop Color="#FF57585A" Offset="0"/>
+    							<GradientStop Color="#FF221E1F" Offset="1"/>
+    						</LinearGradientBrush>
+    					</Path.Fill>
+    				</Path>
+    				<TextBlock Foreground="White" Text="SOCIAL LANDMARKS" Margin="5,0,0,0"/>
+    			</Canvas>
+
+    			<ItemsControl x:Name="lbSocialFeeds" 
+    				Margin="0" Padding="0"
+    				Background="Transparent"
+    				BorderThickness="0">
+    				<ItemsControl.ItemTemplate>
+    					<DataTemplate>
+    						<CheckBox Height="25" Width="230" 
+    							Click="cbSocialFeedClick" 
+    							VerticalContentAlignment="Center" 
+    							Loaded="CheckBox_Loaded" Content="{Binding Title}"/>
+    					</DataTemplate>
+    				</ItemsControl.ItemTemplate>
+    			</ItemsControl>
+
+
+
+
+
+    		</StackPanel>
+
+
+    		<!--<Canvas Height="200" Width="240">
+                <Border BorderThickness="5" BorderBrush="Black" >
+                    <m:Map x:Name="MiniMap" 
+                        Height="200" Width="240"
+                        Mode="Road" 
+                        NavigationVisibility="Collapsed" 
+                        ScaleVisibility="Collapsed" 
+                        LogoVisibility="Collapsed"
+                        CopyrightVisibility="Collapsed"
+                        CredentialsProvider="{StaticResource MyCredentials}">
+                        <Rectangle Canvas.Left="125" Canvas.Top="85" Stroke="Black" Opacity="0.5" StrokeThickness="1" StrokeDashArray="2" />
+                    </m:Map>
+                </Border>
+                
+          </Canvas>-->
+
+
+    		<!--<local:TwitterUserBadge x:Name="currentUserBadge">
+                
+                
+            </local:TwitterUserBadge>-->
+
+    		<Button x:Name="btnAddLandmark" 
+    			Width="150" 
+    			Visibility="Collapsed"
+    			VerticalAlignment="Bottom" 
+    			Margin="20"
+    			HorizontalAlignment="Center"  
+    			Click="AddLandmark_Click"
+    			Content="+ Add a Landmark"/>
+
+
+
+
+
+
+    		<!--<Slider x:Name="xRotSlider" 
+                Orientation="Vertical" 
+                Height="128" 
+                Width="32" 
+                Minimum="-30" Maximum="30" 
+                Value="{Binding ElementName=projRotX, Path=RotationX, Mode=TwoWay}"/>-->
+
+    		<!-- Spacer -->
+    		<Canvas Background="Transparent" Height="20"/>
+
+    		<Canvas Height="32">
+    			<Path Stretch="UniformToFill"  Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    						<GradientStop Color="#FF57585A" Offset="0"/>
+    						<GradientStop Color="#FF221E1F" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<TextBlock Foreground="White" Text="MAP ATTRIBUTES" Margin="5,0,0,0"/>
+    		</Canvas>
+
+    		<ItemsControl x:Name="lbRegionFeeds" 
+    			Margin="0" Padding="0"
+    			Background="Transparent"
+    			BorderThickness="0">
+    			<ItemsControl.ItemTemplate>
+
+    				<DataTemplate>
+    					<RadioButton Height="25" Width="230" 
+    						Checked="RadioButton_Checked" 
+    						Unchecked="RadioButton_Checked" 
+    						Loaded="RadioButton_Loaded"
+    						VerticalContentAlignment="Center" 
+    						Content="{Binding Title}" />
+    				</DataTemplate>
+    			</ItemsControl.ItemTemplate>
+    		</ItemsControl>
+    		<Canvas Height="32" Visibility="Collapsed">
+    			<Path Stretch="UniformToFill"  Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    						<GradientStop Color="#FF57585A" Offset="0"/>
+    						<GradientStop Color="#FF221E1F" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<TextBlock Foreground="White" Text="SEARCH" Margin="5,0,0,0"/>
+    		</Canvas>
+
+    		<!-- Spacer -->
+    		<!--<Canvas Background="Transparent" Height="20"/>
+
+            <Canvas Height="32">
+                <Path Stretch="UniformToFill"  Data="M1.5,98.5L328.5,98.5L328.5,79.5L1.5,79.5z" UseLayoutRounding="False">
+                    <Path.Fill>
+                        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                            <GradientStop Color="#FF57585A" Offset="0"/>
+                            <GradientStop Color="#FF221E1F" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+                <TextBlock Foreground="White" Text="SEARCH" Margin="4"></TextBlock>
+            </Canvas>-->
+
+    		<!-- Advanced Search Component Implemented By Cory Fowler-->
+    		<!--<rb:SearchView />-->
+
+
+    		<!-- Spacer -->
+    		<!--<Canvas Background="Transparent" Height="20"/>-->
+
+
+    	</StackPanel>
+
+
+
+<!--  MouseDoubleClick="Map_MouseDoubleClick"-->
+    	<m:Map x:Name="OpenDataMap" CopyrightVisibility="Collapsed" 
+    		LogoVisibility="Visible" Grid.Column="2" Grid.Row="1"
+    		Center="0,0" ZoomLevel="0"
+    		CredentialsProvider="{StaticResource MyCredentials}"  
+    		AnimationLevel="UserInput"  
+    		Mode="Road">
+
+          
+ 
+    		<m:Map.Projection>
+    			<PlaneProjection x:Name="projRotX"  RotationX="0"/>
+    		</m:Map.Projection>
+
+          
+
+
+
+
+    		<!-- displays the region data from the service Mode="Aerial" -->
+    		<m:MapLayer x:Name="regionsMapLayer"/>
+
+    		<!-- Points recieved from the service ( multiple layers within ) -->
+    		<m:MapLayer x:Name="pointsMapLayer"/>
+
+    		<!-- Displays community created map points -->
+    		<m:MapLayer x:Name="communityMapLayer" Visibility="Collapsed"/>
+
+    		<m:MapLayer x:Name="twitterMapLayer" Visibility="Collapsed"/>
+
+    		<m:MapLayer x:Name="searchResultsMapLayer" Visibility="Visible"/>
+
+    		<!-- Displays layers, points added by the current user -->
+    		<m:MapLayer x:Name="currentUserMapLayer" Visibility="Collapsed"/>
+
+    		<!-- User control for commenting / rating / pinwheel, ... -->
+    		<m:MapLayer x:Name="userControlMapLayer" />
+
+    		<!-- Dropped, draggable pin, + Name+Description entry form. -->
+    		<m:MapLayer x:Name="userGenMapLayer"/>
+
+          
+
+
+
+
+    	</m:Map>
+
+    </Grid>
+    <!--</StackPanel>-->
+
+</UserControl>

@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+   <head>
+      <title></title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+      <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2"></script>
+
+      
+      <script type="text/javascript">
+         var map = null;
+
+         var Vanc = new VELatLong(49.241810639098816, -123.06404113769532);
+
+         var pinPoint = null;
+         var pinPixel = null;
+
+         var shaperLayers = [];
+         var shapeLayerData = [];
+
+/*
+         var communityCentersShape = new VEShapeLayer();
+         var fireHallsLayer = new VEShapeLayer();
+         var libraryLayer = new VEShapeLayer();
+*/        
+         function GetMap()
+         {
+            map = new VEMap('myMap');
+            map.LoadMap(Vanc, 10, VEMapStyle.Aerial, false, VEMapMode.Mode2D, true, 1);
+            map.SetCredentials("AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj");
+
+
+//            communityCentersShape.SetTitle("Hello Kitty");
+//	        var shape = new VEShapeSourceSpecification(VEDataType.ImportXML, "http://data.vancouver.ca/download/kml/cov_community_centres.kml", communityCentersShape);
+//	        map.ImportShapeLayerData(shape, null, true);
+//	        
+//	        
+//	        var shape2 = new VEShapeSourceSpecification(VEDataType.ImportXML, "http://data.vancouver.ca/download/kml/cov_firehalls.kml", fireHallsLayer);
+//	        map.ImportShapeLayerData(shape2, onFireHallsLoaded, true);
+
+//	        var libShape = new VEShapeSourceSpecification(VEDataType.ImportXML, "http://data.vancouver.ca/download/kml/cov_libraries.kml", libraryLayer);
+//	        map.ImportShapeLayerData(libShape, null, true);
+
+            getSources();
+
+            map.AttachEvent("onmouseover", onShapeInfo);
+            map.AttachEvent("onmouseout", onShapeInfo);
+	    }
+
+	    function getSources() 
+	    {
+	        if (window.XMLHttpRequest) {
+	            xhttp = new XMLHttpRequest();
+	        }
+	        else // Internet Explorer 5/6
+	        {
+	            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        }
+	        xhttp.open("GET", "sources.xml", false);
+	        xhttp.send("");
+	        xmlDoc = xhttp.responseXML;
+
+	        var layerNodes = xmlDoc.getElementsByTagName("entry");
+	        var failedCount = 0;
+	        for (var n = 0; n < layerNodes.length; n++) 
+	        {
+	            var nodeData = parseNodeToMapLayer(layerNodes[n]);
+	            if (nodeData != null) {
+	                addListLink(nodeData, n - failedCount);
+	            }
+	            else {
+	                failedCount++;
+	            }
+	            
+	        }
+	    }
+
+	    function addListLink(data,n) {
+
+	        var tagFrag = "<li onclick='showHideLayer(" + n + ")'>";
+//	        if (data.iconUrl != null) {
+//	            tagFrag += "<img src='" + data.iconUrl + "'/>";
+//	        }   
+	        tagFrag += data.title + "</li>";
+	        document.getElementById("dataLayerList").innerHTML += tagFrag;
+	    }
+
+	    function showHideLayer(index)
+	    {
+	        var layer = shapeLayerData[index].shapeLayer;
+	        if (layer != null) {
+	            if (layer.IsVisible()) {
+	                layer.Hide();
+	            }
+	            else {
+	                layer.Show();
+	            }
+	        }   
+	    }
+
+	    function parseNodeToMapLayer(xNode) 
+	    {
+	        var layerData = {};
+	        layerData.iconUrl = "pin.png";
+	        
+	        var childNodes = xNode.childNodes;
+	        var len = childNodes.length;
+	        for (var n = 0; n < len; n++) 
+	        {
+	            var node = childNodes[n];
+	            switch (node.nodeName) 
+	            {
+	                case "title":   // intentional fallthrough
+	                case "id":
+	                case "summary":
+	                    layerData[node.nodeName] = node.childNodes[0].nodeValue;
+	                    break;
+	                case "link":
+	                    var type = node.getAttribute("type")
+	                    if (type == "application/vnd.google-earth.kml+xml") {
+	                        layerData.kml = decodeURI(node.getAttribute("href"));
+	                    }
+//	                    else if (type == "image/png") {
+//	                        layerData.iconUrl = node.getAttribute("href"); ;
+//	                    }
+	                    break;
+	            }
+	        }
+
+	        if (layerData.kml != null) {
+
+	            var shapeLayer = layerData.shapeLayer = new VEShapeLayer();
+	            shapeLayer.SetTitle(layerData.title);
+	             
+	            var shape = new VEShapeSourceSpecification(VEDataType.ImportXML, layerData.kml, shapeLayer);
+	            try {
+	                var funk = null;
+	                if (layerData.iconUrl != null) {
+	                    funk = function(layer) {
+	                        onLayerLoaded(layer, layerData.iconUrl);
+	                    }
+	                }
+	                map.ImportShapeLayerData(shape, funk, true);
+	                shapeLayerData.push(layerData);
+	                
+	                return layerData;
+	            }
+	            catch (e) {
+	                alert(e.message);
+	            }
+	        }
+
+	        return null;
+
+
+	    }
+
+	    function onLayerLoaded(layer, iconUrl) 
+	    {
+	       // var custIcon = new VECustomIconSpecification();
+	        //custIcon.Image = imgUrl;
+	        var count = layer.GetShapeCount();
+	        for (var n = 0; n < count; n++) {
+	            var shape = layer.GetShapeByIndex(n);
+
+	            shape.SetCustomIcon(iconUrl);
+
+	        }
+	    }
+
+	    function onFireHallsLoaded() {
+	    
+	    /*
+	        var imgUrl = "http://read.pudn.com/downloads122/sourcecode/web/519499/GoogleMapControl/icons/FireTruck.png"; 
+	        var custIcon = new VECustomIconSpecification();
+	            custIcon.Image = imgUrl;
+	        var count = fireHallsLayer.GetShapeCount();
+	        for (var n = 0; n < count; n++) 
+	        {
+	            var shape = fireHallsLayer.GetShapeByIndex(n);
+
+	            shape.SetCustomIcon(imgUrl);
+
+	        }
+	        */
+
+
+
+	    }
+
+	    function onShapeInfo(e) 
+	    {
+	        if (e.elementID != null) {
+
+	            var shape = map.GetShapeByID(e.elementID);
+	            var layer = shape.GetShapeLayer();
+	            document.getElementById("label").innerText = "Shape ID " + shape.GetID() + "\nbelongs to shape layer '" + layer.GetTitle() + "'.\n" + shape.GetPoints()[0].Latitude;
+
+	            return true;
+	        }
+	        else {
+	            document.getElementById("label").innerText = "";
+	        }
+	    }
+
+
+
+
+
+         function getInfo()
+         {
+            if (communityCentersShape != null) {
+                 if (communityCentersShape.IsVisible())
+                     communityCentersShape.Hide();
+                 else
+                     communityCentersShape.Show();
+             }
+             return;
+
+            var info;
+
+            if (map.IsBirdseyeAvailable())
+            {
+                var be = map.GetBirdseyeScene();
+
+                info  = "ID: "          + be.GetID() + "\n";
+                info += "orientation: " + be.GetOrientation()+ "\n";
+                info += "height: "      + be.GetHeight() + "\n";
+                info += "width: "       + be.GetWidth() + "\n";
+
+                var pixel = be.LatLongToPixel(map.GetCenter(), map.GetZoomLevel());
+
+                info += "LatLongToPixel: " + pixel.x + ", " + pixel.y + "\n";
+
+                // Check to see if the current birdseye view contains the pushpin pixel point.
+                info += "contains pixel " + pinPixel.x + ", " + pinPixel.y + ": " + 
+                        be.ContainsPixel(pinPixel.x, pinPixel.y, map.GetZoomLevel()) + "\n";
+                
+                // Check to see if the current view contains the pushpin LatLong.
+                info += "contains latlong " + pinPoint + ": " + be.ContainsLatLong(pinPoint) + "\n";
+                
+                // This method may return null, depending on the selected view and map style.
+                info += "latlong: " + map.PixelToLatLong(pixel);
+
+                alert(info);
+            }
+            else
+            {
+                var center = map.GetCenter();
+
+                info  = "Zoom level:\t" + map.GetZoomLevel() + "\n";
+                info += "Latitude:\t"   + center.Latitude    + "\n";
+                info += "Longitude:\t"  + center.Longitude;
+
+                alert(info);
+            }
+         }
+         
+         function AddPin()
+         {
+            // Add a new pushpin to the center of the map.
+            pinPoint = map.GetCenter();
+            pinPixel = map.LatLongToPixel(pinPoint);
+            //map.AddPushpin(pinPoint);
+         }
+      </script>
+      
+      <style>
+          
+      body
+      {
+      	 background-color:#333;
+      	 margin:0 0;
+      	 padding:0 0;
+      	 font-family:Trebuchet MS;
+      	 color:#ddd;
+      }
+      
+      li
+      {
+        list-style:none;	
+      }
+      
+      li:hover
+      {
+      	 background-color:#666;
+      }
+      
+      </style>
+      
+   </head>
+   
+   
+   
+   <body onload="GetMap();">
+      <ul id="dataLayerList" style="float:left;clear:none;width:200px;"></ul>
+      <div id='myMap' style="position:relative;width:800px;height:800px;"></div>
+      <div id="label"></div>
+   </body>
+</html>
