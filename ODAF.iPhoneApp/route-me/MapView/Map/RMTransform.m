@@ -44,7 +44,7 @@
 	
 	if (source == nil || destination == nil)
 	{
-		[self release];
+		[self dealloc];
 		return nil;
 	}
 	

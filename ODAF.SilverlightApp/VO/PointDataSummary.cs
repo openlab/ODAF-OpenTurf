@@ -36,9 +36,7 @@ namespace ODAF.SilverlightApp.VO
         {
             get
             {
-
-                return ((App)Application.Current).pageRootUrl +"user/image/" + this.CreatedById;
-
+                return ((App)Application.Current).pageRootUrl + "user/image/" + this.CreatedById;
             }
 
         }

@@ -39,7 +39,6 @@
 	sublayers = [[NSMutableArray alloc] init];
 	mapContents = _contents;
 	self.masksToBounds = YES;
-	rotationTransform = CGAffineTransformIdentity;
 	return self;
 }
 
@@ -61,9 +60,6 @@
 		if(layer_with_proto.enableDragging){
 			RMProjectedPoint location = [layer_with_proto projectedLocation];
 			layer_with_proto.position = [[mapContents mercatorToScreenProjection] projectXYPoint:location];
-		}
-		if(!layer_with_proto.enableRotation){
-			[layer_with_proto setAffineTransform:rotationTransform];
 		}
 	}
 }
@@ -190,20 +186,6 @@
 - (BOOL) hasSubLayer:(CALayer *)layer
 {
 	return [sublayers containsObject:layer];
-}
-
-- (void) setRotationOfAllSublayers:(float) angle
-{
-	rotationTransform = CGAffineTransformMakeRotation(angle); // store rotation transform for subsequent layers
-	@synchronized(sublayers) {
-		for (id layer in sublayers)
-		{
-			CALayer<RMMovingMapLayer>* layer_with_proto = (CALayer<RMMovingMapLayer>*)layer;
-			if(!layer_with_proto.enableRotation){
-				[layer_with_proto setAffineTransform:rotationTransform];
-			}
-		}
-	}
 }
 
 @end

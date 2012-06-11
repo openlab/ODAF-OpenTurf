@@ -793,6 +793,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Proj4;
+				SDKROOT = iphonesimulator2.1;
 			};
 			name = Debug;
 		};
@@ -808,6 +809,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = Proj4;
+				SDKROOT = iphonesimulator2.1;
 			};
 			name = Release;
 		};
@@ -817,14 +819,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator3.2;
+				SDKROOT = iphonesimulator2.1;
 			};
 			name = Debug;
 		};
@@ -833,12 +833,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_FAST_MATH = YES;
-				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator3.2;
+				SDKROOT = iphonesimulator2.1;
 			};
 			name = Release;
 		};

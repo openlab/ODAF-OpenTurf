@@ -11,14 +11,13 @@
 		<email>support@nitobi.com</email>
 	</author>
  
-	<entry>
+	<!--<entry>
 		<title>Shared Landmarks</title>
 		<link rel="self" href="http://vanguide.cloudapp.net" />
 		<link rel="enclosure" type="text/json" href="http://vanguide.cloudapp.net/Summaries/ShowForCommunityByActivity.json/?page=%d&amp;page_size=%d"/>
 		<id>B6CCD1E8-1D0B-45CF-9CAC-17CEA5529A4B</id>
 		<updated></updated>
 		<summary>This shows all the landmarks in the community, with only ones that have been modified recently shown.</summary>
-	</entry>
- 
-
-</feed>
+	</entry>-->
+   
+ </feed>

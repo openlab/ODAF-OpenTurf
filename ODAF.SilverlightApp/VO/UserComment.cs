@@ -34,7 +34,7 @@ namespace ODAF.SilverlightApp.VO
                 }
                 else
                 {
-                    TimeSpan ts = DateTime.UtcNow - Comment.CreatedOn.ToUniversalTime();
+                    TimeSpan ts = DateTime.Now - Comment.CreatedOn.ToLocalTime();
                     if (Math.Abs(ts.TotalDays) > 7)
                     {
                         return this.Comment.CreatedOn.ToString("d MMM yyyy");
@@ -58,25 +58,10 @@ namespace ODAF.SilverlightApp.VO
                     else
                     {
                         return "Moments ago.";
-                    }
-
-                    
+                    }               
                 }
             }
         }
-
-        public string CreatorProfileImageUrl
-        {
-            get
-            {
-
-                return ((App)Application.Current).pageRootUrl +"user/image/" + this.Comment.CreatedById;
-                
-            }
-
-        }
-
-
     }
 
     public class Comment
@@ -90,8 +75,6 @@ namespace ODAF.SilverlightApp.VO
         public int CreatedById { get; set; }
 
         public int SummaryId { get; set; }
-
-
 
 
     }

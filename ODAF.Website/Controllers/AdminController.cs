@@ -8,6 +8,7 @@ using System.Transactions;
 using SubSonic.DataProviders;
 using SubSonic.Schema;
 using System.Linq.Expressions;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace vancouveropendata.Controllers
 {
@@ -150,7 +151,8 @@ namespace vancouveropendata.Controllers
         [Prerequisite(Authenticated = true, Role = ODAF.Data.Enums.UserRole.Administrator, ShowPage = true)]
         public ActionResult ReIndex()
         {
-            SearchEngine.Instance.Index(0);
+            if (RoleEnvironment.IsAvailable)
+                SearchEngine.Instance.Index(0);
             return View();
         }
 
@@ -163,7 +165,11 @@ namespace vancouveropendata.Controllers
             {
                 result += data.PointDataSourceId+":"+data.Title+";";
             }
-            ViewData.Add("DataSources", result.Remove(result.Length-1));
+
+            if (result.Length > 0)
+                result = result.Remove(result.Length - 1);
+
+            ViewData.Add("DataSources", result);
             ViewData.Add("DataSourceId", id);
             return View("Feeds", ViewData);
         }
@@ -177,7 +183,11 @@ namespace vancouveropendata.Controllers
             {
                 result += data.PointDataSourceId + ":" + data.Title + ";";
             }
-            ViewData.Add("DataSources", result.Remove(result.Length - 1));
+
+            if (result.Length > 0)
+                result = result.Remove(result.Length - 1);
+
+            ViewData.Add("DataSources", result);
             ViewData.Add("DataSourceId", id);
             return View("Layers", ViewData);
         }
@@ -378,8 +388,8 @@ namespace vancouveropendata.Controllers
                            t.Tag,
                            t.CommentCount,
                            t.RatingTotal+" ("+t.RatingCount+")",
-                           t.ModifiedOn.Value.ToString("dd-MMM-yyyy HH:mm"),
-                           t.CreatedOn.Value.ToString("dd-MMM-yyyy HH:mm")
+                           t.ModifiedOn.ToString("dd-MMM-yyyy HH:mm"),
+                           t.CreatedOn.ToString("dd-MMM-yyyy HH:mm")
                        })
             {
                 page = model.Page,
@@ -399,14 +409,17 @@ namespace vancouveropendata.Controllers
                 UpdateModel(summary, new string[] { "LayerId", "Name", "Description", "Latitude", "Longitude", "Tag" });
                 summary.ModifiedOn = DateTime.Now;
                 summary.Update();
-                SearchEngine.Instance.Index(summary.Id);
+                if (RoleEnvironment.IsAvailable)
+                    SearchEngine.Instance.Index(summary.Id);
                 return Json(summary);
             }
             else if (Request["oper"] == "del")
             {
                 PointDataComment.Delete(p => p.SummaryId == int.Parse(id));
                 PointDataSummary.Delete(p => p.Id == int.Parse(id));
-                SearchEngine.Instance.RemoveFromIndex(int.Parse(id));
+
+                if (RoleEnvironment.IsAvailable)
+                    SearchEngine.Instance.RemoveFromIndex(int.Parse(id));
                 return Json(true);
             }
 
@@ -443,7 +456,7 @@ namespace vancouveropendata.Controllers
                             t.CreatedById,
                             t.summary,
                             t.Text,
-                            t.CreatedOn.Value.ToString("dd-MMM-yyyy HH:mm")
+                            t.CreatedOn.ToString("dd-MMM-yyyy HH:mm")
                        })
             {
                 page = model.Page,

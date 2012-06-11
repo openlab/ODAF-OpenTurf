@@ -76,18 +76,19 @@
     <Content Include="Bing Maps\Microsoft.Maps.Extended.dll" />
     <Content Include="Bing Maps\Microsoft.Maps.MapControl.Common.dll" />
     <Content Include="Bing Maps\Microsoft.Maps.MapControl.dll" />
+    <Content Include="Bing Maps\Microsoft.Maps.MapControl.ExtendedModes.dll" />
     <Content Include="Bing Maps\Microsoft.Maps.MapControl.Types.dll" />
     <Content Include="Bing Maps\Microsoft.Maps.Plugins.dll" />
-    <Content Include="MEF\System.ComponentModel.Composition.dll" />
-    <Content Include="MEF\System.ComponentModel.Composition.Initialization.dll" />
-    <Content Include="Microsoft.Windows.Controls.WatermarkedTextBox.dll" />
-    <Content Include="MVVM Light\Silverlight 3\GalaSoft.MvvmLight.dll" />
-    <Content Include="MVVM Light\Silverlight 3\GalaSoft.MvvmLight.Extras.dll" />
-    <Content Include="MVVM Light\Silverlight 3\GalaSoft.MvvmLight.Extras.XML" />
-    <Content Include="MVVM Light\Silverlight 3\GalaSoft.MvvmLight.XML" />
-    <Content Include="MVVM Light\Silverlight 3\System.Windows.Interactivity.dll" />
-    <Content Include="Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components.dll" />
-    <Content Include="Net.SyntaxC4.RedBitSoftware.ODAF.Search.dll" />
+    <Content Include="Lucene.Net.dll" />
+    <Content Include="Microsoft\Microsoft.Web.Mvc.dll" />
+    <Content Include="Microsoft\Microsoft.Windows.Controls.WatermarkedTextBox.dll" />
+    <Content Include="MVVM Light\GalaSoft.MvvmLight.Extras.SL4.dll" />
+    <Content Include="MVVM Light\GalaSoft.MvvmLight.SL4.dll" />
+    <Content Include="Subsonic\SubSonic.Core.dll" />
+    <Content Include="System.Windows.Interactivity.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

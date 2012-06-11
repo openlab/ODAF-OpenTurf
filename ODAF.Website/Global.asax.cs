@@ -1,11 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
-using Microsoft.WindowsAzure.ServiceRuntime;
+using vancouveropendata;
 using System.Configuration;
 using System.Reflection;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
-
-namespace vancouveropendata
+namespace website_mvc
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -15,7 +19,7 @@ namespace vancouveropendata
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
             routes.MapRoute(
                 "DefaultFeedIndex",                                              // Route name
                 "Feeds",                                                // URL with parameters
@@ -23,7 +27,37 @@ namespace vancouveropendata
             );
 
             routes.MapRoute(
-                "DefaultFeedList",                                              // Route name
+                "MobileOverrideFeedList",                                              // Route name
+                "PointSources.xml",                                                // URL with parameters
+                new { controller = "Feeds", action = "MobileFeeds", id = "" }  // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "MobileFeedList",                                              // Route name
+                "Feeds/MobileFeeds",                                                // URL with parameters
+                new { controller = "Feeds", action = "MobileFeeds", id = "" }  // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "MobileOverrideregionsList",                                              // Route name
+                "RegionSources.{format}",                                                // URL with parameters
+                new { controller = "Feeds", action = "RegionsMobile", format = "xml" }  // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "MobileRegionsList",                                              // Route name
+                "Feeds/RegionsMobile/{format}",                                                // URL with parameters
+                new { controller = "Feeds", action = "RegionsMobile", format = "xml" }  // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "MobileRegionsList2",                                              // Route name
+                "Feeds/RegionsMobile.{format}",                                                // URL with parameters
+                new { controller = "Feeds", action = "RegionsMobile", format = "xml" }  // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "DefaultFeedList2",                                              // Route name
                 "Feeds/List",                                                // URL with parameters
                 new { controller = "Feeds", action = "List", id = "" }  // Parameter defaults
             );
@@ -69,7 +103,7 @@ namespace vancouveropendata
         //  via reflection to do our bidding if it's running on Azure.
         private void hackAConnectionString(string name)
         {
-            
+
             //Check that we are actually running in the cloud (or cloud emulator)
             if (RoleEnvironment.IsAvailable)
             {

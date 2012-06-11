@@ -4,13 +4,9 @@
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            Width="320" Height="240"
            Margin="0" Padding="0" Loaded="OnLoaded"
-           Title="Tweet about it!">
-
-    
-
+            Background="White"
+           Title="{Binding Path=UserControlsViewsResource.TweetAboutIt, Source={StaticResource LocalizedStrings}}" FontFamily="Segoe UI">
     <Grid x:Name="LayoutRoot" Margin="2">
-
-
         <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
@@ -32,20 +28,28 @@
                    Grid.Row="1" />
 
             <Button x:Name="CancelButton" 
-                Content="Cancel" 
+                Content="{Binding Path=UserControlsViewsResource.Cancel, Source={StaticResource LocalizedStrings}}" 
                 Click="CancelButton_Click" 
-                Width="75" 
+                Width="75"
                 HorizontalAlignment="Right" 
                 Margin="0,12,0,0" 
-                Grid.Row="1" />
+                Grid.Row="1"
+                FontSize="12"
+                BorderThickness="0"
+                Background="#B1B1B1"
+                Style="{StaticResource ButtonBase}"/>
 
             <Button x:Name="OKButton" 
-                Content="OK" 
+                Content="{Binding Path=UserControlsViewsResource.OK, Source={StaticResource LocalizedStrings}}" 
                 Click="OKButton_Click" 
-                Width="75" 
+                Width="75"
                 HorizontalAlignment="Right" 
                 Margin="0,12,79,0"
-                Grid.Row="1" />
+                Grid.Row="1"
+                FontSize="12"
+                BorderThickness="0"
+                Background="#B1B1B1"
+                Style="{StaticResource ButtonBase}"/>
 
         </Grid>
     

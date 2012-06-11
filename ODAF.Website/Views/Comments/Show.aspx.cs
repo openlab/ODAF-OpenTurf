@@ -17,6 +17,6 @@ public partial class Views_Comments_Show : System.Web.Mvc.ViewPage< AggregatedCo
 
     public string GetUserImageUrl(long userId)
     {
-         return this.BuildUrlFromExpression<UserController>(c => c.Image(userId, "png"));
+        return this.BuildUrlFromExpression<UserController>(c => c.Image(userId, "png"));
     }
 }

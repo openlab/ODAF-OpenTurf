@@ -42,6 +42,5 @@
 
 @property (assign, nonatomic) RMProjectedPoint projectedLocation;
 @property (assign) BOOL enableDragging;
-@property (assign) BOOL enableRotation;
 
 @end

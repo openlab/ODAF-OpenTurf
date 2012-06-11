@@ -8,12 +8,15 @@
         var oauth_token = '<%=this.ViewData["oauth_token"] %>';
         var denied = '<%=this.ViewData["denied"]%>';
 
+
+
         function doCallback() {
             // Note: this does not work in IE
             if (window.opener != null) {
 
                 try {
-                    window.opener.callbackTW(oauth_token);
+                    //window.opener.callbackTW(oauth_token);
+                    getParameter();
                 }
                 catch (e) {
 
@@ -36,14 +39,26 @@
     <style type="text/css">
         body
         {
-            background:#40225F url(<%= ResolveUrl("~/images/background-tile-vertical.png")%>) repeat-y;
+            background:#FFFFFF repeat-y;
             font-family:Verdana;
             font-size:10pt;
-            color:#FFF;
+            color:#000000;
             width:100%;
             height:100%;
-            
+            margin: 0;
+            padding: 0;
             vertical-align:middle;
+        }
+        
+        h1
+        {
+            background:#006F8F;
+            height:80px;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 20px;
+            font-size: 38px;
+            font-weight:lighter;
         }
         
         .confirmed
@@ -92,9 +107,9 @@
 
    <div class="confirmed">
         
-        <img style="position:absolute;z-index:1;left:18px;top:120px;" src='<%= ResolveUrl("~/images/logo.png") %>' alt="<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%>" />
+        <h1><%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%></h1>
         
-        <table width="100%" style="padding-top:200px;">
+        <table width="100%" style="padding-top:100px;">
             <tr>
                 <td>
                     <img src="<%= ResolveUrl("~/images/TwitterSignin.png") %>" alt="Twitter" />
@@ -102,7 +117,10 @@
                 <td>
                     <div>
                         Cool, you signed in with Twitter.<br />
-                        You can close this window and continue exploring.
+                        You can close this window and continue exploring.<br />
+                        <br />
+                        Cool, vous venez de vous connecter avec Twitter.<br />
+                        Vous pouvez fermer cette fenêtre et continuer à naviguer.
                     </div>
                 </td>
                 <td>

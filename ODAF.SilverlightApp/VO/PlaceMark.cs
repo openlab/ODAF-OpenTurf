@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Maps.MapControl;
+using Microsoft.Maps.MapControl.ExtendedModes;
+using System.Globalization;
 
 namespace ODAF.SilverlightApp.VO
 {
@@ -24,19 +26,19 @@ namespace ODAF.SilverlightApp.VO
         {
             set
             {
-                double lat = double.Parse(value.Split(',')[1]);
-                double lon = double.Parse(value.Split(',')[0]);
+                double lat = double.Parse(value.Split(',')[1], System.Globalization.CultureInfo.InvariantCulture);
+                double lon = double.Parse(value.Split(',')[0], System.Globalization.CultureInfo.InvariantCulture);
                 this.Location = new Location(lat, lon);
             }
         }
         // this is the description we get from the KML feed info
         // server overriden version is in Summary.Description
-        public string name { get; set; }
+        public string Name { get; set; }
         public int ratingCount;
         public int ratingTotal;
         public int commentCount;
 
-        public UserComment[]  Comments { get; set; }
+        public UserComment[] Comments { get; set; }
         public PointDataSummary Summary { get; set; }
     }
 }

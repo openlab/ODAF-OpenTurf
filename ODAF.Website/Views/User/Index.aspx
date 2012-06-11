@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#"  MasterPageFile="~/Views/Shared/ODDocsMasterPage.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-ODAF REST API for User Accounts
+ODAF Openturf REST API for User Accounts
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
@@ -10,7 +10,7 @@ ODAF REST API for User Accounts
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 <div>
-   <h1>ODAF REST API for User Accounts (Twitter OAuth)</h1>
+   <h1>ODAF Openturf REST API for User Accounts (Twitter OAuth)</h1>
 
    <div class="api_block">
 		<div class="api_url">/User/RequestAuthToken.{format}</div>

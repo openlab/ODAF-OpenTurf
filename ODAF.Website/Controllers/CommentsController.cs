@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
 using System.Web.Mvc;
+using System.Web.Routing;
 using ODAF.Data;
+using System.Linq;
+using System.Collections.Generic;
 using SubSonic.DataProviders;
+using System.Transactions;
 using SubSonic.Schema;
-using website_mvc.Code;
+using Microsoft.Web.Mvc;
+using System.Collections;
 
 namespace vancouveropendata.Controllers
 {
@@ -57,7 +59,7 @@ namespace vancouveropendata.Controllers
             }
             else
             {
-                return Json(result,JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -69,12 +71,11 @@ namespace vancouveropendata.Controllers
         /// <param name="page">the page index of results to get</param>
         /// <param name="page_size">the number of results per page to get</param>
         /// <returns></returns>
-        [AcceptVerbs(HttpVerbs.Get)]
-        [JsonpFilter]
-        public ActionResult List(long id, string format, int? page, int? page_size)
+        [AcceptVerbs(HttpVerbs.Get)]       
+        public ActionResult List(long id, string format, int? page, int? page_size, string guid)
         {
             IQueryable<PointDataSummary> iq_s = PointDataSummary.All().Where(
-                    c => c.Id == id);
+                    c => c.Id == id || c.Guid == guid);
             PointDataSummary summary = iq_s.FirstOrDefault();
 
             if (summary == null) 
@@ -111,7 +112,7 @@ namespace vancouveropendata.Controllers
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Put)]
         [Prerequisite(Authenticated = true)]
-        public ActionResult Add(long id, string format)
+        public ActionResult Add(long id, string format, string guid)
         {
             PointDataComment newComment = null;
 
@@ -122,7 +123,7 @@ namespace vancouveropendata.Controllers
                 {
                     // Modify the summary
                     IQueryable<PointDataSummary> iq = PointDataSummary.All().Where(
-                            c => c.Id == id);
+                            c => c.Id == id || c.Guid == guid);
                     PointDataSummary summary = iq.FirstOrDefault();
 
                     summary.ModifiedOn = DateTime.UtcNow;
@@ -136,7 +137,7 @@ namespace vancouveropendata.Controllers
                     // Get POST data
                     UpdateModel<PointDataComment>(newComment, new[] { "Text" });
 
-                    newComment.SummaryId = id;
+                    newComment.SummaryId = summary.Id;
                     newComment.CreatedById = CurrentUserId;
                     //newComment.CreatedOn = summary.ModifiedOn;
 

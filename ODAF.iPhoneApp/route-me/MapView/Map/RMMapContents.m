@@ -39,6 +39,7 @@
 #import "RMTileImageSet.h"
 
 #import "RMOpenStreetMapSource.h"
+#import "RMVirtualEarthSource.h"
 #import "RMCoreAnimationRenderer.h"
 #import "RMCachedTileSource.h"
 
@@ -63,7 +64,6 @@
 @synthesize boundingMask;
 @synthesize minZoom;
 @synthesize maxZoom;
-@synthesize screenScale;
 @synthesize markerManager;
 
 #pragma mark --- begin constants ----
@@ -129,12 +129,6 @@
 	renderer = nil;
 	imagesOnScreen = nil;
 	tileLoader = nil;
-    
-    screenScale = 1.0;
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-    {
-        screenScale = [[[UIScreen mainScreen] valueForKey:@"scale"] floatValue];
-    }
 
 	boundingMask = RMMapMinWidthBound;
 
@@ -450,75 +444,54 @@
 	[self zoomByFactor:zoomFactor near:pivot animated:animated withCallback:nil];
 }
 
-- (BOOL)shouldZoomToTargetZoom:(float)targetZoom withZoomFactor:(float)zoomFactor {
-	//bools for syntactical sugar to understand the logic in the if statement below
-	BOOL zoomAtMax = ([self zoom] == [self maxZoom]);
-	BOOL zoomAtMin = ([self zoom] == [self minZoom]);
-	BOOL zoomGreaterMin = ([self zoom] > [self minZoom]);
-	BOOL zoomLessMax = ([self zoom] < [self maxZoom]);
-	
-	//zooming in zoomFactor > 1
-	//zooming out zoomFactor < 1
-	
-	if ((zoomGreaterMin && zoomLessMax) || (zoomAtMax && zoomFactor<1) || (zoomAtMin && zoomFactor>1))
-	{
-		return YES;
-	}
-	else
-	{
-		return NO;
-	}
-}
-
 - (void)zoomByFactor: (float) zoomFactor near:(CGPoint) pivot animated:(BOOL) animated withCallback:(id<RMMapContentsAnimationCallback>)callback
 {
 	zoomFactor = [self adjustZoomForBoundingMask:zoomFactor];
 	float zoomDelta = log2f(zoomFactor);
 	float targetZoom = zoomDelta + [self zoom];
 	
-	if (targetZoom == [self zoom]){
-		return;
-	}
-	// clamp zoom to remain below or equal to maxZoom after zoomAfter will be applied
-	if(targetZoom > [self maxZoom]){
-		zoomFactor = exp2f([self maxZoom] - [self zoom]);
-	}
-	
 	if (animated)
 	{
-		if ([self shouldZoomToTargetZoom:targetZoom withZoomFactor:zoomFactor])
-		{
-			// goal is to complete the animation in animTime seconds
-			static const float stepTime = kZoomAnimationStepTime;
-			static const float animTime = kZoomAnimationAnimationTime;
-			float nSteps = animTime / stepTime;
-			float zoomIncr = zoomDelta / nSteps;
-			
-			CFDictionaryRef pivotDictionary = CGPointCreateDictionaryRepresentation(pivot);
-			/// \bug magic string literals
-			NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-									  [NSNumber numberWithFloat:zoomIncr], @"zoomIncr", 
-									  [NSNumber numberWithFloat:targetZoom], @"targetZoom", 
-									  pivotDictionary, @"pivot", 
-									  callback, @"callback", nil];
-			CFRelease(pivotDictionary);
-			[NSTimer scheduledTimerWithTimeInterval:stepTime
-											 target:self 
-										   selector:@selector(animatedZoomStep:) 
-										   userInfo:userInfo
-											repeats:YES];			
-		} else
-		{
-			if([self zoom] > [self maxZoom])
-				[self setZoom:[self maxZoom]];
-			if([self zoom] < [self minZoom])
-				[self setZoom:[self minZoom]];
-		}
+		// goal is to complete the animation in animTime seconds
+		static const float stepTime = kZoomAnimationStepTime;
+		static const float animTime = kZoomAnimationAnimationTime;
+		float nSteps = animTime / stepTime;
+		float zoomIncr = zoomDelta / nSteps;
 		
+		CFDictionaryRef pivotDictionary = CGPointCreateDictionaryRepresentation(pivot);
+		/// \bug magic string literals
+		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+								  [NSNumber numberWithFloat:zoomIncr], @"zoomIncr", 
+								  [NSNumber numberWithFloat:targetZoom], @"targetZoom", 
+								  pivotDictionary, @"pivot", 
+								  callback, @"callback", nil];
+		CFRelease(pivotDictionary);
+		[NSTimer scheduledTimerWithTimeInterval:stepTime
+										 target:self 
+									   selector:@selector(animatedZoomStep:) 
+									   userInfo:userInfo
+										repeats:YES];
 	}
 	else
 	{
-		if ([self shouldZoomToTargetZoom:targetZoom withZoomFactor:zoomFactor])
+		if (targetZoom == [self zoom]){
+			return;
+		}
+		// clamp zoom to remain below or equal to maxZoom after zoomAfter will be applied
+		if(targetZoom > [self maxZoom]){
+			zoomFactor = exp2f([self maxZoom] - [self zoom]);
+		}
+		
+		//bools for syntactical sugar to understand the logic in the if statement below
+		BOOL zoomAtMax = ([self zoom] == [self maxZoom]);
+		BOOL zoomAtMin = ([self zoom] == [self minZoom]);
+		BOOL zoomGreaterMin = ([self zoom] > [self minZoom]);
+		BOOL zoomLessMax = ([self zoom] < [self maxZoom]);
+		
+		//zooming in zoomFactor > 1
+		//zooming out zoomFactor < 1
+		
+		if ((zoomGreaterMin && zoomLessMax) || (zoomAtMax && zoomFactor<1) || (zoomAtMin && zoomFactor>1))
 		{
 			[mercatorToScreenProjection zoomScreenByFactor:zoomFactor near:pivot];
 			[imagesOnScreen zoomByFactor:zoomFactor near:pivot];
@@ -629,10 +602,9 @@
 		return;
 	
 	RMCachedTileSource *newCachedTileSource = [RMCachedTileSource cachedTileSourceWithSource:newTileSource];
-
-	newCachedTileSource = [newCachedTileSource retain];
+	
 	[tileSource release];
-	tileSource = newCachedTileSource;
+	tileSource = [newCachedTileSource retain];
 
         NSAssert(([tileSource minZoom] - minZoom) <= 1.0, @"Graphics & memory are overly taxed if [contents minZoom] is more than 1.5 smaller than [tileSource minZoom]");
 	
@@ -776,8 +748,7 @@
 
 -(RMTileRect) tileBounds
 {
-    return [mercatorToTileProjection projectRect:[mercatorToScreenProjection projectedBounds] 
-                                         atScale:[self scaledMetersPerPixel]];
+	return [mercatorToTileProjection project: mercatorToScreenProjection];
 }
 
 -(CGRect) screenBounds
@@ -804,11 +775,6 @@
         [overlay zoomByFactor:zoomFactor near:pivot];
         [overlay correctPositionOfAllSublayers];
         [renderer setNeedsDisplay];
-}
-
--(float) scaledMetersPerPixel
-{
-    return [mercatorToScreenProjection metersPerPixel] / screenScale;
 }
 
 -(void)setMaxZoom:(float)newMaxZoom
@@ -1071,19 +1037,8 @@ static BOOL _performExpensiveOperations = YES;
 
 - (void)setRotation:(float)angle
 { 
-	[overlay setRotationOfAllSublayers:(-angle)]; // rotate back markers and paths if theirs allowRotate=NO
+  [markerManager setRotation:(-angle)]; // rotate markers back
 }
 
-- (short)tileDepth {
-	return imagesOnScreen.tileDepth;
-}
-
-- (void)setTileDepth:(short)value {
-	imagesOnScreen.tileDepth = value;
-}
-
-- (BOOL)fullyLoaded {
-	return imagesOnScreen.fullyLoaded;
-}
 
 @end

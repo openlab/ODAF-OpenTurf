@@ -10,7 +10,7 @@ ODAF REST API for Comments
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 <div>
-   <h1>ODAF REST API for Comments</h1>
+   <h1>ODAF Openturf REST API for Comments</h1>
    
    <div class="api_block">
 		<div class="api_url">/Comments/Show.{format}/{commentId}</div>

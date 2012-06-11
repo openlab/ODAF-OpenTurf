@@ -1,23 +1,23 @@
 ﻿<UserControl x:Class="ODAF.SilverlightApp.CreatePointView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    
-
-    <Grid x:Name="LayoutRoot">
-        
-        
-
-        <StackPanel Orientation="Vertical">
-            <Border BorderBrush="Gray"  Background="#EFEFEF" Margin="0,0,0,-1" CornerRadius="4" Padding="4">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    Width="320" Height="250" FontFamily="{StaticResource ContentFontFamily}">
+ 
+    <Grid x:Name="LayoutRoot" Margin="0,0,0,-20">
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+            <Border BorderBrush="Gray" Background="White" Margin="0,0,0,-1" Padding="4" Width="320" Height="250">
                 <Grid  Margin="0">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="#FF00A9DA" Width="10" />
                         <TextBlock x:Name="tbTitle" 
                                    FontWeight="Bold" 
+                                   Text="{Binding Path=CreatePointViewResource.AddLandmark, Source={StaticResource LocalizedStrings}}"
                                    TextAlignment="Left" 
                                    HorizontalAlignment="Left"
-                                   Margin="0,4,0,4"
-                                   Width="300">Add a Landmark</TextBlock>
+                                   Margin="4,4,0,4"
+                                   Width="300"/>
+                        </StackPanel>
                         <StackPanel x:Name="PointEntry" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0">
 
                             <Grid Width="312">
@@ -26,13 +26,14 @@
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Margin="0" Grid.Column="0">Name</TextBlock>
+                                <TextBlock Margin="0" Grid.Column="0" Text="{Binding Path=CreatePointViewResource.Name, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock x:Name="tbNameReq"  
                                            Grid.Column="1" 
+                                           Text="8 lettres ou plus svp."
                                            TextAlignment="Right" 
                                            HorizontalAlignment="Right"
                                            Visibility="Collapsed"
-                                           Foreground="Red">8 or more letters please.</TextBlock>
+                                           Foreground="Red" />
                             </Grid>
                             <TextBox x:Name="tbName" 
                                      TextWrapping="Wrap" 
@@ -40,14 +41,15 @@
                                      Width="312" 
                                      TextChanged="tbName_TextChanged"
                                      LostFocus="tbName_LostFocus"
+                                     BorderThickness="3"
+                                     BorderBrush="Black"
                                      AcceptsReturn="False">
                                 <ToolTipService.ToolTip>
                                     <StackPanel>
-                                        <TextBlock TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" Text="Please give your landmark a name."/>
-                                        <TextBlock Text="Make it meaningful.  Hint: Must be at least 8 letters."/>
+                                        <TextBlock TextWrapping="Wrap" TextAlignment="Left" Foreground="White" HorizontalAlignment="Left" Text="{Binding Path=CreatePointViewResource.PleaseGiveAName, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Path=CreatePointViewResource.MakeItMeaningful, Source={StaticResource LocalizedStrings}}" Foreground="White" />
                                     </StackPanel>
                                 </ToolTipService.ToolTip>
-
                             </TextBox>
                             
                             <Grid Width="312">
@@ -55,30 +57,33 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Margin="0" Grid.Column="0">Description</TextBlock>
+
+                                <TextBlock Margin="0" Grid.Column="0" Text="{Binding Path=CreatePointViewResource.Description, Source={StaticResource LocalizedStrings}}" />
                                 <TextBlock x:Name="tbDescReq" 
                                            Grid.Column="1" 
+                                           Text="8 lettres ou plus svp."
                                            TextAlignment="Right" 
                                            HorizontalAlignment="Right"
                                            Visibility="Collapsed"
-                                           Foreground="Red">8 or more letters please.</TextBlock>
+                                           Foreground="Red"/>
                             </Grid>
                            
                             <TextBox x:Name="tbDescription" 
                                      TextWrapping="Wrap" 
-                                     Height="100"
+                                     Height="78"
                                      Width="312" 
                                      VerticalScrollBarVisibility="Visible"
                                      Margin="0" Padding="0" 
                                      TextChanged="onTextChanged"
                                      HorizontalAlignment="Left" 
                                      MaxLength="1000"
+                                     BorderThickness="3"
+                                     BorderBrush="Black"
                                      AcceptsReturn="True">
                                 <ToolTipService.ToolTip>
                                     <StackPanel>
-                                        <TextBlock TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" Text="Please describe your landmark."/>
-                                        <TextBlock Text="Make it meaningful.  Hint: Must be at least 8 letters."/>
+                                        <TextBlock TextWrapping="Wrap" Foreground="White" TextAlignment="Left" HorizontalAlignment="Left" Text="{Binding Path=CreatePointViewResource.PleaseDescribeLandmark, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Path=CreatePointViewResource.MakeItMeaningful, Source={StaticResource LocalizedStrings}}" Foreground="White" />
                                     </StackPanel>
                                 </ToolTipService.ToolTip>
                             </TextBox>
@@ -86,23 +91,37 @@
                             <Grid Margin="0,4,-4,4" Width="300">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="75"/>
+                                    <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0" TextWrapping="Wrap">Drag the pin to place your landmark.</TextBlock>
-                                <Button x:Name="btnSave" Grid.Column="1" Content="Save" Margin="2" Click="Save_Click"/>
-                                <Button x:Name="btnCancel" Grid.Column="2" Content="Cancel" Margin="2" Click="Cancel_Click"/>
+
+                                <TextBlock Grid.Column="0" Height="60" TextWrapping="Wrap" Text="{Binding Path=CreatePointViewResource.DragThePinPlaceLandmark, Source={StaticResource LocalizedStrings}}" />
+                                <Button x:Name="btnSave" 
+                                        Grid.Column="1" 
+                                        Content="{Binding Path=CreatePointViewResource.Save, Source={StaticResource LocalizedStrings}}" Margin="2" 
+                                        Click="Save_Click" 
+                                        FontSize="12"
+                                        BorderThickness="0"
+                                        Background="#B1B1B1"
+                                        Height="32"
+                                        Style="{StaticResource ButtonBase}"/>
+                                <Button x:Name="btnCancel" Grid.Column="2"
+                                        Content="{Binding Path=CreatePointViewResource.Cancel, Source={StaticResource LocalizedStrings}}" 
+                                        Margin="2" 
+                                        Click="Cancel_Click" 
+                                        FontSize="12"
+                                        BorderThickness="0"
+                                        Background="#B1B1B1"
+                                        Height="32"
+                                        Style="{StaticResource ButtonBase}"/>
                                 </Grid>
 
                         </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
-
-            <Image Source="Images/callout_bottom.png" Stretch="None"/>
         </StackPanel>
-
+        
         <Image x:Name="btnClose" 
                Source="Images/CancelButton.png" 
                MouseLeftButtonUp="btnClose_MouseLeftButtonUp"

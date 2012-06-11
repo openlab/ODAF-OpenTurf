@@ -17,29 +17,23 @@
 	<key>LoadRemoteSources</key>
 	<true/>
 	<key>WebAppUrl</key>
-	<string>http://vanguide.cloudapp.net</string>
+	<string>http://odafrance.cloudapp.net</string>
 	<key>UseMapKit</key>
 	<false/>
 	<key>ClientAppId</key>
-	<string>D5B672D4-7B1C-46cc-8643-FBE8334F4ADF</string>
+	<string>d92f9082-7e7e-4a5e-bd1e-2cab62c8cf1c</string>
 	<key>ReachableUrl</key>
-	<string>vanguide.cloudapp.net</string>
+	<string>odafrance.cloudapp.net</string>
 	<key>DevMode</key>
 	<false/>
 	<key>MapSettings</key>
 	<dict>
 		<key>MapInitialLatitude</key>
-		<real>49.25705</real>
-		<key>MapInitialLatitudeiPad</key>
-		<real>49.25705</real>
+		<real>48.856924</real>
 		<key>MapInitialLongitude</key>
-		<real>-123.151245</real>
-		<key>MapInitialLongitudeiPad</key>
-		<real>-123.151245</real>
+		<real>2.341209</real>
 		<key>MapInitialZoom</key>
 		<real>10.6</real>
-		<key>MapInitialZoomiPad</key>
-		<real>11.49</real>
 		<key>MapCurrentLocationZoom</key>
 		<integer>16</integer>
 		<key>MapViewCommentZoom</key>
@@ -48,11 +42,11 @@
 	<key>DevSettings</key>
 	<dict>
 		<key>ClientAppId</key>
-		<string>398E5663-3B80-4832-A7F9-325ECFDA1017</string>
+		<string>d92f9082-7e7e-4a5e-bd1e-2cab62c8cf1c</string>
 		<key>WebAppUrl</key>
-		<string>http://192.168.1.2/msopendata</string>
+		<string>http://odafrance.cloudapp.net</string>
 		<key>ReachableUrl</key>
-		<string>192.168.1.2</string>
+		<string>odafrance.cloudapp.net</string>
 	</dict>
 </dict>
 </plist>

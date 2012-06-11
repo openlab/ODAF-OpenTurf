@@ -9,8 +9,10 @@
 
 /* keys */
 
-#define kTwitterAppConsumerKey				@"cQBwvcwaUeYkoj7BkEVNw"
-#define kTwitterAppConsumerSecret			@"IMUVXbVGKEkPAFR5CHJK4Kdh9yz98eBAAdfuVYQFtw"
+// CHANGEME: Add your Twitter App consumer key
+#define kTwitterAppConsumerKey				@"ryS5RtMKdb5nlCsho1o9A"
+// CHANGEME: Add your Twitter App consumer secret
+#define kTwitterAppConsumerSecret			@"3T2S0xzSSnDvVcVx3Y3T5t51srnk7wNzRBm1D119C5k"
 
 /* limits */
 
@@ -21,9 +23,6 @@
 
 #define kMapInitialLatitudeSpanMetres		5000
 #define kMapInitialLongitudeSpanMetres		10000
-
-#define kDefaultPopoverWidth				320
-#define kDefaultPopoverHeight				480
 
 /* ActionSheet Tags */
 
@@ -40,7 +39,8 @@
 /* General */
 
 #define kYourLandmarksFilter				@"YourLandmarksFilter"
-#define BING_MAPS_DEV_KEY					@"AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj"
+// CHANGEME: Add your Bing Maps Dev Key
+#define BING_MAPS_DEV_KEY					@"Av2ZW7NluP8HOWXWxyZjqE60XGCfnwQwe-HDmGb7ogLLrgxXPrmi1G8vWMBjke3Y"
 
 #define kListTerminationText				@"•"
 #define kLoadingText						@"Loading…"
@@ -160,7 +160,6 @@
 
 #define ODViewComment						@"ODViewComment"
 #define ODAddPointForViewComment			@"ODAddPointForViewComment"
-#define ODClosePopover						@"ODClosePopover"
 
 /* Preferences keys */
 
@@ -191,11 +190,8 @@
 
 #define kConfigKeyMapSettings				@"MapSettings"
 #define kConfigKeyMapInitialLatitude		@"MapInitialLatitude"
-#define kConfigKeyMapInitialLatitudeiPad	@"MapInitialLatitudeiPad"
 #define kConfigKeyMapInitialLongitude		@"MapInitialLongitude"
-#define kConfigKeyMapInitialLongitudeiPad	@"MapInitialLongitudeiPad"
 #define kConfigKeyMapInitialZoom			@"MapInitialZoom"
-#define kConfigKeyMapInitialZoomiPad		@"MapInitialZoomiPad"
 #define kConfigKeyMapCurrentLocationZoom	@"MapCurrentLocationZoom"
 #define kConfigKeyMapViewCommentZoom		@"MapViewCommentZoom"
 

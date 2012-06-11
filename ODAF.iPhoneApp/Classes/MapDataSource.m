@@ -83,7 +83,7 @@
 	if ([sourceType isEqualToString:kSourceTypeKml]) {
 		
 		self.download = [NSMutableData data];
-		
+		sourceUrl = [sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:sourceUrl] 
 												 cachePolicy:NSURLRequestReturnCacheDataElseLoad
 											 timeoutInterval:10.0];
@@ -253,12 +253,14 @@
 	if (self.tempPlacemark != nil) 
 	{
 		if ([lowerElem isEqualToString:kKmlTagName]) {
-			self.tempPlacemark.name = self.tempString;
+			//self.tempPlacemark.name = self.tempString;
+			self.tempPlacemark.guid = self.tempString;
 		} else if ([lowerElem isEqualToString:kKmlTagCoordinates]) {
 			self.tempPlacemark.coordinates = [self.tempString stringByTrimmingCharactersInSet:
 										 [NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		} else if ([lowerElem isEqualToString:kKmlTagDescription]) {
 			self.tempPlacemark.description = self.tempString;
+			self.tempPlacemark.name = self.tempString;
 		}
 	}
 }

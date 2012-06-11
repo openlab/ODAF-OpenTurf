@@ -548,7 +548,10 @@ namespace <#=Namespace #>
             
 <#}else{#>       
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
 <#}#>
         }

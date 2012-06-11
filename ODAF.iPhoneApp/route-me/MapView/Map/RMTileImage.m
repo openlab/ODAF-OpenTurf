@@ -29,7 +29,6 @@
 #import "RMWebTileImage.h"
 #import "RMTileLoader.h"
 #import "RMFileTileImage.h"
-#import "RMDBTileImage.h"
 #import "RMTileCache.h"
 #import "RMPixel.h"
 #import <QuartzCore/QuartzCore.h>
@@ -104,21 +103,9 @@
 
 + (RMTileImage*)imageForTile:(RMTile) tile withData: (NSData*)data
 {
-	UIImage *image = [[UIImage alloc] initWithData:data];
-	RMTileImage *tileImage;
-
-	if (!image)
-		return nil;
-
-	tileImage = [[self alloc] initWithTile:tile];
-	[tileImage updateImageUsingImage:image];
-	[image release];
-	return [tileImage autorelease];
-}
-
-+ (RMTileImage*)imageForTile:(RMTile) _tile fromDB: (FMDatabase*)db
-{
-	return [[[RMDBTileImage alloc] initWithTile: _tile fromDB:db] autorelease];
+	RMTileImage *image = [[RMTileImage alloc] initWithTile:tile];
+	[image updateImageUsingData:data];
+	return [image autorelease];
 }
 
 -(void) cancelLoading
@@ -139,7 +126,6 @@
 - (void)updateImageUsingImage: (UIImage*) rawImage
 {
 	layer.contents = (id)[rawImage CGImage];
-//	[self animateIn];
 }
 
 - (BOOL)isLoaded
@@ -181,14 +167,14 @@
 		[customActions setObject:[NSNull null] forKey:@"position"];
 		[customActions setObject:[NSNull null] forKey:@"bounds"];
 		[customActions setObject:[NSNull null] forKey:kCAOnOrderOut];
-        [customActions setObject:[NSNull null] forKey:kCAOnOrderIn];
-
-		CATransition *fadein = [[CATransition alloc] init];
-		fadein.duration = 0.3;
-		fadein.type = kCATransitionReveal;
-		[customActions setObject:fadein forKey:@"contents"];
+		
+/*		CATransition *fadein = [[CATransition alloc] init];
+		fadein.duration = 2.0;
+		fadein.type = kCATransitionFade;
+		[customActions setObject:fadein forKey:kCAOnOrderIn];
 		[fadein release];
-
+*/
+		[customActions setObject:[NSNull null] forKey:kCAOnOrderIn];
 		
 		layer.actions=customActions;
 		

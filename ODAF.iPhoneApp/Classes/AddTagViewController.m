@@ -17,10 +17,6 @@
 
 @synthesize summary, tagToAdd, currentTags, tagButton;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
-
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
@@ -71,16 +67,8 @@
 
 - (IBAction) close
 {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = self.navigationController;
-		[navigationController popViewControllerAnimated:YES];
-	}
-	else
-	{
-		VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
-		[delg.navigationController popViewControllerAnimated:YES];
-	}		
+	VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
+	[delg.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) lazyCreateSummary

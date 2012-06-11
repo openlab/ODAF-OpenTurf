@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -36,6 +35,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ODAF.SearchIndexRole\ODAF.SearchIndexRole.csproj">
+      <Name>ODAF.SearchIndexRole</Name>
+      <Project>{45be09e7-6513-4388-a146-9f409202f98c}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ODAF.SearchIndexRole</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\ODAF.Website\ODAF.Website.Mvc.csproj">
       <Name>ODAF.Website.Mvc</Name>
       <Project>{46074c40-509f-4855-b863-bd636735331c}</Project>
@@ -43,17 +50,9 @@
       <RoleType>Web</RoleType>
       <RoleName>ODAF.Website.Mvc</RoleName>
     </ProjectReference>
-    <ProjectReference Include="..\SearchIndexRole\ODAF.SearchIndexRole.csproj">
-      <Name>ODAF.SearchIndexRole</Name>
-      <Project>{45be09e7-6513-4388-a146-9f409202f98c}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>ODAF.SearchIndexRole</RoleName>
-    </ProjectReference>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\1.6\</CloudExtensionsDir>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />

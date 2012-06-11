@@ -31,17 +31,14 @@
 #import "RMMapContents.h"
 #import "RMTileLoader.h"
 
-NSString *RMWebTileImageErrorDomain = @"RMWebTileImageErrorDomain";
-NSString *RMWebTileImageHTTPResponseCodeKey = @"RMWebTileImageHTTPResponseCodeKey";
-NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationErrorKey";
-
-
 @implementation RMWebTileImage
 
 - (id) initWithTile: (RMTile)_tile FromURL:(NSString*)urlStr
 {
 	if (![super initWithTile:_tile])
 		return nil;
+
+        [super displayProxy:[RMTileProxy loadingTile]];
 	
 	url = [[NSURL alloc] initWithString:urlStr];
 
@@ -51,7 +48,7 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 	
 	retries = kWebTileRetries;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRequested object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRequested object:nil];
 
 	[self requestTile];
 	
@@ -84,10 +81,9 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 		if(retries == 0) // No more retries
 		{
 			[super displayProxy:[RMTileProxy errorTile]];
-			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:self];
+			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:nil];
 
-			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:self userInfo:[NSDictionary dictionaryWithObject:lastError forKey:RMWebTileImageNotificationErrorKey]];
-            [lastError autorelease]; lastError = nil;
+			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:[NSNumber numberWithInteger:retryCode]];
 
 			return;
 		}
@@ -110,7 +106,7 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 	if (!connection)
 	{
 		[super displayProxy:[RMTileProxy errorTile]];
-		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:nil];
 	}
 }
 
@@ -119,14 +115,12 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 	if (!connection)
 		return;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:nil];
 	[connection cancel];
 	
 	[connection release];
 	connection = nil;
 	
-    if ( lastError ) [lastError release]; lastError = nil;
-    
 	[super cancelLoading];
 }
 
@@ -160,14 +154,7 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
         /// \bug magic number
 	else if(statusCode == 404) // Not Found
 	{
-        [super displayProxy:[RMTileProxy missingTile]];
-        
-        NSError *error = [NSError errorWithDomain:RMWebTileImageErrorDomain 
-                                             code:RMWebTileImageErrorNotFoundResponse
-                                         userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   NSLocalizedString(@"The requested tile was not found on the server", @""), NSLocalizedDescriptionKey, nil]];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:self userInfo:[NSDictionary dictionaryWithObject:error forKey:RMWebTileImageNotificationErrorKey]];
+                [super displayProxy:[RMTileProxy missingTile]];
 		[self cancelLoading];
 	}
 	else // Other Error
@@ -183,21 +170,14 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 			case 503: retry = TRUE; break;
 		}
 		
-        NSError *error = [NSError errorWithDomain:RMWebTileImageErrorDomain 
-                                             code:RMWebTileImageErrorUnexpectedHTTPResponse 
-                                         userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [NSNumber numberWithInt:statusCode], RMWebTileImageHTTPResponseCodeKey,
-                                                   [NSString stringWithFormat:NSLocalizedString(@"The server returned error code %d", @""), statusCode], NSLocalizedDescriptionKey, nil]];
-        
 		if(retry)
 		{
-            if ( lastError ) [lastError release];
-            lastError = [error retain];
+                        retryCode = statusCode;
 			[self requestTile];
 		}
 		else 
 		{
-			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:self userInfo:[NSDictionary dictionaryWithObject:error forKey:RMWebTileImageNotificationErrorKey]];
+			[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:[NSNumber numberWithInteger:statusCode]];
 			[self cancelLoading];
 		}
 	}
@@ -231,14 +211,12 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 	
 	if(retry)
 	{
-        if ( lastError ) [lastError release];
-        lastError = [error retain];
-        
+                retryCode = [error code];
 		[self requestTile];
 	}
 	else 
 	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:self userInfo:[NSDictionary dictionaryWithObject:error forKey:RMWebTileImageNotificationErrorKey]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileError object:[NSNumber numberWithInteger:[error code]]];
 		[self cancelLoading];
 	}
 }
@@ -247,12 +225,8 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 {
 	if ([data length] == 0) {
 		//RMLog(@"connectionDidFinishLoading %@ data size %d", _connection, [data length]);
-        
-        if ( lastError ) [lastError release];
-        lastError = [[NSError errorWithDomain:RMWebTileImageErrorDomain 
-                                         code:RMWebTileImageErrorZeroLengthResponse
-                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                               NSLocalizedString(@"The server returned a zero-length response", @""), NSLocalizedDescriptionKey, nil]] retain];
+                /// \bug magic number
+                retryCode = 512;
 		[self requestTile];
 	}
 	else
@@ -265,9 +239,8 @@ NSString *RMWebTileImageNotificationErrorKey = @"RMWebTileImageNotificationError
 		url = nil;
 		[connection release];
 		connection = nil;
-		if ( lastError ) [lastError release]; lastError = nil;
-        
-		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:self];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:RMTileRetrieved object:nil];
 	}
 }
 

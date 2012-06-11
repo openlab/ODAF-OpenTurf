@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MainMapActivity!</string>
+    <string name="app_name">ODAF.Android</string>
+    <string name="odafWebsitebaseUrl">http://odafrance.cloudapp.net/</string>
+    <string name="odafAppId">37d19814-5cc6-4cde-85bf-1c6ec491fd65</string>
+    <string name="latitude">48.8569246977568</string>
+    <string name="longitude">2.34120972454548</string>
+    <string name="zoomLevel">13</string>
+    <string name="consumerKey">rrbgPcBoDR0hJE4SmOEsA</string>
+    <string name="consumerSecret">Ib8vu5xlbhtmjzk1zRanFMcfZ1Mtvu1ooIeBMhy5E</string>
+    <string name="twitterCommentSent">Comment sent :)</string>
+	<string name="choose_data">Choose data</string>
+	<string name="details">Details</string>
+	<string name="comments">Comments</string>
+</resources>

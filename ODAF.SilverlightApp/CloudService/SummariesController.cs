@@ -16,11 +16,11 @@ using System.Collections.Generic;
 using System.Net.Browser;
 using System.IO;
 using System.Windows.Browser;
+using System.Globalization;
 
 
 namespace ODAF.SilverlightApp.CloudService
 {
-
     public class SummaryDeletedArgs : EventArgs
     {
         public string guid;
@@ -179,8 +179,6 @@ namespace ODAF.SilverlightApp.CloudService
 
         #endregion
 
-
-
         public void GetSummariesForCommunity()
         {
             string jsonUrl = BaseURL + "Summaries/ShowForCommunityByActivity.json?page=0&page_size=100";
@@ -226,7 +224,7 @@ namespace ODAF.SilverlightApp.CloudService
             {
                 ret = new PointDataSummary();
                 ret.Guid = guid;
-                ret.Name = pm.name; // this is temp until data is retrieved
+                ret.Name = pm.Name; // this is temp until data is retrieved
                 ret.Latitude = pm.Location.Latitude;
                 ret.Longitude = pm.Location.Longitude;
                 ret.LayerId = pm.FeedId;
@@ -280,7 +278,7 @@ namespace ODAF.SilverlightApp.CloudService
             string jsonUrl = BaseURL + "Summaries/ShowByGuid.json?guid=" + guid;
             WebClient placemarkClient = new WebClient();
             placemarkClient.Headers["RequestGuid"] = guid;
-            placemarkClient.OpenReadCompleted += new OpenReadCompletedEventHandler(ShowByGuid_OpenReadCompleted);
+            placemarkClient.OpenReadCompleted += ShowByGuid_OpenReadCompleted;
             placemarkClient.OpenReadAsync(new Uri(jsonUrl));
         }
 
@@ -326,6 +324,7 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
+
         #region "RemovePlacemark"
 
         public void RemovePointDataSummary(string guid)
@@ -361,7 +360,7 @@ namespace ODAF.SilverlightApp.CloudService
                     UserSummaries.Remove(guid);
                     SummaryDeletedArgs args = new SummaryDeletedArgs(guid);
                     SummaryDeleted(this, args);
-                    
+
                 }
 
             }
@@ -457,7 +456,6 @@ namespace ODAF.SilverlightApp.CloudService
 
         public void CreatePointDataSummary(PointDataSummary val)
         {
-
             PDSummaries[val.Guid] = val;
             string jsonUrl = BaseURL + "Summaries/Add.json";
             WebRequest req = WebRequest.Create(jsonUrl);
@@ -481,8 +479,8 @@ namespace ODAF.SilverlightApp.CloudService
 
                 writer.Write("Description=" + HttpUtility.UrlEncode(currentSummary.Description));
                 writer.Write("&LayerId=" + currentSummary.LayerId);
-                writer.Write("&Latitude=" + HttpUtility.UrlEncode(currentSummary.Latitude.ToString()));
-                writer.Write("&Longitude=" + HttpUtility.UrlEncode(currentSummary.Longitude.ToString()));
+                writer.Write("&Latitude=" + HttpUtility.UrlEncode(currentSummary.Latitude.ToString(CultureInfo.InvariantCulture)));
+                writer.Write("&Longitude=" + HttpUtility.UrlEncode(currentSummary.Longitude.ToString(CultureInfo.InvariantCulture)));
                 writer.Write("&Guid=" + currentSummary.Guid);
                 writer.Write("&Name=" + currentSummary.Name);
                 writer.Write("&Tag=" + currentSummary.Tag);
@@ -495,9 +493,6 @@ namespace ODAF.SilverlightApp.CloudService
             {
                 req.Abort(); // ??
             }
-            
-
-
         }
 
         void onCreatedPlaceMarkSummary(IAsyncResult asyncResult)
@@ -608,7 +603,6 @@ namespace ODAF.SilverlightApp.CloudService
 
                     SummaryUpdateArgs args = new SummaryUpdateArgs(tempSummary);
                     SummaryUpdate(this, args);
-
                 }
             }
             catch (Exception e)
@@ -654,8 +648,6 @@ namespace ODAF.SilverlightApp.CloudService
 
             }
         }
-
-
 
         void AddRatingPostRequest(IAsyncResult asyncResult)
         {
@@ -793,8 +785,6 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
-
-
         #endregion
 
         public void AddComment(string guid, string text, bool bAutoTweet)
@@ -868,9 +858,7 @@ namespace ODAF.SilverlightApp.CloudService
                     if (bAutoTweet)
                     {
                         string tweetText = request.Headers["RequestCommentBody"];
-                        FormatAndPostCommentToTwitter(tweetText, tempSummary, addedComment.Comment.Id);
-                        
-                        
+                        FormatAndPostCommentToTwitter(tweetText, tempSummary, addedComment.Comment.Id);                    
                     }
                 }
 
@@ -922,16 +910,9 @@ namespace ODAF.SilverlightApp.CloudService
             if (tweetText.Length > maxLen)
             {
                 truncTweet = tweetText.Substring(0, maxLen);
-            }
-
-            
+            }           
             truncTweet += elipsis + res.short_url;
             this.baseController.User.UpdateTwitterStatus(truncTweet, tempSummary.Latitude, tempSummary.Longitude);
         }
-
-
-
     }
-
-    
 }

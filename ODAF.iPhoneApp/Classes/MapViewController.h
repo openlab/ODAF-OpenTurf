@@ -21,9 +21,6 @@
 	AtomParser* communityDataAtomParser;
 	NSNotification* pendingNotification;
 	
-	IBOutlet UIBarButtonItem* filterButton;
-	id popoverController;
-		
 @private 
 	UIViewController* authenticateParentViewController;
 }
@@ -35,9 +32,6 @@
 @property (nonatomic, retain) NSThread* filterThread;
 @property (nonatomic, retain) UIViewController* authenticateParentViewController;
 @property (nonatomic, retain) NSNotification* pendingNotification;
-
-@property (nonatomic, retain) UIBarButtonItem* filterButton;
-@property (nonatomic, retain) id popoverController;
 
 - (void) loadMapDataSources;
 - (void) filterAnnotations;

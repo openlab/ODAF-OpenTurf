@@ -26,11 +26,6 @@
 
 @synthesize username, password, signInButton, twitterAuth, toolbar, oauthAccount, spinner, noReauth;
 
-
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
-
 - (void)viewDidLoad 
 {
     [super viewDidLoad];

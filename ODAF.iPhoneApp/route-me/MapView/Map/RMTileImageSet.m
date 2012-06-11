@@ -37,7 +37,7 @@
 
 @implementation RMTileImageSet
 
-@synthesize delegate, tileDepth;
+@synthesize delegate;
 
 -(id) initWithDelegate: (id) _delegate
 {
@@ -46,28 +46,20 @@
 	
 	tileSource = nil;
 	self.delegate = _delegate;
-	images = [[NSMutableSet alloc] init];
-	[[NSNotificationCenter defaultCenter]
-		addObserver:self
-		selector:@selector(tileImageLoaded:)
-		name:RMMapImageLoadedNotification
-		object:nil
-	];
+	images = [[NSCountedSet alloc] init];
 	return self;
 }
 
 -(void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self removeAllTiles];
+	[tileSource release];
 	[images release];
 	[super dealloc];
 }
 
 -(void) removeTile: (RMTile) tile
 {
-	RMTileImage *img;
-
 	NSAssert(!RMTileIsDummy(tile), @"attempted to remove dummy tile");
 	if (RMTileIsDummy(tile))
 	{
@@ -76,24 +68,54 @@
 	}
 	
 	RMTileImage *dummyTile = [RMTileImage dummyTile:tile];
-	img = [images member:dummyTile];
-	if (!img) {
-		return;
-	}
-
-	if ([delegate respondsToSelector: @selector(tileRemoved:)])
+	if ([images countForObject:dummyTile] == 1)
 	{
-		[delegate tileRemoved:tile];
+		if ([delegate respondsToSelector: @selector(tileRemoved:)])
+		{
+			[delegate tileRemoved:tile];
+		}
+
+		[[NSNotificationCenter defaultCenter] postNotificationName:RMMapImageRemovedFromScreenNotification object:[self imageWithTile:tile]];
 	}
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:RMMapImageRemovedFromScreenNotification object:img];
 	[images removeObject:dummyTile];
 }
 
+-(void) removeTiles: (RMTileRect)rect
+{	
+	RMTileRect roundedRect = RMTileRectRound(rect);
+	// The number of tiles we'll load in the vertical and horizontal directions
+	int tileRegionWidth = (int)roundedRect.size.width;
+	int tileRegionHeight =  (int)roundedRect.size.height;
+	
+	RMTile t;
+	t.zoom = rect.origin.tile.zoom;
+	
+	id<RMMercatorToTileProjection> proj = [tileSource mercatorToTileProjection];
+	
+	for (t.x = roundedRect.origin.tile.x; t.x < roundedRect.origin.tile.x + tileRegionWidth; t.x++)
+	{
+		for (t.y = (roundedRect.origin.tile.y); t.y <= roundedRect.origin.tile.y + tileRegionHeight; t.y++)
+		{
+			RMTile normalisedTile = [proj normaliseTile: t];
+			if (RMTileIsDummy(normalisedTile))
+			{
+				continue;				
+			}
+			
+			[self removeTile:normalisedTile];
+		}
+	}
+}
+
+
 -(void) removeAllTiles
 {
-	for (RMTileImage * img in [images allObjects]) {
-		[self removeTile: img.tile];
+	NSArray * imagelist = [images allObjects];
+	for (RMTileImage * img in imagelist) {
+		NSUInteger count = [images countForObject:img];
+		for (NSUInteger i = 0; i < count; i++)
+			[self removeTile: img.tile];
 	}
 }
 
@@ -104,31 +126,22 @@
 	tileSource = newTileSource;
 }
 
+/* Untested.
+ -(BOOL) hasTile: (Tile) tile
+ {
+ NSEnumerator *enumerator = [images objectEnumerator];
+ TileImage *object;
+ 
+ while ((object = [enumerator nextObject])) {
+ if (TilesEqual(tile, [object tile]))
+ return YES;
+ }
+ 
+ return NO;
+ }*/
+
 -(void) addTile: (RMTile) tile WithImage: (RMTileImage *)image At: (CGRect) screenLocation
 {
-	BOOL tileNeeded;
-
-	tileNeeded = YES;
-	for (RMTileImage *img in images)
-	{
-		if (![img isLoaded])
-		{
-			continue;
-		}
-		if ([self isTile:tile worseThanTile:img.tile])
-		{
-			tileNeeded = NO;
-			break;
-		}
-	}
-	if (!tileNeeded) {
-		return;
-	}
-
-	if ([image isLoaded]) {
-		[self removeTilesWorseThan:image];
-	}
-
 	image.screenLocation = screenLocation;
 	[images addObject:image];
 	
@@ -170,79 +183,58 @@
 //	RMLog(@"addTiles: %d %d - %f %f", rect.origin.tile.x, rect.origin.tile.y, rect.size.width, rect.size.height);
 	
 	RMTile t;
+	t.zoom = rect.origin.tile.zoom;
+	
+	// ... Should be the same as equivalent calculation for height.
 	float pixelsPerTile = bounds.size.width / rect.size.width;
+	
+	CGRect screenLocation;
+	screenLocation.size.width = pixelsPerTile;
+	screenLocation.size.height = pixelsPerTile;
+	
 	RMTileRect roundedRect = RMTileRectRound(rect);
 	// The number of tiles we'll load in the vertical and horizontal directions
 	int tileRegionWidth = (int)roundedRect.size.width;
 	int tileRegionHeight = (int)roundedRect.size.height;
+	
 	id<RMMercatorToTileProjection> proj = [tileSource mercatorToTileProjection];
-	short minimumZoom = [tileSource minZoom], alternateMinimum;
-
+		
+	for (t.x = roundedRect.origin.tile.x; t.x < roundedRect.origin.tile.x + tileRegionWidth; t.x++)
+	{
+		for (t.y = (roundedRect.origin.tile.y); t.y <= roundedRect.origin.tile.y + tileRegionHeight; t.y++)
+		{
+			RMTile normalisedTile = [proj normaliseTile: t];
+			if (RMTileIsDummy(normalisedTile))
+				continue;
+			
+			screenLocation.origin.x = bounds.origin.x + (t.x - (rect.origin.offset.x + rect.origin.tile.x)) * pixelsPerTile;
+			screenLocation.origin.y = bounds.origin.y + (t.y - (rect.origin.offset.y + rect.origin.tile.y)) * pixelsPerTile;
+			
+			[self addTile:normalisedTile At:screenLocation];
+		}
+	}
+	
 	// Now we translate the loaded region back into screen space for loadedBounds.
 	CGRect newLoadedBounds;
 	newLoadedBounds.origin.x = bounds.origin.x - (rect.origin.offset.x * pixelsPerTile);
 	newLoadedBounds.origin.y = bounds.origin.y - (rect.origin.offset.y * pixelsPerTile);	
 	newLoadedBounds.size.width = tileRegionWidth * pixelsPerTile;
 	newLoadedBounds.size.height = tileRegionHeight * pixelsPerTile;
-
-	alternateMinimum = zoom - tileDepth - 1;
-	if (minimumZoom < alternateMinimum)
-	{
-		minimumZoom = alternateMinimum;
-	}
-
-	for (;;)
-	{
-		CGRect screenLocation;
-		screenLocation.size.width = pixelsPerTile;
-		screenLocation.size.height = pixelsPerTile;
-		t.zoom = rect.origin.tile.zoom;
-
-		for (t.x = roundedRect.origin.tile.x; t.x < roundedRect.origin.tile.x + tileRegionWidth; t.x++)
-		{
-			for (t.y = roundedRect.origin.tile.y; t.y < roundedRect.origin.tile.y + tileRegionHeight; t.y++)
-			{
-				RMTile normalisedTile = [proj normaliseTile: t];
-
-				if (RMTileIsDummy(normalisedTile))
-					continue;
-
-				// this regrouping of terms is better for calculation precision (issue 128)		
-				screenLocation.origin.x = bounds.origin.x + (t.x - rect.origin.tile.x - rect.origin.offset.x) * pixelsPerTile;		
-				screenLocation.origin.y = bounds.origin.y + (t.y - rect.origin.tile.y - rect.origin.offset.y) * pixelsPerTile;
-
-				[self addTile:normalisedTile At:screenLocation];
-			}
-		}
-
-		// adjust rect for next zoom level down until we're at minimum
-		if (--rect.origin.tile.zoom <= minimumZoom)
-			break;
-		if (rect.origin.tile.x & 1)
-			rect.origin.offset.x += 1.0;
-		if (rect.origin.tile.y & 1)
-			rect.origin.offset.y += 1.0;
-		rect.origin.tile.x /= 2;
-		rect.origin.tile.y /= 2;
-		rect.size.width *= 0.5;
-		rect.size.height *= 0.5;
-		rect.origin.offset.x *= 0.5;
-		rect.origin.offset.y *= 0.5;
-		pixelsPerTile = bounds.size.width / rect.size.width;
-		roundedRect = RMTileRectRound(rect);
-		// The number of tiles we'll load in the vertical and horizontal directions
-		tileRegionWidth = (int)roundedRect.size.width;
-		tileRegionHeight = (int)roundedRect.size.height;
-	}
-	
 	return newLoadedBounds;
 }
 
 -(RMTileImage*) imageWithTile: (RMTile) tile
 {
-	RMTileImage *dummyTile = [RMTileImage dummyTile:tile];
-
-	return [images member:dummyTile];
+	NSEnumerator *enumerator = [images objectEnumerator];
+	RMTileImage *object;
+	
+	while ((object = [enumerator nextObject]))
+	{
+		if (RMTilesEqual(tile, [object tile]))
+			return object;
+	}
+	
+	return nil;
 }
 
 -(NSUInteger) count
@@ -321,212 +313,5 @@
 	}
 }
 
-- (RMTileImage *)anyTileImage {
-	return [images anyObject];
-}
-
-- (short)zoom
-{
-	return zoom;
-}
-
-- (void)setZoom:(short)value
-{
-	if (zoom == value) {
-		// no need to act
-		return;
-	}
-
-	zoom = value;
-	for (RMTileImage *image in [images allObjects])
-	{
-		if (![image isLoaded]) {
-			continue;
-		}
-		[self removeTilesWorseThan:image];
-	}
-}
-
-- (BOOL)fullyLoaded
-{
-	BOOL fullyLoaded = YES;
-
-	for (RMTileImage *image in images)
-	{
-		if (![image isLoaded])
-		{
-			fullyLoaded = NO;
-			break;
-		}
-	}
-	return fullyLoaded;
-}
-
-- (void)tileImageLoaded:(NSNotification *)notification
-{
-	RMTileImage *img = (RMTileImage *)[notification object];
-
-	if (!img || img != [images member:img])
-	{
-		// i don't contain img, it may be already removed or in another set
-		return;
-	}
-
-	[self removeTilesWorseThan:img];
-}
-
-- (void)removeTilesWorseThan:(RMTileImage *)newImage {
-	RMTile newTile = newImage.tile;
-
-	if (newTile.zoom > zoom) {
-		// no tiles are worse since this one is too detailed to keep long-term
-		return;
-	}
-
-	for (RMTileImage *oldImage in [images allObjects])
-	{
-		RMTile oldTile = oldImage.tile;
-
-		if (oldImage == newImage)
-		{
-			continue;
-		}
-		if ([self isTile:oldTile worseThanTile:newTile])
-		{
-			[oldImage cancelLoading];
-			[self removeTile:oldTile];
-		}
-	}
-}
-
-- (BOOL)isTile:(RMTile)subject worseThanTile:(RMTile)object
-{
-	short subjZ, objZ;
-	uint32_t sx, sy, ox, oy;
-
-	objZ = object.zoom;
-	if (objZ > zoom)
-	{
-		// can't be worse than this tile, it's too detailed to keep long-term
-		return NO;
-	}
-
-	subjZ = subject.zoom;
-	if (subjZ + tileDepth >= zoom && subjZ <= zoom)
-	{
-		// this tile isn't bad, it's within zoom limits
-		return NO;
-	}
-
-	sx = subject.x;
-	sy = subject.y;
-	ox = object.x;
-	oy = object.y;
-
-	if (subjZ < objZ)
-	{
-		// old tile is larger & blurrier
-		unsigned int dz = objZ - subjZ;
-
-		ox >>= dz;
-		oy >>= dz;
-	}
-	else if (objZ < subjZ)
-	{
-		// old tile is smaller & more detailed
-		unsigned int dz = subjZ - objZ;
-
-		sx >>= dz;
-		sy >>= dz;
-	}
-	if (sx != ox || sy != oy)
-	{
-		// Tiles don't overlap
-		return NO;
-	}
-
-	if (abs(zoom - subjZ) < abs(zoom - objZ))
-	{
-		// subject is closer to desired zoom level than object, so it's not worse
-		return NO;
-	}
-
-	return YES;
-}
-
--(void) removeTilesOutsideOf: (RMTileRect)rect
-{
-	uint32_t minX, maxX, minY, maxY, span;
-	short currentZoom = rect.origin.tile.zoom;
-	RMTile wrappedTile;
-	id<RMMercatorToTileProjection> proj = [tileSource mercatorToTileProjection];
-
-	rect = RMTileRectRound(rect);
-	minX = rect.origin.tile.x;
-	span = rect.size.width > 1.0f ? (uint32_t)rect.size.width - 1 : 0;
-	maxX = rect.origin.tile.x + span;
-	minY = rect.origin.tile.y;
-	span = rect.size.height > 1.0f ? (uint32_t)rect.size.height - 1 : 0;
-	maxY = rect.origin.tile.y + span;
-
-	wrappedTile.x = maxX;
-	wrappedTile.y = maxY;
-	wrappedTile.zoom = rect.origin.tile.zoom;
-	wrappedTile = [proj normaliseTile:wrappedTile];
-	if (!RMTileIsDummy(wrappedTile))
-	{
-		maxX = wrappedTile.x;
-	}
-
-	for(RMTileImage *img in [images allObjects])
-	{
-		RMTile tile = img.tile;
-		short tileZoom = tile.zoom;
-		uint32_t x, y, zoomedMinX, zoomedMaxX, zoomedMinY, zoomedMaxY;
-
-		x = tile.x;
-		y = tile.y;
-		zoomedMinX = minX;
-		zoomedMaxX = maxX;
-		zoomedMinY = minY;
-		zoomedMaxY = maxY;
-
-		if (tileZoom < currentZoom)
-		{
-			// Tile is too large for current zoom level
-			unsigned int dz = currentZoom - tileZoom;
-
-			zoomedMinX >>= dz;
-			zoomedMaxX >>= dz;
-			zoomedMinY >>= dz;
-			zoomedMaxY >>= dz;
-		}
-		else
-		{
-			// Tile is too small & detailed for current zoom level
-			unsigned int dz = tileZoom - currentZoom;
-
-			x >>= dz;
-			y >>= dz;
-		}
-
-		if (y >= zoomedMinY && y <= zoomedMaxY)
-		{
-			if (zoomedMinX <= zoomedMinY)
-			{
-				if (x >= zoomedMinX && x <= zoomedMaxX)
-					continue;
-			}
-			else
-			{
-				if (x >= zoomedMinX || x <= zoomedMaxX)
-					continue;
-			}
-
-		}
-		// if haven't continued, tile is outside of rect
-		[self removeTile:tile];
-	}
-}
 
 @end

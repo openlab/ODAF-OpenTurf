@@ -102,7 +102,6 @@ svn checkout http://route-me.googlecode.com/svn/trunk/ route-me-read-only
  */
 typedef struct {
 	CGPoint center;
-	CGFloat angle;
 	float averageDistanceFromCenter;
 	int numTouches;
 } RMGestureDetails;
@@ -125,19 +124,15 @@ typedef struct {
 	id<RMMapViewDelegate> delegate;
 	BOOL enableDragging;
 	BOOL enableZoom;
-        BOOL enableRotate;
 	RMGestureDetails lastGesture;
 	float decelerationFactor;
 	BOOL deceleration;
-        CGFloat rotation;
 	
 @private
    	BOOL _delegateHasBeforeMapMove;
 	BOOL _delegateHasAfterMapMove;
 	BOOL _delegateHasBeforeMapZoomByFactor;
 	BOOL _delegateHasAfterMapZoomByFactor;
-	BOOL _delegateHasBeforeMapRotate;
-	BOOL _delegateHasAfterMapRotate;
 	BOOL _delegateHasDoubleTapOnMap;
 	BOOL _delegateHasSingleTapOnMap;
 	BOOL _delegateHasTapOnMarker;
@@ -150,20 +145,12 @@ typedef struct {
 	NSTimer *_decelerationTimer;
 	CGSize _decelerationDelta;
 	
-	BOOL _constrainMovement;
-	RMProjectedPoint NEconstraint, SWconstraint;
-	
 	BOOL _contentsIsSet; // "contents" must be set, but is initialized lazily to allow apps to override defaults in -awakeFromNib
 }
 
 /// Any other functionality you need to manipulate the map you can access through this
 /// property. The RMMapContents class holds the actual map bits.
 @property (nonatomic, retain) RMMapContents *contents;
-
-// View properties
-@property (readwrite) BOOL enableDragging;
-@property (readwrite) BOOL enableZoom;
-@property (readwrite) BOOL enableRotate;
 
 @property (nonatomic, retain, readonly) RMMarkerManager *markerManager;
 
@@ -173,7 +160,6 @@ typedef struct {
 @property (readwrite) float decelerationFactor;
 @property (readwrite) BOOL deceleration;
 
-@property (readonly) CGFloat rotation;
 
 - (id)initWithFrame:(CGRect)frame WithLocation:(CLLocationCoordinate2D)latlong;
 
@@ -183,15 +169,11 @@ typedef struct {
 - (void)moveToProjectedPoint: (RMProjectedPoint)aPoint;
 
 - (void)moveBy: (CGSize) delta;
-
--(void)setConstraintsSW:(CLLocationCoordinate2D)sw NE:(CLLocationCoordinate2D)ne;
-
 - (void)zoomByFactor: (float) zoomFactor near:(CGPoint) aPoint;
 - (void)zoomByFactor: (float) zoomFactor near:(CGPoint) aPoint animated:(BOOL)animated;
 
 - (void)didReceiveMemoryWarning;
 
-- (void)setRotation:(CGFloat)angle;
-
+- (void)setRotation:(float)angle;
 
 @end

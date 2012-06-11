@@ -17,10 +17,6 @@
 
 @synthesize tweetTextView, summary, tweetButton, tweetCharCountLabel, currentMode;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
-
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
@@ -68,9 +64,11 @@
 	RESTInfo* call = [homeAPI GetLinkForSummary:self.summary.Id];
 	call.delegate = self;
 	
-	[[Utils sharedInstance] loadingStart:[[Utils sharedInstance] createLoadingViewOptionsFullScreen:false 
-																						   withText:NSLocalizedString(kShorteningUrlText, kShorteningUrlText)] 
-								withView:[[Utils sharedInstance] keyboardSuperview]];
+	[[Utils sharedInstance] loadingStart:[[Utils sharedInstance] 
+							createLoadingViewOptionsFullScreen:false 
+							withText:NSLocalizedString(kShorteningUrlText, kShorteningUrlText)] 
+							withView:[[Utils sharedInstance] keyboardSuperview]];
+	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
 	
@@ -144,16 +142,8 @@
 	// remove notif registration for authenticate
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:ODRESTAuthenticateFail object:nil];
 
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = self.navigationController;
-		[navigationController popViewControllerAnimated:YES];
-	}
-	else
-	{
-		VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
-		[delg.navigationController popViewControllerAnimated:YES];
-	}		
+	VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
+	[delg.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark -
