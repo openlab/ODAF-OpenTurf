@@ -563,10 +563,10 @@ namespace ODAF.SilverlightApp
 				if (feed.RefMapLayer != null)
 				{
 					feed.RefMapLayer.Visibility = Visibility.Collapsed;
-					if (this._pointDataView.CurrentSummary != null && this._pointDataView.CurrentSummary.LayerId == feed.ID)
-					{
+					//if (this._pointDataView.CurrentSummary != null && this._pointDataView.CurrentSummary.LayerId == feed.ID)
+					//{
 						_pointDataView.Visibility = Visibility.Collapsed;
-					}
+					//}
 				}
 			}
 		}
@@ -637,9 +637,10 @@ namespace ODAF.SilverlightApp
 				var elements = from results in xDoc.Descendants(ns + "Placemark")
 							   select new PlaceMark
 							   {
-								   Id = results.Element(ns + "name").Value,
-								   FeedId = feed.ID,
-								   Name = results.Element(ns + "description").Value,
+								   Id = results.Element(ns + "description").Value,
+                                   FeedId = feed.ID,
+                                   IsSystem = feed.IsSystem,
+								   Name = results.Element(ns + "name").Value,
 								   Coords = results.Element(ns + "Point").Element(ns + "coordinates").Value
 
 							   };
