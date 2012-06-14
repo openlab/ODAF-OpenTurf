@@ -73,6 +73,7 @@ namespace ODAF.SilverlightApp
 			_pointDataView.User = Service.User;
 
 			this.currentUserBadge.twitterImage.MouseLeftButtonUp += TwitterImage_MouseLeftButtonUp;
+			this.currentUserBadge.twitterText.MouseLeftButtonUp += TwitterImage_MouseLeftButtonUp;
 
 			#region Advanced Search Component Wire-ups
 			Messenger.Default.Register<object>(this, NotificationTokens.GetMapDetails, e =>

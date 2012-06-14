@@ -38,7 +38,8 @@
         	<ColumnDefinition Width="52"/>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="twitterImageStackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" >
-            <TextBlock Text="{Binding Path=TwitterUserBadgeResource.SignInViaTwitter, Source={StaticResource LocalizedStrings}}"
+            <TextBlock x:Name="twitterText"
+					   Text="{Binding Path=TwitterUserBadgeResource.SignInViaTwitter, Source={StaticResource LocalizedStrings}}"
                        TextWrapping="Wrap"
                        FontFamily="{StaticResource ContentFontFamily}"
                        FontSize="12"
