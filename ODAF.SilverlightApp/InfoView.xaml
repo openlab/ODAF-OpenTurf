@@ -27,7 +27,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <StackPanel Orientation="Horizontal" x:Name="spOwnerButtons" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Visible"  >
+            <StackPanel Orientation="Horizontal" x:Name="spOwnerButtons" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"  >
 
                 <Button x:Name="btnEdit" 
         			VerticalAlignment="Bottom" 
