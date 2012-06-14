@@ -1,4 +1,4 @@
-///
+//
 //  RMPath.m
 //
 // Copyright (c) 2008-2009, Route-Me Contributors
@@ -37,10 +37,10 @@
 @synthesize scaleLineWidth;
 @synthesize projectedLocation;
 @synthesize enableDragging;
-@synthesize enableRotation;
 
-#define kDefaultLineWidth 2
+#define kDefaultLineWidth 100
 
+/// \bug default values for lineWidth, lineColor, fillColor are hardcoded
 - (id) initWithContents: (RMMapContents*)aContents
 {
 	if (![super init])
@@ -52,22 +52,14 @@
 	
 	lineWidth = kDefaultLineWidth;
 	drawingMode = kCGPathFillStroke;
-	lineCap = kCGLineCapButt;
-	lineJoin = kCGLineJoinMiter;
 	lineColor = [UIColor blackColor];
 	fillColor = [UIColor redColor];
 	
+	//self.masksToBounds = NO;
 	self.masksToBounds = YES;
 	
 	scaleLineWidth = NO;
 	enableDragging = YES;
-	enableRotation = YES;
-	isFirstPoint = YES;
-	
-    if ( [self respondsToSelector:@selector(setContentsScale:)] )
-    {
-        [(id)self setValue:[[UIScreen mainScreen] valueForKey:@"scale"] forKey:@"contentsScale"];
-    }
 	
 	return self;
 }
@@ -93,13 +85,13 @@
 
 - (void) recalculateGeometry
 {
-	RMMercatorToScreenProjection *projection = [contents mercatorToScreenProjection];
-	float scale = [projection metersPerPixel];
+	float scale = [[contents mercatorToScreenProjection] metersPerPixel];
 	float scaledLineWidth;
 	CGPoint myPosition;
 	CGRect pixelBounds, screenBounds;
 	float offset;
 	const float outset = 100.0f; // provides a buffer off screen edges for when path is scaled or moved
+	
 	
 	// The bounds are actually in mercators...
 	/// \bug if "bounds are actually in mercators", shouldn't be using a CGRect
@@ -110,14 +102,18 @@
 	}
 	
 	CGRect boundsInMercators = CGPathGetBoundingBox(path);
-	boundsInMercators = CGRectInset(boundsInMercators, -scaledLineWidth, -scaledLineWidth);
+	boundsInMercators.origin.x -= scaledLineWidth;
+	boundsInMercators.origin.y -= scaledLineWidth;
+	boundsInMercators.size.width += 2*scaledLineWidth;
+	boundsInMercators.size.height += 2*scaledLineWidth;
+	
 	pixelBounds = CGRectInset(boundsInMercators, -scaledLineWidth, -scaledLineWidth);
 	
 	pixelBounds = RMScaleCGRectAboutPoint(pixelBounds, 1.0f / scale, CGPointZero);
 	
 	// Clip bound rect to screen bounds.
 	// If bounds are not clipped, they won't display when you zoom in too much.
-	myPosition = [projection projectXYPoint: projectedLocation];
+	myPosition = [[contents mercatorToScreenProjection] projectXYPoint: projectedLocation];
 	screenBounds = [contents screenBounds];
 	
 	// Clip top
@@ -143,7 +139,7 @@
 		pixelBounds.size.width -= offset;
 	}
 	
-	[super setPosition:myPosition];
+	self.position = myPosition;
 	self.bounds = pixelBounds;
 	//RMLog(@"x:%f y:%f screen bounds: %f %f %f %f", myPosition.x, myPosition.y,  screenBounds.origin.x, screenBounds.origin.y, screenBounds.size.width, screenBounds.size.height);
 	//RMLog(@"new bounds: %f %f %f %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
@@ -156,10 +152,12 @@
 {
 	//	RMLog(@"addLineToXY %f %f", point.x, point.y);
 
+	NSValue* value = [NSValue value:&point withObjCType:@encode(RMProjectedPoint)];
 
-	if(isFirstPoint)
+	if (points == nil)
 	{
-		isFirstPoint = FALSE;
+		points = [[NSMutableArray alloc] init];
+		[points addObject:value];
 		projectedLocation = point;
 
 		self.position = [[contents mercatorToScreenProjection] projectXYPoint: projectedLocation];
@@ -168,6 +166,8 @@
 	}
 	else
 	{
+		[points addObject:value];
+
 		point.easting = point.easting - projectedLocation.easting;
 		point.northing = point.northing - projectedLocation.northing;
 
@@ -239,8 +239,6 @@
 	CGContextAddPath(theContext, path); 
 	
 	CGContextSetLineWidth(theContext, scaledLineWidth);
-	CGContextSetLineCap(theContext, lineCap);
-	CGContextSetLineJoin(theContext, lineJoin);	
 	CGContextSetStrokeColorWithColor(theContext, [lineColor CGColor]);
 	CGContextSetFillColorWithColor(theContext, [fillColor CGColor]);
 	
@@ -262,6 +260,7 @@
 {
 	lineWidth = newLineWidth;
 	[self recalculateGeometry];
+	[self setNeedsDisplay];
 }
 
 - (CGPathDrawingMode) drawingMode
@@ -272,28 +271,6 @@
 - (void) setDrawingMode: (CGPathDrawingMode) newDrawingMode
 {
 	drawingMode = newDrawingMode;
-	[self setNeedsDisplay];
-}
-
-- (CGLineCap) lineCap
-{
-	return lineCap;
-}
-
-- (void) setLineCap: (CGLineCap) newLineCap
-{
-	lineCap = newLineCap;
-	[self setNeedsDisplay];
-}
-
-- (CGLineJoin) lineJoin
-{
-	return lineJoin;
-}
-
-- (void) setLineJoin: (CGLineJoin) newLineJoin
-{
-	lineJoin = newLineJoin;
 	[self setNeedsDisplay];
 }
 
@@ -326,12 +303,22 @@
 - (void)moveBy: (CGSize) delta {
 	if(enableDragging){
 		[super moveBy:delta];
+	
+		[self recalculateGeometry];
 	}
 }
 
-- (void)setPosition:(CGPoint)value
+- (void)zoomByFactor: (float) zoomFactor near:(CGPoint) pivot
 {
-	[self recalculateGeometry];
+	[super zoomByFactor:zoomFactor near:pivot];
+	// don't redraw if the path hasn't been scaled very much
+	float newScale = [contents metersPerPixel];
+	if (newScale / renderedScale >= 1.10f
+		|| newScale / renderedScale <= 0.90f)
+	{
+		[self recalculateGeometry];
+		[self setNeedsDisplay];
+	}
 }
 
 @end

@@ -18,13 +18,13 @@
 	// XML Parser stuff (and temporary objects for parser)
 	NSXMLParser* xmlParser;
 	MapDataSource* tempDataSource;
-	NSString* tempString;
+	NSMutableString* tempString;
 }
 
 @property (nonatomic, assign) NSInteger dataType;
 @property (nonatomic, retain) NSXMLParser* xmlParser;
 @property (nonatomic, retain) MapDataSource* tempDataSource;
-@property (nonatomic, copy)   NSString* tempString;
+@property (nonatomic, retain)   NSMutableString* tempString;
 
 - (id) initWithContentsOfURL:(NSURL*)url andDataType:(NSInteger)dataType;
 - (void) parse;

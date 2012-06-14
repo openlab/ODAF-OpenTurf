@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Views/Shared/ODDocsMasterPage.Master" Inherits="Views_Summaries_Index" Codebehind="Index.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-ODAF REST API for Summaries
+ODAF Openturf REST API for Summaries
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
@@ -10,7 +10,7 @@ ODAF REST API for Summaries
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 <div>
-   <h1>ODAF REST API for Summaries</h1>
+   <h1>ODAF Openturf REST API for Summaries</h1>
 
    <div class="api_block">
 		<div class="api_url">/Summaries/ShowLayersByUserId.{format}/{userId}</div>

@@ -22,7 +22,6 @@
 
 @synthesize segmentedControl, filterThread, pointDataAtomParser, pendingNotification;
 @synthesize regionDataAtomParser, communityDataAtomParser, authenticateParentViewController;
-@synthesize filterButton, popoverController;
 
 #pragma mark -
 #pragma mark UINavigationController delegate
@@ -38,19 +37,6 @@
 }
 
 #pragma mark -
-
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		return YES;
-	}
-	else
-	{
-		return NO;
-	}
-}
 
 - (void) dealloc 
 {
@@ -100,8 +86,6 @@
 												 name:ODNoFiltersSelected object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewComment:) 
 												 name:ODViewComment object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closePopover:) 
-												 name:ODClosePopover object:nil];
 	
 	//[self.segmentedControl addTarget:self action:@selector(mapTypeChanged:) forControlEvents:UIControlEventValueChanged];
 	
@@ -130,7 +114,7 @@
 								   initWithTitle:NSLocalizedString(aTitle, aTitle)
 								   message:NSLocalizedString(caption, caption) delegate:self 
 								   cancelButtonTitle:NSLocalizedString(cancel, cancel)
-								   otherButtonTitles:NSLocalizedString(proceed, proceed)];
+								   otherButtonTitles:NSLocalizedString(proceed, proceed), nil];
 		[alert show];
 		[alert release];
 	}
@@ -369,26 +353,13 @@
 
 	[[MapDataSourceModel sharedInstance] reset];
 	
-	FlipsideViewController* viewController = [[FlipsideViewController alloc] initWithNibName:@"FlipsideViewController" bundle:nil];
-	viewController.delegate = self;
+	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideViewController" bundle:nil];
+	controller.delegate = self;
 	
-
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		id popover = [[NSClassFromString(@"UIPopoverController") alloc] initWithContentViewController:viewController];
-		self.popoverController = popover;          // we retain a pointer so we can release later or re-use
-		
-		[popover presentPopoverFromBarButtonItem:self.filterButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-		[popover release];
-	}
-	else
-	{
-		viewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-		[self presentModalViewController:viewController animated:YES];
-	}		
+	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController:controller animated:YES];
 	
-	
-	[viewController release];
+	[controller release];
 }
 
 - (IBAction) locateMe
@@ -453,7 +424,7 @@
 - (void) authorizationNeeded:(NSNotification*)notification
 {
 	UIViewController* authParent = (UIViewController*)notification.object;
-	
+/*	
 #ifdef XAUTH
 	SignInViewController* viewController = [[SignInViewController alloc] init];
 	viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -462,23 +433,9 @@
 		viewController.noReauth = YES;
 	}
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = authParent.navigationController;
-		viewController.modalPresentationStyle = UIModalPresentationCurrentContext;//UIModalPresentationFormSheet;
-		if (navigationController != nil) {
-			[navigationController presentModalViewController:viewController animated:YES];	
-		} else {
-			[authParent presentModalViewController:viewController animated:YES];	
-		}
-	}
-	else
-	{
-		[authParent presentModalViewController:viewController animated:YES];	
-	}		
-	
+	[authParent presentModalViewController:viewController animated:YES];	
 	[viewController release];
-#else	
+#else	*/
 	NSString* caption = 
 		@"You need to sign in to use this feature. VanGuide uses Twitter for sign in, as well as the 'Tweet This' feature. Your Twitter password is not stored by VanGuide.";
 	NSString* cancel = @"Cancel";
@@ -497,33 +454,15 @@
 	sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
 	[sheet showInView:self.authenticateParentViewController.view];
 	[sheet release];
-#endif
-}
-
-- (void) closePopover:(NSNotification*)notification
-{
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		[self.popoverController dismissPopoverAnimated:YES];
-		self.popoverController = nil;
-	}
+// #endif
 }
 
 #pragma mark -
 #pragma mark FlipsideViewControllerDelegate implementation
 
-- (void) flipsideViewControllerDidFinish:(FlipsideViewController*)controller 
-{
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		[self.popoverController dismissPopoverAnimated:YES];
-	}
-	else
-	{
-		[self dismissModalViewControllerAnimated:YES];
-	}		
-	
-	
+- (void) flipsideViewControllerDidFinish:(FlipsideViewController*)controller {
+    
+	[self dismissModalViewControllerAnimated:YES];
 	[self stopLoadingAnnotations];
 	[self filterAnnotations];
 }

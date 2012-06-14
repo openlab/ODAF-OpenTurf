@@ -27,7 +27,7 @@
 {
 	if (self = [super init]) {
 		self.dataType = myDataType;
-		
+		self.tempString = [[NSMutableString alloc] init];
 		self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];
 		[self.xmlParser setShouldProcessNamespaces:NO];
 		[self.xmlParser setShouldReportNamespacePrefixes:NO];
@@ -58,6 +58,8 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName 
 	attributes:(NSDictionary *)attributeDict
 {
+	[self.tempString setString:@""];
+	 
 	if ([elementName isEqualToString:kAtomTagEntry]) {
 		self.tempDataSource = [[MapDataSource alloc] init];
 	}
@@ -86,7 +88,7 @@
 	if ([elementName isEqualToString:kAtomTagEntry]) {
 		[[MapDataSourceModel sharedInstance] mapSourceParsed:tempDataSource forDataType:dataType];
 		self.tempDataSource = nil;
-		self.tempString = nil;
+		[self.tempString setString:@""];
 	}
 	
 	if (tempDataSource != nil) 
@@ -105,7 +107,7 @@
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-	self.tempString = string;
+	[self.tempString appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError

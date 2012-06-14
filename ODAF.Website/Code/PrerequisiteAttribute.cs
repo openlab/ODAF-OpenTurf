@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Configuration;
+using System.Net;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web;
 using vancouveropendata.Controllers;
 using DataEnums = ODAF.Data.Enums;
-using System.Net;
-using System.Configuration;
+using website_mvc.Code;
 
 namespace vancouveropendata
 {
@@ -35,7 +34,7 @@ namespace vancouveropendata
         void IAuthorizationFilter.OnAuthorization(AuthorizationContext filterContext)
         {
             bool devMode = false;
-            bool.TryParse(ConfigurationManager.AppSettings["DevMode"], out devMode);
+            bool.TryParse(CloudSettingsResolver.GetConfigSetting("DevMode"), out devMode);
             if (devMode)
             {
                 return;

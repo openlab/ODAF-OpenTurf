@@ -42,10 +42,11 @@
 	return [self.coordinatesArray count] > 1;
 }
 
-- (NSString*) guid
+/*- (NSString*) guid
 {
-	return self.isOGDI ? self.description : guid;
-}
+	//return self.isOGDI ? self.description : guid;
+	return guid;
+}*/
 
 - (CLLocationCoordinate2D) coordinate
 {

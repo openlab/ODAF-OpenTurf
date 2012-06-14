@@ -115,8 +115,6 @@ enum {
 	/// maximum zoom number allowed for the view. #minZoom and #maxZoom must be within the limits of #tileSource but can be stricter; they are clamped to tilesource limits if needed.
 	float maxZoom;
 
-    float screenScale;
-
 	id<RMTilesUpdateDelegate> tilesUpdateDelegate;
 }
 
@@ -125,13 +123,11 @@ enum {
 @property (readonly)  RMTileRect tileBounds;
 @property (readonly)  CGRect screenBounds;
 @property (readwrite) float metersPerPixel;
-@property (readonly)  float scaledMetersPerPixel;
 /// zoom level is clamped to range (minZoom, maxZoom)
 @property (readwrite) float zoom;
 
-@property (nonatomic, readwrite) float minZoom, maxZoom;
-
-@property (nonatomic, assign) float screenScale;
+@property (readwrite) float minZoom;
+@property (readwrite) float maxZoom;
 
 @property (readonly)  RMTileImageSet *imagesOnScreen;
 @property (readonly)  RMTileLoader *tileLoader;
@@ -153,10 +149,6 @@ enum {
 @property (readwrite) NSUInteger boundingMask;
 /// The denominator in a cartographic scale like 1/24000, 1/50000, 1/2000000.
 @property (readonly)double scaleDenominator;
-
-// tileDepth defaults to zero. if tiles have no alpha, set this higher, 3 or so, to make zooming smoother
-@property (readwrite, assign) short tileDepth;
-@property (readonly, assign) BOOL fullyLoaded;
 
 - (id)initWithView: (UIView*) view;
 - (id)initWithView: (UIView*) view

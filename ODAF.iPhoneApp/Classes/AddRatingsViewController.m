@@ -18,10 +18,6 @@
 
 @synthesize ratingView, summary, ratingCaption, rateButton;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
-
 - (void) saveRatingToCache
 {
 	NSMutableDictionary* ratedItems = [[Utils sharedInstance] getTempPlist:kPlistRatingsCache];
@@ -181,16 +177,8 @@
 
 - (IBAction) close
 {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = self.navigationController;
-		[navigationController popViewControllerAnimated:YES];
-	}
-	else
-	{
-		VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
-		[delg.navigationController popViewControllerAnimated:YES];
-	}		
+	VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
+	[delg.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark -

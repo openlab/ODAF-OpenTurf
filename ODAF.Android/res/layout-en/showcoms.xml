@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+    <ListView android:id="@+id/comsListView"
+			  android:layout_width="match_parent"
+			  android:layout_height="0dp"
+			  android:layout_weight="8"></ListView>
+			  		  
+	<!-- Login Interface -->
+			  		  
+	<WebView	android:id="@+id/loginWebView"
+				android:layout_width="match_parent"
+				android:layout_height="200dp"
+				android:visibility="gone"/>		
+					
+	<TextView 	android:id="@+id/loginTextView"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:text="Please enter PIN code verification from Twitter."
+				android:visibility="gone"/>
+				
+	<EditText 	android:id="@+id/loginEditText"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:visibility="gone"/>
+	
+	<Button android:id="@+id/loginButton"
+			android:layout_width="fill_parent" 
+			android:layout_height="0dp"
+			android:text="Valider code PIN"
+			android:layout_weight="1"
+			android:visibility="gone" />
+			
+	<!-- /Login Interface -->
+	
+	<!-- Add Comment Interface -->
+	
+	<EditText 	android:id="@+id/commentEditText" 
+				android:layout_width="400px" 
+				android:layout_height="wrap_content"
+				android:lines="3" 
+				android:layout_margin="5dp" 
+				android:maxLength="140"				
+				android:visibility="gone"/>
+	 
+	<Button android:id="@+id/validateCommentButton"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:text="Validate comment"
+			android:visibility="gone"/>
+	
+	<!-- /Add Comment Interface -->
+			  
+  <Button android:id="@+id/showComsAddComButton"
+			android:layout_width="fill_parent" 
+			android:layout_height="40dp"
+			android:text="Add a comment"
+			android:layout_weight="1" />
+  
+  <Button android:id="@+id/showComsCloseViewButton"
+			android:layout_width="fill_parent"
+			android:layout_height="40dp"
+			android:text="Back" 
+			android:layout_weight="1"/>
+	
+			  
+</LinearLayout>

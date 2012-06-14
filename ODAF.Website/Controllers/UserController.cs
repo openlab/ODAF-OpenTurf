@@ -31,7 +31,7 @@ namespace vancouveropendata.Controllers
         private const string kOAuthTokenSecret = "oauth_token_secret";
         private const string kOAuthLink = "link";
 
-        [AcceptVerbs(HttpVerbs.Get)]       
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Index()
         {
             return View();
@@ -46,34 +46,36 @@ namespace vancouveropendata.Controllers
             if (app == null)
             {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { error = "Invalid or unknown appId" }, JsonRequestBehavior.AllowGet);               
+                return Json(new { error = "Invalid or unknown appId" }, JsonRequestBehavior.AllowGet);
             }
 
             string call_return = OAuth.GetRequestToken(TwitterOAuthRequestUrl, app.ConsumerKey, app.ConsumerSecret);
             var collection = HttpUtility.ParseQueryString(call_return);
             string token = collection[kOAuthToken];
             string token_secret = collection[kOAuthTokenSecret];
-            
+
             if (token == null)
             {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                retVal = new { 
-                    error = call_return 
+                retVal = new
+                {
+                    error = call_return
                 };
             }
             else
             {
-                retVal = new { 
+                retVal = new
+                {
                     oauth_token = token,
                     oauth_token_secret = token_secret,
-                    link = String.Format(TwitterOAuthAuthorizeUrl, token) 
+                    link = String.Format(TwitterOAuthAuthorizeUrl, token)
                 };
             }
 
             return Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]       
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult GetAccessToken(string appId, string format, string oauth_token)
         {
             object retVal = new { };
@@ -128,14 +130,22 @@ namespace vancouveropendata.Controllers
             }
 
             // if the token expiry was reset, return it
-            if (expiry.HasValue) {
-                retVal = new { 
-                    oauth_token = token, oauth_token_secret = token_secret, 
-                    oauth_token_expiry = expiry.Value };
+            if (expiry.HasValue)
+            {
+                retVal = new
+                {
+                    oauth_token = token,
+                    oauth_token_secret = token_secret,
+                    oauth_token_expiry = expiry.Value
+                };
             }
-            else {
-                retVal = new { 
-                    oauth_token = token, oauth_token_secret = token_secret };
+            else
+            {
+                retVal = new
+                {
+                    oauth_token = token,
+                    oauth_token_secret = token_secret
+                };
             }
 
             return Json(retVal, JsonRequestBehavior.AllowGet);
@@ -146,16 +156,18 @@ namespace vancouveropendata.Controllers
         {
             OAuthAccount account = AuthenticatedUser;
 
-            if (account == null){
+            if (account == null)
+            {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
-            else {
+            else
+            {
                 return Json(account, JsonRequestBehavior.AllowGet);
             }
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]       
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Authenticate(string appId, string format, string oauth_token, string oauth_token_secret)
         {
             OAuthClientApp app = OAuthClientApp.Find(c => c.Guid.Equals(appId)).SingleOrDefault();
@@ -177,7 +189,7 @@ namespace vancouveropendata.Controllers
                     return Json(new { }, JsonRequestBehavior.AllowGet);
                 }
             }
-            
+
             // Check for token expiry
             if (tokenExpired)
             {
@@ -192,11 +204,11 @@ namespace vancouveropendata.Controllers
                                                     app.ConsumerSecret,
                                                     oauth_token,
                                                     oauth_token_secret);
-            
+
             HttpContext.Response.StatusCode = (int)NUrl.LastResponseStatusCode.GetValueOrDefault();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> obj = serializer.DeserializeObject(verify) as Dictionary<string, object>;
-            
+
             if (HttpContext.Response.StatusCode == (int)HttpStatusCode.OK)
             {
                 // Update/Add TwitterAccount
@@ -216,14 +228,17 @@ namespace vancouveropendata.Controllers
                         }
 
                         // the deserializer always boxes it to int (so far), but just in case in the future its > int
-                        long user_id = 0; 
+                        long user_id = 0;
 
-                        if (obj.ContainsKey(kTwitterUserId)) {
-                            if (obj[kTwitterUserId] is int) {
+                        if (obj.ContainsKey(kTwitterUserId))
+                        {
+                            if (obj[kTwitterUserId] is int)
+                            {
                                 int user_id_int = (int)obj[kTwitterUserId];
                                 user_id = user_id_int;
                             }
-                            else if (obj[kTwitterUserId] is long) {
+                            else if (obj[kTwitterUserId] is long)
+                            {
                                 user_id = (long)obj[kTwitterUserId];
                             }
                         }
@@ -238,7 +253,7 @@ namespace vancouveropendata.Controllers
 
                         var atu = CloudSettingsResolver.GetConfigSetting("AdminTwitterUser");
 
-                        if( !string.IsNullOrEmpty(atu) && atu == screen_name )
+                        if (!string.IsNullOrEmpty(atu) && atu == screen_name)
                             account.UserRole = 2;
 
                         account.Save();
@@ -329,10 +344,12 @@ namespace vancouveropendata.Controllers
             try
             {
                 account = OAuthAccount.Find(c => c.oauth_token == oauth_token).SingleOrDefault();
-                if (account != null) {
+                if (account != null)
+                {
                     bool useTokenExpiry = false;
                     bool.TryParse(CloudSettingsResolver.GetConfigSetting("UseTokenExpiry"), out useTokenExpiry);
-                    if (useTokenExpiry) {
+                    if (useTokenExpiry)
+                    {
                         expired = (DateTime.UtcNow.Ticks - account.TokenExpiry.ToUniversalTime().Ticks) >= 0;
                     }
                 }
@@ -346,14 +363,21 @@ namespace vancouveropendata.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult AuthorizeReturn(string format, string oauth_token, string denied, string done)
+        public ActionResult AuthorizeReturn(string oauth_token, string oauth_verifier)
+        {
+            // We just pass the data to the View
+            return View(new { oauth_token = oauth_token, denied = "", done = "" });
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult AuthorizeReturnOld(string format, string oauth_token, string denied, string done)
         {
             // We just pass the data to the View
             return View(new { oauth_token = oauth_token, denied = denied, done = done });
         }
 
         [Prerequisite(Authenticated = true)]
-        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Put | HttpVerbs.Get)]       
+        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Put | HttpVerbs.Get)]
         public ActionResult UpdateTwitterStatus(string format, string status, decimal? lat, decimal? lng)
         {
             OAuthClientApp app = OAuthClientApp.Find(c => c.Id.Equals(AuthenticatedUser.oauth_service_id)).SingleOrDefault();
@@ -375,7 +399,7 @@ namespace vancouveropendata.Controllers
                     return Json(new { }, JsonRequestBehavior.AllowGet);
                 }
             }
-            
+
             // Check for token expiry
             if (tokenExpired)
             {
@@ -384,7 +408,8 @@ namespace vancouveropendata.Controllers
             }
 
             string postUrl = String.Format("{0}?status={1}", TwitterUpdateStatusUrl, OAuthExtensions.EscapeUriDataStringRfc3986(status));
-            if (lat != null && lng != null) {
+            if (lat != null && lng != null)
+            {
                 postUrl = String.Format("{0}&lat={1}&long={2}", postUrl, lat.Value, lng.Value);
             }
 
@@ -395,7 +420,7 @@ namespace vancouveropendata.Controllers
                                                     app.ConsumerSecret,
                                                     AuthenticatedUser.oauth_token,
                                                     AuthenticatedUser.oauth_token_secret);
-            
+
             HttpContext.Response.StatusCode = (int)NUrl.LastResponseStatusCode.GetValueOrDefault();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> obj = serializer.DeserializeObject(verify) as Dictionary<string, object>;

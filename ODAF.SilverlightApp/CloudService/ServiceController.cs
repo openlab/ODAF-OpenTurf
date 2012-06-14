@@ -24,10 +24,10 @@ namespace ODAF.SilverlightApp.CloudService
 
         public string BaseURL { get; set; }
         public SummariesController Summaries { get; set; }
-        public UserController User{ get; set; }
+        public UserController User { get; set; }
         public FeedController Feeds { get; set; }
 
-       // public  SearchResults { get; set; }
+        // public  SearchResults { get; set; }
 
         public System.Collections.ObjectModel.ObservableCollection<GeocodeResult> SearchResults { get; set; }
 
@@ -50,7 +50,7 @@ namespace ODAF.SilverlightApp.CloudService
             Feeds.GetFeedList();
         }
 
-        public void GeoSearch(string keywords,Map mapView)
+        public void GeoSearch(string keywords, Map mapView)
         {
             UriBuilder serviceUri = new UriBuilder("http://dev.virtualearth.net/webservices/v1/GeocodeService/GeocodeService.svc");
             BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
@@ -62,7 +62,7 @@ namespace ODAF.SilverlightApp.CloudService
             GeocodeRequest req = new GeocodeRequest();
             req.Query = keywords;
             req.Credentials = new Credentials();
-            req.Credentials.ApplicationId = "AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj"; // TODO: Get from Resource
+            req.Credentials.ApplicationId = ((App)Application.Current).GeoCodeServiceCredentials;
 
             req.ExecutionOptions = new ExecutionOptions();
             req.ExecutionOptions.SuppressFaults = true;

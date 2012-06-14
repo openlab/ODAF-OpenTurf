@@ -16,6 +16,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -53,11 +53,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SubSonic.Core, Version=3.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SubSonic_3_0_0_3\Binaries\SubSonic.Core.dll</HintPath>
+      <HintPath>..\..\Dependencies\Subsonic\SubSonic.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -98,6 +96,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="tt\ActiveRecord.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ActiveRecord.cs</LastGenOutput>

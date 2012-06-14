@@ -18,19 +18,17 @@
 //  the License.
 //
 
+#import <mach-o/arch.h>
+
 #import "GTMNSObject+UnitTesting.h"
 #import "GTMSystemVersion.h"
 #import "GTMGarbageCollection.h"
-#import "GTMNSNumber+64Bit.h"
 
 #if GTM_IPHONE_SDK
 #import <UIKit/UIKit.h>
-#else
-#import <AppKit/AppKit.h>
 #endif
 
-NSString *const GTMUnitTestingEncodedObjectNotification 
-  = @"GTMUnitTestingEncodedObjectNotification";
+NSString *const GTMUnitTestingEncodedObjectNotification = @"GTMUnitTestingEncodedObjectNotification";
 NSString *const GTMUnitTestingEncoderKey = @"GTMUnitTestingEncoderKey";
 
 #if GTM_IPHONE_SDK
@@ -59,7 +57,7 @@ BOOL GTMIsObjectImageEqualToImageNamed(id object,
   if (error) {
     *error = nil;
   }
-  BOOL isGood = [object respondsToSelector:@selector(gtm_unitTestImage)];
+  BOOL isGood = [object respondsToSelector:@selector(gtm_createUnitTestImage)];
   if (isGood) {
     if ([object gtm_areSystemSettingsValidForDoingImage]) {
       NSString *aPath = [object gtm_pathForImageNamed:filename];
@@ -73,48 +71,45 @@ BOOL GTMIsObjectImageEqualToImageNamed(id object,
           filename = [filename stringByAppendingString:@"_Failed"];
         }
         BOOL aSaved = [object gtm_saveToImageNamed:filename];
-        NSString *fileNameWithExtension 
-          = [NSString stringWithFormat:@"%@.%@",
-             filename, [object gtm_imageExtension]];
+        NSString *fileNameWithExtension = [NSString stringWithFormat:@"%@.%@",
+                                           filename, [object gtm_imageExtension]];
         NSString *fullSavePath = [object gtm_saveToPathForImageNamed:filename];
         if (NO == aSaved) {
           if (!aPath) {
-            failString = [NSString stringWithFormat:@"File %@ did not exist in "
-                          @"bundle. Tried to save as %@ and failed.", 
+            failString = [NSString stringWithFormat:@"File %@ did not exist in bundle. "
+                          "Tried to save as %@ and failed.", 
                           fileNameWithExtension, fullSavePath];
           } else {
-            failString = [NSString stringWithFormat:@"Object image different "
-                          @"than file %@. Tried to save as %@ and failed.", 
+            failString = [NSString stringWithFormat:@"Object image different than file %@. "
+                          "Tried to save as %@ and failed.", 
                           aPath, fullSavePath];
           }
         } else {
           if (!aPath) {
-            failString = [NSString stringWithFormat:@"File %@ did not exist in "
-                          @" bundle. Saved to %@", fileNameWithExtension, 
-                          fullSavePath];
+            failString = [NSString stringWithFormat:@"File %@ did not exist in bundle. "
+                          "Saved to %@", fileNameWithExtension, fullSavePath];
           } else {
             NSString *diffPath = [filename stringByAppendingString:@"_Diff"];
             diffPath = [object gtm_saveToPathForImageNamed:diffPath];
             NSData *data = nil;
             if (diff) {
               data = [object gtm_imageDataForImage:diff];
+              CFRelease(diff);
             }
             if ([data writeToFile:diffPath atomically:YES]) {
               failString = [NSString stringWithFormat:@"Object image different "
-                            @"than file %@. Saved image to %@. "
-                            @"Saved diff to %@", 
+                            "than file %@. Saved image to %@. Saved diff to %@", 
                             aPath, fullSavePath, diffPath];
             } else {
               failString = [NSString stringWithFormat:@"Object image different "
-                            @"than file %@. Saved image to %@. Unable to save "
-                            @"diff. Most likely the image and diff are "
-                            @"different sizes.", 
+                            "than file %@. Saved image to %@. Unable to save "
+                            "diff. Most likely the image and diff are "
+                            "different sizes.", 
                             aPath, fullSavePath];
             }
           }
         }
       }
-      CGImageRelease(diff);
     } else {
       failString = @"systemSettings not valid for taking image";  // COV_NF_LINE
     }
@@ -151,22 +146,21 @@ BOOL GTMIsObjectStateEqualToStateNamed(id object,
       NSString *fullSavePath = [object gtm_saveToPathForStateNamed:filename];
       if (NO == aSaved) {
         if (!aPath) {
-          failString = [NSString stringWithFormat:@"File %@ did not exist in "
-                        @"bundle. Tried to save as %@ and failed.", 
+          failString = [NSString stringWithFormat:@"File %@ did not exist in bundle. "
+                        "Tried to save as %@ and failed.", 
                         fileNameWithExtension, fullSavePath];
         } else {
-          failString = [NSString stringWithFormat:@"Object state different "
-                        @"than file %@. Tried to save as %@ and failed.", 
+          failString = [NSString stringWithFormat:@"Object state different than file %@. "
+                        "Tried to save as %@ and failed.", 
                         aPath, fullSavePath];
         }
       } else {
         if (!aPath) {
-          failString = [NSString stringWithFormat:@"File %@ did not exist in "
-                       @ "bundle. Saved to %@", fileNameWithExtension, 
-                        fullSavePath];
+          failString = [NSString stringWithFormat:@"File %@ did not exist in bundle. "
+                        "Saved to %@", fileNameWithExtension, fullSavePath];
         } else {
-          failString = [NSString stringWithFormat:@"Object state different "
-                        @"than file %@. Saved to %@", aPath, fullSavePath];
+          failString = [NSString stringWithFormat:@"Object state different than file %@. "
+                        "Saved to %@", aPath, fullSavePath];
         }
       }
     }
@@ -177,41 +171,6 @@ BOOL GTMIsObjectStateEqualToStateNamed(id object,
     *error = failString;
   }
   return isGood;
-}
-
-CGContextRef GTMCreateUnitTestBitmapContextOfSizeWithData(CGSize size,
-                                                          unsigned char **data) {
-  CGContextRef context = NULL;
-  size_t height = size.height;
-  size_t width = size.width;
-  size_t bytesPerRow = width * 4;
-  size_t bitsPerComponent = 8;
-  CGColorSpaceRef cs = NULL;
-#if GTM_IPHONE_SDK
-  cs = CGColorSpaceCreateDeviceRGB();
-#else
-  cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-#endif
-  _GTMDevAssert(cs, @"Couldn't create colorspace");
-  CGBitmapInfo info 
-    = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-  if (data) {
-    *data = (unsigned char*)calloc(bytesPerRow, height);
-    _GTMDevAssert(*data, @"Couldn't create bitmap");
-  }
-  context = CGBitmapContextCreate(data ? *data : NULL, width, height, 
-                                  bitsPerComponent, bytesPerRow, cs, info);
-  _GTMDevAssert(context, @"Couldn't create an context");
-  if (!data) {
-    CGContextClearRect(context, CGRectMake(0, 0, size.width, size.height));
-  }
-  CGContextSetRenderingIntent(context, kCGRenderingIntentRelativeColorimetric);
-  CGContextSetInterpolationQuality(context, kCGInterpolationNone);
-  CGContextSetShouldAntialias(context, NO);
-  CGContextSetAllowsAntialiasing(context, NO);
-  CGContextSetShouldSmoothFonts(context, NO);
-  CGColorSpaceRelease(cs);
-  return context;  
 }
 
 @interface NSObject (GTMUnitTestingAdditionsPrivate)
@@ -239,11 +198,10 @@ CGContextRef GTMCreateUnitTestBitmapContextOfSizeWithData(CGSize size,
 //    the path if the file exists in your bundle
 //    or nil if no file is found
 //
-- (NSString *)gtm_pathForFileNamed:(NSString*)name 
-                         extension:(NSString*)extension;
+- (NSString *)gtm_pathForFileNamed:(NSString*)name extension:(NSString*)extension;
 - (NSString *)gtm_saveToPathForFileNamed:(NSString*)name 
                                extension:(NSString*)extension;
-- (CGImageRef)gtm_unitTestImage;
+- (CGImageRef)gtm_createUnitTestImage;
 // Returns nil if there is no override
 - (NSString *)gtm_getOverrideDefaultUnitTestSaveToDirectory;
 @end
@@ -263,7 +221,7 @@ CGContextRef GTMCreateUnitTestBitmapContextOfSizeWithData(CGSize size,
 @end
 
 // Small utility function for checking to see if a is b +/- 1.
-GTM_INLINE BOOL almostEqual(unsigned char a, unsigned char b) {
+static inline BOOL almostEqual(unsigned char a, unsigned char b) {
   unsigned char diff = a > b ? a - b : b - a;
   BOOL notEqual = diff < 2;
   return notEqual;
@@ -301,8 +259,7 @@ GTM_INLINE BOOL almostEqual(unsigned char a, unsigned char b) {
 //  Arguments:
 //    key - key to check for in dictionary
 - (void)checkForKey:(NSString*)key {
-  _GTMDevAssert(![dictionary_ objectForKey:key], 
-                @"Key already exists for %@", key);
+  _GTMDevAssert(![dictionary_ objectForKey:key], @"Key already exists for %@", key);
 }
 
 // Key routine for the encoder. We store objects in our dictionary based on
@@ -332,12 +289,11 @@ GTM_INLINE BOOL almostEqual(unsigned char a, unsigned char b) {
   
   // We then send out a notification to let other folks
   // add data for this object
-  NSDictionary *notificationDict 
-    = [NSDictionary dictionaryWithObject:self forKey:GTMUnitTestingEncoderKey];
-  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-  [nc postNotificationName:GTMUnitTestingEncodedObjectNotification
-                    object:objv
-                  userInfo:notificationDict];
+  NSDictionary *notificationDict = [NSDictionary dictionaryWithObject:self
+                                                               forKey:GTMUnitTestingEncoderKey];
+  [[NSNotificationCenter defaultCenter] postNotificationName:GTMUnitTestingEncodedObjectNotification
+                                                      object:objv
+                                                    userInfo:notificationDict];
   
   // If we got anything from the object, or from the notification, store it in
   // our dictionary. Otherwise store the description.
@@ -429,17 +385,15 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
     if (!gGTMUnitTestSaveToDirectory) {
 #if GTM_IPHONE_SDK
       // Developer build, use their home directory Desktop.
-      gGTMUnitTestSaveToDirectory 
-        = [[[[[NSHomeDirectory() stringByDeletingLastPathComponent] 
-              stringByDeletingLastPathComponent] 
-             stringByDeletingLastPathComponent] 
-            stringByDeletingLastPathComponent] 
-           stringByAppendingPathComponent:@"Desktop"];
+      gGTMUnitTestSaveToDirectory = [[[[[NSHomeDirectory() stringByDeletingLastPathComponent] 
+                                        stringByDeletingLastPathComponent] 
+                                       stringByDeletingLastPathComponent] 
+                                      stringByDeletingLastPathComponent] 
+                                     stringByAppendingPathComponent:@"Desktop"];
 #else
-      NSArray *desktopDirs 
-        = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, 
-                                              NSUserDomainMask,
-                                              YES);
+      NSArray *desktopDirs = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, 
+                                                                 NSUserDomainMask,
+                                                                 YES);
       gGTMUnitTestSaveToDirectory = [desktopDirs objectAtIndex:0];
 #endif    
       // Did we get overridden?
@@ -463,12 +417,11 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   // we're on an automated build system, so use the build products dir as an
   // override instead of writing on the desktop.
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
-  NSString *key;
-  GTM_FOREACH_KEY(key, env) {
-    if ([key hasSuffix:@"BUILD_NUMBER"]) {
-      break;
-    }
-  }
+  NSEnumerator *enumerator = [env keyEnumerator];
+  NSString *key = nil;
+  while (((key = [enumerator nextObject]) != nil) &&
+         ![key hasSuffix:@"BUILD_NUMBER"])
+    ;
   if (key) {
     result = [env objectForKey:@"BUILT_PRODUCTS_DIR"];
   }
@@ -481,22 +434,18 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
 
 ///  Find the path for a file named name.extension in your bundle.
 //  Searches for the following:
-//  "name.CompilerSDK.OSVersionMajor.OSVersionMinor.OSVersionBugFix.arch.extension"
-//  "name.CompilerSDK.OSVersionMajor.OSVersionMinor.arch.extension"
-//  "name.CompilerSDK.OSVersionMajor.arch.extension"
-//  "name.CompilerSDK.arch.extension"
-//  "name.CompilerSDK.OSVersionMajor.OSVersionMinor.OSVersionBugFix.extension"
-//  "name.CompilerSDK.OSVersionMajor.OSVersionMinor.extension"
-//  "name.CompilerSDK.OSVersionMajor.extension"
-//  "name.CompilerSDK.extension"
-//  "name.OSVersionMajor.OSVersionMinor.OSVersionBugFix.arch.extension"
-//  "name.OSVersionMajor.OSVersionMinor.arch.extension"
+//  "name.extension", 
+//  "name.arch.extension", 
+//  "name.arch.OSVersionMajor.extension"
+//  "name.arch.OSVersionMajor.OSVersionMinor.extension"
+//  "name.arch.OSVersionMajor.OSVersionMinor.OSVersion.bugfix.extension"
+//  "name.arch.OSVersionMajor.extension"
 //  "name.OSVersionMajor.arch.extension"
-//  "name.arch.extension"
-//  "name.OSVersionMajor.OSVersionMinor.OSVersionBugFix.extension"
-//  "name.OSVersionMajor.OSVersionMinor.extension"
+//  "name.OSVersionMajor.OSVersionMinor.arch.extension"
+//  "name.OSVersionMajor.OSVersionMinor.OSVersion.bugfix.arch.extension"
 //  "name.OSVersionMajor.extension"
-//  "name.extension"
+//  "name.OSVersionMajor.OSVersionMinor.extension"
+//  "name.OSVersionMajor.OSVersionMinor.OSVersion.bugfix.extension"
 //  Do not include the ".extension" extension on your name.
 //
 //  Args:
@@ -512,11 +461,10 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   NSString *thePath = nil;
   Class bundleClass = [GTMUnitTestingAdditionsBundleFinder class];
   NSBundle *myBundle = [NSBundle bundleForClass:bundleClass];
-  _GTMDevAssert(myBundle, 
-                @"Couldn't find bundle for class: %@ searching for file:%@.%@", 
-                NSStringFromClass(bundleClass), name, extension);
+  _GTMDevAssert(myBundle, @"Couldn't find bundle for class: %@ searching for file:%@.%@", 
+            NSStringFromClass(bundleClass), name, extension);
   // System Version
-  SInt32 major, minor, bugFix;
+  long major, minor, bugFix;
   [GTMSystemVersion getMajor:&major minor:&minor bugFix:&bugFix];
   NSString *systemVersions[4];
   systemVersions[0] = [NSString stringWithFormat:@".%d.%d.%d", 
@@ -524,52 +472,51 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   systemVersions[1] = [NSString stringWithFormat:@".%d.%d", major, minor];
   systemVersions[2] = [NSString stringWithFormat:@".%d", major];
   systemVersions[3] = @"";
-  // Architecture
-  NSString *architecture[2];
-  architecture[0] 
-    = [NSString stringWithFormat:@".%@", 
-       [GTMSystemVersion runtimeArchitecture]];
-  architecture[1] = @"";
-  // Compiler SDK
-#if GTM_MACOS_SDK
-  // Some times Apple changes how things work based on the SDK built against.
-  NSString *sdks[2];
-# if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
-  sdks[0] = @".10_6_SDK";
-# elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
-  sdks[0] = @".10_5_SDK";
-# elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4
-  sdks[0] = @".10_4_SDK";
-# elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
-  sdks[0] = @".10_3_SDK";
-# elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_2
-  sdks[0] = @".10_2_SDK";
-# elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_1
-  sdks[0] = @".10_1_SDK";
-# else
-  sdks[0] = @".10_0_SDK";
-# endif
-  sdks[1] = @"";
-#else  // !GTM_MACOS_SDK
-  // iPhone doesn't current support SDK specific images (hopefully it won't
-  // be needed.
-  NSString *sdks[] = { @"" };
-#endif  // GTM_MACOS_SDK
+  NSString *extensions[2];
+#if GTM_IPHONE_SDK
+  extensions[0] = @".iPhone";
+#else // !GTM_IPHONE_SDK
+  // In reading arch(3) you'd thing this would work:
+  //
+  // const NXArchInfo *localInfo = NXGetLocalArchInfo();
+  // _GTMDevAssert(localInfo && localInfo->name, @"Couldn't get NXArchInfo");
+  // const NXArchInfo *genericInfo = NXGetArchInfoFromCpuType(localInfo->cputype, 0);
+  // _GTMDevAssert(genericInfo && genericInfo->name, @"Couldn't get generic NXArchInfo");
+  // extensions[0] = [NSString stringWithFormat:@".%s", genericInfo->name];
+  //
+  // but on 64bit it returns the same things as on 32bit, so...
+#if __POWERPC__
+ #if __LP64__
+  extensions[0] = @".ppc64";
+ #else // !__LP64__
+  extensions[0] = @".ppc";
+ #endif // __LP64__
+#else // !__POWERPC__
+ #if __LP64__
+  extensions[0] = @".x86_64";
+ #else // !__LP64__
+  extensions[0] = @".i386";
+ #endif // __LP64__
+#endif // !__POWERPC__
+
+#endif // GTM_IPHONE_SDK
+  extensions[1] = @"";
   
+  size_t i, j;
   // Note that we are searching for the most exact match first.
-  for (size_t i = 0; 
-       !thePath && i < sizeof(sdks) / sizeof(*sdks); 
+  for (i = 0; 
+       !thePath && i < sizeof(extensions) / sizeof(*extensions); 
        ++i) {
-    for (size_t j = 0; 
-         !thePath && j < sizeof(architecture) / sizeof(*architecture); 
+    for (j = 0; 
+         !thePath && j < sizeof(systemVersions) / sizeof(*systemVersions); 
          j++) {
-      for (size_t k = 0;
-           !thePath && k < sizeof(systemVersions) / sizeof(*systemVersions); 
-           k++) {
-        NSString *fullName = [NSString stringWithFormat:@"%@%@%@%@", 
-                    name, sdks[i], systemVersions[k], architecture[j]];
-        thePath = [myBundle pathForResource:fullName ofType:extension];
-      }
+      NSString *fullName = [NSString stringWithFormat:@"%@%@%@", 
+                            name, extensions[i], systemVersions[j]];
+      thePath = [myBundle pathForResource:fullName ofType:extension];
+      if (thePath) break;
+      fullName = [NSString stringWithFormat:@"%@%@%@", 
+                  name, systemVersions[j], extensions[i]];
+      thePath = [myBundle pathForResource:fullName ofType:extension];
     }
   }
   
@@ -578,15 +525,39 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
 
 - (NSString *)gtm_saveToPathForFileNamed:(NSString*)name 
                                extension:(NSString*)extension {  
-  NSString *systemArchitecture = [GTMSystemVersion runtimeArchitecture];
+  char const *systemArchitecture;
+#if GTM_IPHONE_SDK
+  systemArchitecture = "iPhone";
+#else
+  // In reading arch(3) you'd thing this would work:
+  //
+  // const NXArchInfo *localInfo = NXGetLocalArchInfo();
+  // _GTMDevAssert(localInfo && localInfo->name, @"Couldn't get NXArchInfo");
+  // const NXArchInfo *genericInfo = NXGetArchInfoFromCpuType(localInfo->cputype, 0);
+  // _GTMDevAssert(genericInfo && genericInfo->name, @"Couldn't get generic NXArchInfo");
+  // system = genericInfo->name;
+  //
+  // but on 64bit it returns the same things as on 32bit, so...
+#if __POWERPC__
+ #if __LP64__
+  systemArchitecture = "ppc64";
+ #else // !__LP64__
+  systemArchitecture = "ppc";
+ #endif // __LP64__
+#else // !__POWERPC__
+ #if __LP64__
+  systemArchitecture = "x86_64";
+ #else // !__LP64__
+  systemArchitecture = "i386";
+ #endif // __LP64__
+#endif // !__POWERPC__
   
-  SInt32 major, minor, bugFix;
+#endif
+  long major, minor, bugFix;
   [GTMSystemVersion getMajor:&major minor:&minor bugFix:&bugFix];
   
-  // We don't include the CompilerSDK in here because it is not something that
-  // that is commonly needed.
-  NSString *fullName = [NSString stringWithFormat:@"%@.%d.%d.%d.%@", 
-                        name, major, minor, bugFix, systemArchitecture];
+  NSString *fullName = [NSString stringWithFormat:@"%@.%s.%d.%d.%d", 
+                        name, systemArchitecture, major, minor, bugFix];
   
   NSString *basePath = [[self class] gtm_getUnitTestSaveToDirectory];
   return [[basePath stringByAppendingPathComponent:fullName]
@@ -594,6 +565,54 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
 }
 
 #pragma mark UnitTestImage
+
+// Create a CGColorSpaceRef appropriate for using in creating a unit test image
+// iPhone uses device colorspace.
+//  Returns:
+//    an CGColorSpaceRef of the object. Caller must release
+- (CGColorSpaceRef)gtm_createUnitTestColorspace {
+#if GTM_IPHONE_SDK
+  return CGColorSpaceCreateDeviceRGB();
+#else
+  return CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+#endif
+}
+
+// Create a CGBitmapContextRef appropriate for using in creating a unit test 
+// image. If data is non-NULL, returns the buffer that the bitmap is
+// using for it's underlying storage. You must free this buffer using
+// free. If data is NULL, uses it's own internal storage.
+//
+//  Returns:
+//    an CGContextRef of the object. Caller must release
+- (CGContextRef)gtm_createUnitTestBitmapContextOfSize:(CGSize)size 
+                                                 data:(unsigned char**)data {
+  CGContextRef context = NULL;
+  size_t height = size.height;
+  size_t width = size.width;
+  size_t bytesPerRow = width * 4;
+  size_t bitsPerComponent = 8;
+  CGColorSpaceRef cs = [self gtm_createUnitTestColorspace];
+  _GTMDevAssert(cs, @"Couldn't create colorspace");
+  CGBitmapInfo info = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+  if (data) {
+    *data = (unsigned char*)calloc(bytesPerRow, height);
+    _GTMDevAssert(*data, @"Couldn't create bitmap");
+  }
+  context = CGBitmapContextCreate(data ? *data : NULL, width, height, 
+                                  bitsPerComponent, bytesPerRow, cs, info);
+  _GTMDevAssert(context, @"Couldn't create an context");
+  if (!data) {
+    CGContextClearRect(context, CGRectMake(0, 0, size.width, size.height));
+  }
+  CGContextSetRenderingIntent(context, kCGRenderingIntentRelativeColorimetric);
+  CGContextSetInterpolationQuality(context, kCGInterpolationNone);
+  CGContextSetShouldAntialias(context, NO);
+  CGContextSetAllowsAntialiasing(context, NO);
+  CGContextSetShouldSmoothFonts(context, NO);
+  CFRelease(cs);
+  return context;  
+}
 
 // Checks to see that system settings are valid for doing an image comparison.
 // To be overridden by subclasses.
@@ -629,11 +648,11 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   }
   return nil;
 #else
-  CFStringRef extension 
-    = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+  CFStringRef extension = UTTypeCopyPreferredTagWithClass(uti, 
+                                                          kUTTagClassFilenameExtension);
   _GTMDevAssert(extension, @"No extension for uti: %@", uti);
   
-  return GTMCFAutorelease(extension);
+  return [GTMNSMakeCollectable(extension) autorelease];
 #endif
 }
 
@@ -657,24 +676,19 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   }
 #else
   data = [NSMutableData data];
-  CGImageDestinationRef dest 
-    = CGImageDestinationCreateWithData((CFMutableDataRef)data,
-                                       [self gtm_imageUTI],
-                                       1,
-                                       NULL);
+  CGImageDestinationRef dest = CGImageDestinationCreateWithData((CFMutableDataRef)data,
+                                                                [self gtm_imageUTI],
+                                                                1,
+                                                                NULL);
   // LZW Compression for TIFF
-  NSDictionary *tiffDict 
-    = [NSDictionary dictionaryWithObjectsAndKeys:
-       [NSNumber gtm_numberWithUnsignedInteger:NSTIFFCompressionLZW],
-       (const NSString*)kCGImagePropertyTIFFCompression,
-       nil];
-  NSDictionary *destProps 
-    = [NSDictionary dictionaryWithObjectsAndKeys:
-       [NSNumber numberWithFloat:1.0f], 
-       (const NSString*)kCGImageDestinationLossyCompressionQuality,
-       tiffDict,
-       (const NSString*)kCGImagePropertyTIFFDictionary,
-       nil];
+  NSDictionary *tiffDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:NSTIFFCompressionLZW]
+                                                       forKey:(const NSString*)kCGImagePropertyTIFFCompression];
+  NSDictionary *destProps = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithFloat:1.0f], 
+                             (const NSString*)kCGImageDestinationLossyCompressionQuality,
+                             tiffDict,
+                             (const NSString*)kCGImagePropertyTIFFDictionary,
+                             nil];
   CGImageDestinationAddImage(dest, image, (CFDictionaryRef)destProps);
   CGImageDestinationFinalize(dest);
   CFRelease(dest);
@@ -720,7 +734,7 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
 //
 // Returns:
 //  A CGImageRef that you own, or nil if no image at path
-- (CGImageRef)gtm_imageWithContentsOfFile:(NSString*)path {
+- (CGImageRef)gtm_createImageUsingPath:(NSString*)path {
   CGImageRef imageRef = nil;
 #if GTM_IPHONE_SDK
   UIImage *image = [UIImage imageWithContentsOfFile:path];
@@ -739,7 +753,7 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
     }
   }
 #endif
-  return (CGImageRef)GTMCFAutorelease(imageRef);
+  return imageRef;
 }
 
 ///  Compares unitTestImage of |self| to the image located at |path|
@@ -757,10 +771,10 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
   if (diff) {
     *diff = nil;
   }
-  CGImageRef fileRep = [self gtm_imageWithContentsOfFile:path];
+  CGImageRef fileRep = [self gtm_createImageUsingPath:path];
   _GTMDevAssert(fileRep, @"Unable to create imagerep from %@", path);
   
-  CGImageRef imageRep = [self gtm_unitTestImage];
+  CGImageRef imageRep = [self gtm_createUnitTestImage];
   _GTMDevAssert(imageRep, @"Unable to create imagerep for %@", self);
 
   size_t fileHeight = CGImageGetHeight(fileRep);
@@ -779,12 +793,12 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
     CGRect imageRect = CGRectMake(0, 0, fileWidth, fileHeight);
     unsigned char *fileData;
     unsigned char *imageData;
-    CGContextRef fileContext 
-      = GTMCreateUnitTestBitmapContextOfSizeWithData(imageSize, &fileData);
+    CGContextRef fileContext = [self gtm_createUnitTestBitmapContextOfSize:imageSize
+                                                                      data:&fileData];
     _GTMDevAssert(fileContext, @"Unable to create filecontext");
     CGContextDrawImage(fileContext, imageRect, fileRep);
-    CGContextRef imageContext
-      = GTMCreateUnitTestBitmapContextOfSizeWithData(imageSize, &imageData);
+    CGContextRef imageContext =[self gtm_createUnitTestBitmapContextOfSize:imageSize
+                                                                      data:&imageData];
     _GTMDevAssert(imageContext, @"Unable to create imageContext");
     CGContextDrawImage(imageContext, imageRect, imageRep);
     
@@ -803,8 +817,8 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
     if (!answer && diff) {
       answer = YES;
       unsigned char *diffData;
-      CGContextRef diffContext 
-        = GTMCreateUnitTestBitmapContextOfSizeWithData(imageSize, &diffData);
+      CGContextRef diffContext = [self gtm_createUnitTestBitmapContextOfSize:imageSize
+                                                                        data:&diffData];
       _GTMDevAssert(diffContext, @"Can't make diff context");
       size_t diffRowBytes = CGBitmapContextGetBytesPerRow(diffContext);
       for (row = 0; row < imageHeight; row++) {
@@ -851,11 +865,13 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
       *diff = CGBitmapContextCreateImage(diffContext);
       free(diffData);
       CFRelease(diffContext);
-    }       
-    free(fileData);
-    CFRelease(fileContext);
-    free(imageData);
-    CFRelease(imageContext);
+      free(fileData);
+      CFRelease(fileContext);
+      free(imageData);
+      CFRelease(imageContext);
+    } 
+    CFRelease(imageRep);
+    CFRelease(fileRep);
   }
   return answer;
 }
@@ -887,10 +903,10 @@ static NSString *gGTMUnitTestSaveToDirectory = nil;
 //    nil if failed
 //
 - (NSData *)gtm_imageRepresentation {
-  CGImageRef imageRep = [self gtm_unitTestImage];
+  CGImageRef imageRep = [self gtm_createUnitTestImage];
   NSData *data = [self gtm_imageDataForImage:imageRep];
-  _GTMDevAssert(data, @"unable to create %@ from %@", 
-                [self gtm_imageExtension], self);
+  _GTMDevAssert(data, @"unable to create %@ from %@", [self gtm_imageExtension], self);
+  CFRelease(imageRep);
   return data;
 }
 

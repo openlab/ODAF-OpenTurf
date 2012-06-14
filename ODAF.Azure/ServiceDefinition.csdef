@@ -18,15 +18,19 @@
       <Setting name="UseTokenExpiry" />
       <Setting name="BlobStorageEndpoint" />
       <Setting name="AdminTwitterUser" />
+      <Setting name="TwitterAppId" />
+      <Setting name="DevMode" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="HttpIn" protocol="http" port="80" />
     </Endpoints>
   </WebRole>
-  <WorkerRole name="ODAF.SearchIndexRole">
+  <WorkerRole name="ODAF.SearchIndexRole" vmsize="ExtraSmall">
+    <Imports>
+    </Imports>
     <ConfigurationSettings>
-      <Setting name="DiagnosticsConnectionString" />
       <Setting name="BlobStorageEndpoint" />
+      <Setting name="DiagnosticsConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

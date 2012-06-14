@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Transactions;
 using SubSonic.DataProviders;
 using SubSonic.Schema;
+using System.Globalization;
 using website_mvc.Code;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace vancouveropendata.Controllers
 {
@@ -76,8 +78,13 @@ namespace vancouveropendata.Controllers
 
             if (summary == null)
             {
-                HttpContext.Response.StatusCode = 404;
-                return Json(null);
+                summary = new PointDataSummary()
+                {
+                    Id = id,
+                    Tag = ""
+                };
+                //HttpContext.Response.StatusCode = 404;
+                //return Json(null);
             }
 
             using (TransactionScope ts = new TransactionScope())
@@ -91,8 +98,10 @@ namespace vancouveropendata.Controllers
                     {
                         string fmt = String.IsNullOrEmpty(summary.Tag)? "{0}" : ",{0}";
                         summary.Tag += String.Format(fmt, filteredTag);
+                        summary.ModifiedOn = DateTime.UtcNow;
                         summary.Save();
-                        SearchEngine.Instance.Index(summary.Id);
+                        if (RoleEnvironment.IsAvailable)
+                            SearchEngine.Instance.Index(summary.Id);
                         ts.Complete();
                     }
                 }
@@ -506,18 +515,34 @@ namespace vancouveropendata.Controllers
                     newSummary = new PointDataSummary();
                     
                     // Get POST data
-                    UpdateModel<PointDataSummary>(newSummary, new[] { "Description", "LayerId", "Latitude", "Longitude", "Tag", "Guid", "Name" });
+                    TryUpdateModel<PointDataSummary>(newSummary, new[] { "Description", "LayerId", "Latitude", "Longitude", "Guid", "Name", "Tag" });
+
+                    if (newSummary.Latitude == 0)
+                    {
+                        string lat = HttpContext.Request["Latitude"];
+                        newSummary.Latitude = decimal.Parse(lat, CultureInfo.InvariantCulture);
+                    }
+
+                    if (newSummary.Longitude == 0)
+                    {
+                        string longi = HttpContext.Request["Longitude"];
+                        newSummary.Longitude = decimal.Parse(longi, CultureInfo.InvariantCulture);
+                    }
 
                     PointDataSummary testSummary = GetSummary(newSummary.Guid, newSummary.LayerId);
                     if (testSummary != null) {
                         throw new Exception("PointDataSummary already exists in database guid, layerId");
                     }
 
+                    newSummary.Description = newSummary.Description ?? string.Empty;
+                    newSummary.Tag = newSummary.Tag ?? string.Empty;
+
                     newSummary.CreatedOn = DateTime.UtcNow;
                     newSummary.ModifiedOn = newSummary.CreatedOn;
                     newSummary.CreatedById = CurrentUserId;
                     newSummary.Save();
-                    SearchEngine.Instance.Index(newSummary.Id);
+                    if (RoleEnvironment.IsAvailable)
+                        SearchEngine.Instance.Index(newSummary.Id);
                     ts.Complete();
 
                     // Set 201 status code, and Location header
@@ -562,7 +587,8 @@ namespace vancouveropendata.Controllers
                     summary.ModifiedOn = DateTime.UtcNow;
 
                     summary.Save();
-                    SearchEngine.Instance.Index(summary.Id);
+                    if(RoleEnvironment.IsAvailable)
+                        SearchEngine.Instance.Index(summary.Id);
                     ts.Complete();
                 }
                 catch (Exception ex)
@@ -585,7 +611,6 @@ namespace vancouveropendata.Controllers
         [Prerequisite(Authenticated = true)]
         public ActionResult Remove(long id, string format)
         {
-
             PointDataSummary summary = null;
 
             using (TransactionScope ts = new TransactionScope())
@@ -626,7 +651,5 @@ namespace vancouveropendata.Controllers
 
             return Json(summary, JsonRequestBehavior.AllowGet);
         }
-
-    
     }
 }

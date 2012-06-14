@@ -287,6 +287,32 @@ namespace ODAF.Data
         
         #region ' Foreign Keys '
 		[ScriptIgnore]
+        public IQueryable<PointDataComment> PointDataComments
+        {
+            get
+            {
+                
+                  var repo=ODAF.Data.PointDataComment.GetRepo();
+                  return from items in repo.GetAll()
+                       where items.CreatedById == _Id
+                       select items;
+            }
+        }
+
+		[ScriptIgnore]
+        public IQueryable<PointDataSummary> PointDataSummaries
+        {
+            get
+            {
+                
+                  var repo=ODAF.Data.PointDataSummary.GetRepo();
+                  return from items in repo.GetAll()
+                       where items.CreatedById == _Id
+                       select items;
+            }
+        }
+
+		[ScriptIgnore]
         public IQueryable<OAuthClientApp> OAuthClientApps
         {
             get
@@ -321,32 +347,6 @@ namespace ODAF.Data
                   var repo=ODAF.Data.UserRole.GetRepo();
                   return from items in repo.GetAll()
                        where items.Code == _UserRole
-                       select items;
-            }
-        }
-
-		[ScriptIgnore]
-        public IQueryable<PointDataComment> PointDataComments
-        {
-            get
-            {
-                
-                  var repo=ODAF.Data.PointDataComment.GetRepo();
-                  return from items in repo.GetAll()
-                       where items.CreatedById == _Id
-                       select items;
-            }
-        }
-
-		[ScriptIgnore]
-        public IQueryable<PointDataSummary> PointDataSummaries
-        {
-            get
-            {
-                
-                  var repo=ODAF.Data.PointDataSummary.GetRepo();
-                  return from items in repo.GetAll()
-                       where items.CreatedById == _Id
                        select items;
             }
         }
@@ -449,6 +449,25 @@ namespace ODAF.Data
             }
         }
 
+        int _oauth_service_id;
+        public int oauth_service_id
+        {
+            get { return _oauth_service_id; }
+            set
+            {
+                if(_oauth_service_id!=value){
+                    _oauth_service_id=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_id");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
         short _UserRole;
         public short UserRole
         {
@@ -515,25 +534,6 @@ namespace ODAF.Data
                 if(_TokenExpiry!=value){
                     _TokenExpiry=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="TokenExpiry");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        int _oauth_service_id;
-        public int oauth_service_id
-        {
-            get { return _oauth_service_id; }
-            set
-            {
-                if(_oauth_service_id!=value){
-                    _oauth_service_id=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_id");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -678,7 +678,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -1073,6 +1076,25 @@ namespace ODAF.Data
             }
         }
 
+        int _oauth_service_id;
+        public int oauth_service_id
+        {
+            get { return _oauth_service_id; }
+            set
+            {
+                if(_oauth_service_id!=value){
+                    _oauth_service_id=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_id");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
         short _UserRole;
         public short UserRole
         {
@@ -1139,25 +1161,6 @@ namespace ODAF.Data
                 if(_TokenExpiry!=value){
                     _TokenExpiry=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="TokenExpiry");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        int _oauth_service_id;
-        public int oauth_service_id
-        {
-            get { return _oauth_service_id; }
-            set
-            {
-                if(_oauth_service_id!=value){
-                    _oauth_service_id=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_id");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -1340,7 +1343,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -1810,15 +1816,15 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _CreatedOn;
-        public DateTime? CreatedOn
+        string _oauth_service_name;
+        public string oauth_service_name
         {
-            get { return _CreatedOn; }
+            get { return _oauth_service_name; }
             set
             {
-                if(_CreatedOn!=value){
-                    _CreatedOn=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
+                if(_oauth_service_name!=value){
+                    _oauth_service_name=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -1829,15 +1835,15 @@ namespace ODAF.Data
             }
         }
 
-        string _oauth_service_name;
-        public string oauth_service_name
+        DateTime? _CreatedOn;
+        public DateTime? CreatedOn
         {
-            get { return _oauth_service_name; }
+            get { return _CreatedOn; }
             set
             {
-                if(_oauth_service_name!=value){
-                    _oauth_service_name=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="oauth_service_name");
+                if(_CreatedOn!=value){
+                    _CreatedOn=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -1944,7 +1950,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -2308,8 +2317,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _CreatedOn;
-        public DateTime? CreatedOn
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
         {
             get { return _CreatedOn; }
             set
@@ -2461,7 +2470,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -2799,8 +2811,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _CreatedOn;
-        public DateTime? CreatedOn
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
         {
             get { return _CreatedOn; }
             set
@@ -2990,7 +3002,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -3251,7 +3266,7 @@ namespace ODAF.Data
         
         public void SetKeyValue(object value) {
             if (value != null && value!=DBNull.Value) {
-                var settable = value.ChangeTypeTo<int>();
+                var settable = value.ChangeTypeTo<long>();
                 this.GetType().GetProperty(this.KeyName()).SetValue(this, settable, null);
             }
         }
@@ -3269,11 +3284,6 @@ namespace ODAF.Data
             }
         }
 
-        
-        public override int GetHashCode() {
-            return this.PointDataFeedId;
-        }
-        
         public string DescriptorValue()
         {
             return this.UniqueId.ToString();
@@ -3308,15 +3318,15 @@ namespace ODAF.Data
         #endregion
         
 
-        int _PointDataSourceId;
-        public int PointDataSourceId
+        long _PointDataFeedId;
+        public long PointDataFeedId
         {
-            get { return _PointDataSourceId; }
+            get { return _PointDataFeedId; }
             set
             {
-                if(_PointDataSourceId!=value){
-                    _PointDataSourceId=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
+                if(_PointDataFeedId!=value){
+                    _PointDataFeedId=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataFeedId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -3327,15 +3337,15 @@ namespace ODAF.Data
             }
         }
 
-        int _PointDataFeedId;
-        public int PointDataFeedId
+        long _PointDataSourceId;
+        public long PointDataSourceId
         {
-            get { return _PointDataFeedId; }
+            get { return _PointDataSourceId; }
             set
             {
-                if(_PointDataFeedId!=value){
-                    _PointDataFeedId=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataFeedId");
+                if(_PointDataSourceId!=value){
+                    _PointDataSourceId=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -3460,6 +3470,25 @@ namespace ODAF.Data
             }
         }
 
+        bool _Active;
+        public bool Active
+        {
+            get { return _Active; }
+            set
+            {
+                if(_Active!=value){
+                    _Active=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Active");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
         DateTime _UpdatedOn;
         public DateTime UpdatedOn
         {
@@ -3488,25 +3517,6 @@ namespace ODAF.Data
                 if(_CreatedOn!=value){
                     _CreatedOn=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        bool _Active;
-        public bool Active
-        {
-            get { return _Active; }
-            set
-            {
-                if(_Active!=value){
-                    _Active=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Active");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -3613,7 +3623,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -3864,17 +3877,17 @@ namespace ODAF.Data
 
         public string KeyName()
         {
-            return "PointDataSourceId";
+            return "PointDataFeedId";
         }
 
         public object KeyValue()
         {
-            return this.PointDataSourceId;
+            return this.PointDataFeedId;
         }
         
         public void SetKeyValue(object value) {
             if (value != null && value!=DBNull.Value) {
-                var settable = value.ChangeTypeTo<int>();
+                var settable = value.ChangeTypeTo<long>();
                 this.GetType().GetProperty(this.KeyName()).SetValue(this, settable, null);
             }
         }
@@ -3892,11 +3905,6 @@ namespace ODAF.Data
             }
         }
 
-        
-        public override int GetHashCode() {
-            return this.PointDataSourceId;
-        }
-        
         public string DescriptorValue()
         {
             return this.UniqueId.ToString();
@@ -3907,7 +3915,7 @@ namespace ODAF.Data
         }
         public static string GetKeyColumn()
         {
-            return "PointDataSourceId";
+            return "PointDataFeedId";
         }        
         public static string GetDescriptorColumn()
         {
@@ -3918,15 +3926,15 @@ namespace ODAF.Data
         #endregion
         
 
-        int _PointDataSourceId;
-        public int PointDataSourceId
+        long _PointDataFeedId;
+        public long PointDataFeedId
         {
-            get { return _PointDataSourceId; }
+            get { return _PointDataFeedId; }
             set
             {
-                if(_PointDataSourceId!=value){
-                    _PointDataSourceId=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
+                if(_PointDataFeedId!=value){
+                    _PointDataFeedId=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataFeedId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -3937,15 +3945,15 @@ namespace ODAF.Data
             }
         }
 
-        int _PointDataFeedId;
-        public int PointDataFeedId
+        long _PointDataSourceId;
+        public long PointDataSourceId
         {
-            get { return _PointDataFeedId; }
+            get { return _PointDataSourceId; }
             set
             {
-                if(_PointDataFeedId!=value){
-                    _PointDataFeedId=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataFeedId");
+                if(_PointDataSourceId!=value){
+                    _PointDataSourceId=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -4070,6 +4078,25 @@ namespace ODAF.Data
             }
         }
 
+        bool _Active;
+        public bool Active
+        {
+            get { return _Active; }
+            set
+            {
+                if(_Active!=value){
+                    _Active=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Active");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
         DateTime _UpdatedOn;
         public DateTime UpdatedOn
         {
@@ -4098,25 +4125,6 @@ namespace ODAF.Data
                 if(_CreatedOn!=value){
                     _CreatedOn=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        bool _Active;
-        public bool Active
-        {
-            get { return _Active; }
-            set
-            {
-                if(_Active!=value){
-                    _Active=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Active");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -4242,7 +4250,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -4539,6 +4550,19 @@ namespace ODAF.Data
         }
         
         #region ' Foreign Keys '
+		[ScriptIgnore]
+        public IQueryable<PointDataSource> PointDataSources
+        {
+            get
+            {
+                
+                  var repo=ODAF.Data.PointDataSource.GetRepo();
+                  return from items in repo.GetAll()
+                       where items.PointDataSourceId == _PointDataSourceId
+                       select items;
+            }
+        }
+
         #endregion
         
 
@@ -4599,8 +4623,8 @@ namespace ODAF.Data
             }
         }
 
-        bool _IsSystem;
-        public bool IsSystem
+        bool? _IsSystem;
+        public bool? IsSystem
         {
             get { return _IsSystem; }
             set
@@ -4608,6 +4632,25 @@ namespace ODAF.Data
                 if(_IsSystem!=value){
                     _IsSystem=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="IsSystem");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        long _PointDataSourceId;
+        public long PointDataSourceId
+        {
+            get { return _PointDataSourceId; }
+            set
+            {
+                if(_PointDataSourceId!=value){
+                    _PointDataSourceId=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -4627,25 +4670,6 @@ namespace ODAF.Data
                 if(_CreatedOn!=value){
                     _CreatedOn=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        int _PointDataSourceId;
-        public int PointDataSourceId
-        {
-            get { return _PointDataSourceId; }
-            set
-            {
-                if(_PointDataSourceId!=value){
-                    _PointDataSourceId=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="PointDataSourceId");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -4752,7 +4776,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -5052,8 +5079,8 @@ namespace ODAF.Data
         #endregion
         
 
-        long _Id;
-        public long Id
+        long? _Id;
+        public long? Id
         {
             get { return _Id; }
             set
@@ -5109,8 +5136,8 @@ namespace ODAF.Data
             }
         }
 
-        bool _IsSystem;
-        public bool IsSystem
+        bool? _IsSystem;
+        public bool? IsSystem
         {
             get { return _IsSystem; }
             set
@@ -5128,8 +5155,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime _CreatedOn;
-        public DateTime CreatedOn
+        DateTime? _CreatedOn;
+        public DateTime? CreatedOn
         {
             get { return _CreatedOn; }
             set
@@ -5147,8 +5174,8 @@ namespace ODAF.Data
             }
         }
 
-        int _PointDataSourceId;
-        public int PointDataSourceId
+        long? _PointDataSourceId;
+        public long? PointDataSourceId
         {
             get { return _PointDataSourceId; }
             set
@@ -5166,15 +5193,15 @@ namespace ODAF.Data
             }
         }
 
-        int? _Summaries;
-        public int? Summaries
+        int? _Expr1;
+        public int? Expr1
         {
-            get { return _Summaries; }
+            get { return _Expr1; }
             set
             {
-                if(_Summaries!=value){
-                    _Summaries=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Summaries");
+                if(_Expr1!=value){
+                    _Expr1=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Expr1");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -5300,7 +5327,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -5561,7 +5591,7 @@ namespace ODAF.Data
         
         public void SetKeyValue(object value) {
             if (value != null && value!=DBNull.Value) {
-                var settable = value.ChangeTypeTo<int>();
+                var settable = value.ChangeTypeTo<long>();
                 this.GetType().GetProperty(this.KeyName()).SetValue(this, settable, null);
             }
         }
@@ -5579,11 +5609,6 @@ namespace ODAF.Data
             }
         }
 
-        
-        public override int GetHashCode() {
-            return this.PointDataSourceId;
-        }
-        
         public string DescriptorValue()
         {
             return this.UniqueId.ToString();
@@ -5615,11 +5640,24 @@ namespace ODAF.Data
             }
         }
 
+		[ScriptIgnore]
+        public IQueryable<PointDataLayer> PointDataLayers
+        {
+            get
+            {
+                
+                  var repo=ODAF.Data.PointDataLayer.GetRepo();
+                  return from items in repo.GetAll()
+                       where items.PointDataSourceId == _PointDataSourceId
+                       select items;
+            }
+        }
+
         #endregion
         
 
-        int _PointDataSourceId;
-        public int PointDataSourceId
+        long _PointDataSourceId;
+        public long PointDataSourceId
         {
             get { return _PointDataSourceId; }
             set
@@ -5732,44 +5770,6 @@ namespace ODAF.Data
             }
         }
 
-        DateTime _UpdatedOn;
-        public DateTime UpdatedOn
-        {
-            get { return _UpdatedOn; }
-            set
-            {
-                if(_UpdatedOn!=value){
-                    _UpdatedOn=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="UpdatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        DateTime _CreatedOn;
-        public DateTime CreatedOn
-        {
-            get { return _CreatedOn; }
-            set
-            {
-                if(_CreatedOn!=value){
-                    _CreatedOn=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
         bool _Active;
         public bool Active
         {
@@ -5798,6 +5798,44 @@ namespace ODAF.Data
                 if(_Description!=value){
                     _Description=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Description");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        DateTime _UpdatedOn;
+        public DateTime UpdatedOn
+        {
+            get { return _UpdatedOn; }
+            set
+            {
+                if(_UpdatedOn!=value){
+                    _UpdatedOn=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="UpdatedOn");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
+        {
+            get { return _CreatedOn; }
+            set
+            {
+                if(_CreatedOn!=value){
+                    _CreatedOn=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -5904,7 +5942,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -6165,7 +6206,7 @@ namespace ODAF.Data
         
         public void SetKeyValue(object value) {
             if (value != null && value!=DBNull.Value) {
-                var settable = value.ChangeTypeTo<int>();
+                var settable = value.ChangeTypeTo<long>();
                 this.GetType().GetProperty(this.KeyName()).SetValue(this, settable, null);
             }
         }
@@ -6183,11 +6224,6 @@ namespace ODAF.Data
             }
         }
 
-        
-        public override int GetHashCode() {
-            return this.PointDataSourceId;
-        }
-        
         public string DescriptorValue()
         {
             return this.UniqueId.ToString();
@@ -6209,8 +6245,8 @@ namespace ODAF.Data
         #endregion
         
 
-        int _PointDataSourceId;
-        public int PointDataSourceId
+        long _PointDataSourceId;
+        public long PointDataSourceId
         {
             get { return _PointDataSourceId; }
             set
@@ -6323,44 +6359,6 @@ namespace ODAF.Data
             }
         }
 
-        DateTime _UpdatedOn;
-        public DateTime UpdatedOn
-        {
-            get { return _UpdatedOn; }
-            set
-            {
-                if(_UpdatedOn!=value){
-                    _UpdatedOn=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="UpdatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        DateTime _CreatedOn;
-        public DateTime CreatedOn
-        {
-            get { return _CreatedOn; }
-            set
-            {
-                if(_CreatedOn!=value){
-                    _CreatedOn=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
         bool _Active;
         public bool Active
         {
@@ -6389,6 +6387,44 @@ namespace ODAF.Data
                 if(_Description!=value){
                     _Description=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Description");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        DateTime _UpdatedOn;
+        public DateTime UpdatedOn
+        {
+            get { return _UpdatedOn; }
+            set
+            {
+                if(_UpdatedOn!=value){
+                    _UpdatedOn=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="UpdatedOn");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
+        {
+            get { return _CreatedOn; }
+            set
+            {
+                if(_CreatedOn!=value){
+                    _CreatedOn=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="CreatedOn");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -6533,7 +6569,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -6800,7 +6839,7 @@ namespace ODAF.Data
         }
         
         public override string ToString(){
-            return this.Description.ToString();
+            return this.Guid.ToString();
         }
 
         public override bool Equals(object obj){
@@ -6814,11 +6853,11 @@ namespace ODAF.Data
 
         public string DescriptorValue()
         {
-            return this.Description.ToString();
+            return this.Guid.ToString();
         }
 
         public string DescriptorColumn() {
-            return "Description";
+            return "Guid";
         }
         public static string GetKeyColumn()
         {
@@ -6826,23 +6865,10 @@ namespace ODAF.Data
         }        
         public static string GetDescriptorColumn()
         {
-            return "Description";
+            return "Guid";
         }
         
         #region ' Foreign Keys '
-		[ScriptIgnore]
-        public IQueryable<PointDataComment> PointDataComments
-        {
-            get
-            {
-                
-                  var repo=ODAF.Data.PointDataComment.GetRepo();
-                  return from items in repo.GetAll()
-                       where items.SummaryId == _Id
-                       select items;
-            }
-        }
-
 		[ScriptIgnore]
         public IQueryable<OAuthAccount> OAuthAccounts
         {
@@ -6852,6 +6878,19 @@ namespace ODAF.Data
                   var repo=ODAF.Data.OAuthAccount.GetRepo();
                   return from items in repo.GetAll()
                        where items.Id == _CreatedById
+                       select items;
+            }
+        }
+
+		[ScriptIgnore]
+        public IQueryable<PointDataComment> PointDataComments
+        {
+            get
+            {
+                
+                  var repo=ODAF.Data.PointDataComment.GetRepo();
+                  return from items in repo.GetAll()
+                       where items.SummaryId == _Id
                        select items;
             }
         }
@@ -6868,6 +6907,44 @@ namespace ODAF.Data
                 if(_Id!=value){
                     _Id=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Id");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        string _Guid;
+        public string Guid
+        {
+            get { return _Guid; }
+            set
+            {
+                if(_Guid!=value){
+                    _Guid=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Guid");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        string _Name;
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if(_Name!=value){
+                    _Name=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7030,8 +7107,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _CreatedOn;
-        public DateTime? CreatedOn
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
         {
             get { return _CreatedOn; }
             set
@@ -7049,8 +7126,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _ModifiedOn;
-        public DateTime? ModifiedOn
+        DateTime _ModifiedOn;
+        public DateTime ModifiedOn
         {
             get { return _ModifiedOn; }
             set
@@ -7058,44 +7135,6 @@ namespace ODAF.Data
                 if(_ModifiedOn!=value){
                     _ModifiedOn=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="ModifiedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        string _Guid;
-        public string Guid
-        {
-            get { return _Guid; }
-            set
-            {
-                if(_Guid!=value){
-                    _Guid=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Guid");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                if(_Name!=value){
-                    _Name=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7226,7 +7265,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -7493,7 +7535,7 @@ namespace ODAF.Data
         }
         
         public override string ToString(){
-            return this.Description.ToString();
+            return this.Guid.ToString();
         }
 
         public override bool Equals(object obj){
@@ -7507,11 +7549,11 @@ namespace ODAF.Data
 
         public string DescriptorValue()
         {
-            return this.Description.ToString();
+            return this.Guid.ToString();
         }
 
         public string DescriptorColumn() {
-            return "Description";
+            return "Guid";
         }
         public static string GetKeyColumn()
         {
@@ -7519,7 +7561,7 @@ namespace ODAF.Data
         }        
         public static string GetDescriptorColumn()
         {
-            return "Description";
+            return "Guid";
         }
         
         #region ' Foreign Keys '
@@ -7535,6 +7577,44 @@ namespace ODAF.Data
                 if(_Id!=value){
                     _Id=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Id");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        string _Guid;
+        public string Guid
+        {
+            get { return _Guid; }
+            set
+            {
+                if(_Guid!=value){
+                    _Guid=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Guid");
+                    if(col!=null){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                            _dirtyColumns.Add(col);
+                        }
+                    }
+                    OnChanged();
+                }
+            }
+        }
+
+        string _Name;
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if(_Name!=value){
+                    _Name=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7697,8 +7777,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _CreatedOn;
-        public DateTime? CreatedOn
+        DateTime _CreatedOn;
+        public DateTime CreatedOn
         {
             get { return _CreatedOn; }
             set
@@ -7716,8 +7796,8 @@ namespace ODAF.Data
             }
         }
 
-        DateTime? _ModifiedOn;
-        public DateTime? ModifiedOn
+        DateTime _ModifiedOn;
+        public DateTime ModifiedOn
         {
             get { return _ModifiedOn; }
             set
@@ -7725,44 +7805,6 @@ namespace ODAF.Data
                 if(_ModifiedOn!=value){
                     _ModifiedOn=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="ModifiedOn");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        string _Guid;
-        public string Guid
-        {
-            get { return _Guid; }
-            set
-            {
-                if(_Guid!=value){
-                    _Guid=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Guid");
-                    if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
-                            _dirtyColumns.Add(col);
-                        }
-                    }
-                    OnChanged();
-                }
-            }
-        }
-
-        string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                if(_Name!=value){
-                    _Name=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7792,15 +7834,15 @@ namespace ODAF.Data
             }
         }
 
-        int? _Comments;
-        public int? Comments
+        string _screen_name;
+        public string screen_name
         {
-            get { return _Comments; }
+            get { return _screen_name; }
             set
             {
-                if(_Comments!=value){
-                    _Comments=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Comments");
+                if(_screen_name!=value){
+                    _screen_name=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="screen_name");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7811,15 +7853,15 @@ namespace ODAF.Data
             }
         }
 
-        string _screen_name;
-        public string screen_name
+        int? _Comments;
+        public int? Comments
         {
-            get { return _screen_name; }
+            get { return _Comments; }
             set
             {
-                if(_screen_name!=value){
-                    _screen_name=value;
-                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="screen_name");
+                if(_Comments!=value){
+                    _Comments=value;
+                    var col=tbl.Columns.SingleOrDefault(x=>x.Name=="Comments");
                     if(col!=null){
                         if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
                             _dirtyColumns.Add(col);
@@ -7931,7 +7973,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -8376,7 +8421,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 
@@ -8821,7 +8869,10 @@ namespace ODAF.Data
             
        
             
-            repo.DeleteMany(expression);
+			var items=repo.GetAll().Where(expression).ToList();
+			if (items != null && items.Count() > 0)
+				items.ForEach(x => x.Delete());
+            //repo.DeleteMany(expression);
             
         }
 

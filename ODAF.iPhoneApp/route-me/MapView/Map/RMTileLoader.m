@@ -24,7 +24,7 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
-#import "RMGlobalConstants.h"
+#import "RMGlobalConstants.h"w
 #import "RMTileLoader.h"
 
 #import "RMTileImage.h"
@@ -65,7 +65,6 @@
 
 -(void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
@@ -79,7 +78,7 @@
 	//	RMTileRect targetRect = [content tileBounds];
 	BOOL contained = CGRectContainsRect(loadedBounds, [content screenBounds]);
 	
-	int targetZoom = (int)([[content mercatorToTileProjection] calculateNormalisedZoomFromScale:[content scaledMetersPerPixel]]);
+	int targetZoom = (int)([[content mercatorToTileProjection] calculateNormalisedZoomFromScale:[content metersPerPixel]]);
 	if((targetZoom > content.maxZoom) || (targetZoom < content.minZoom))
           RMLog(@"target zoom %d is outside of RMMapContents limits %f to %f",
 			  targetZoom, content.minZoom, content.maxZoom);
@@ -126,16 +125,13 @@
 	RMTileRect newTileRect = [content tileBounds];
 	
 	RMTileImageSet *images = [content imagesOnScreen];
-	images.zoom = newTileRect.origin.tile.zoom;
 	CGRect newLoadedBounds = [images addTiles:newTileRect ToDisplayIn:
 							  [content screenBounds]];
 	//RMLog(@"updateLoadedImages added count = %d", [images count]);
 	
 	
 	if (!RMTileIsDummy(loadedTiles.origin.tile))
-	{
-		[images removeTilesOutsideOf:newTileRect];
-	}
+		[images removeTiles:loadedTiles];
 	
 	//RMLog(@"updateLoadedImages final count = %d", [images count]);
 	

@@ -43,9 +43,6 @@
 
 @synthesize tvCell, tableView, annotation, summary, comments, currentMode, viewData, ratingViewController;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad 
@@ -115,16 +112,7 @@
 	AddCommentViewController* viewController = [[AddCommentViewController alloc] init];
 	viewController.summary = self.summary;
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = self.navigationController;
-		[navigationController pushViewController:viewController animated:YES];
-	}
-	else
-	{
-		[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-	}		
-	
+	[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 	[viewController release];
 }
 
@@ -410,36 +398,17 @@
 		case RATINGS_TAGS_SECTION:
 		{
 			if (indexPath.row == 0) { // Rating
-				
 				AddRatingsViewController* viewController = [ [ AddRatingsViewController alloc ] init ];
 				viewController.summary = self.summary;
-				
-				if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-				{
-					UINavigationController* navigationController = self.navigationController;
-					[navigationController pushViewController:viewController animated:YES];
-				}
-				else
-				{
-					[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-				}		
 
+				[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 				[viewController release];
 				
 			} else { // Tag
 				AddTagViewController* viewController = [ [ AddTagViewController alloc ] init ];
 				viewController.summary = self.summary;
-				
-				if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-				{
-					UINavigationController* navigationController = self.navigationController;
-					[navigationController pushViewController:viewController animated:YES];
-				}
-				else
-				{
-					[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-				}		
-				
+
+				[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 				[viewController release];
 			}
 		}
@@ -459,33 +428,14 @@
 				viewController.aggregateComment = aggregateComment;
 				viewController.title = NSLocalizedString(kCommentText, kCommentText);
 				
-				if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-				{
-					UINavigationController* navigationController = self.navigationController;
-					[navigationController pushViewController:viewController animated:YES];
-				}
-				else
-				{
-					[delg pushViewControllerToStack:viewController];
-				}		
-				
+				[delg pushViewControllerToStack:viewController];
 				[viewController release];
-				
 			} else {
 				CommentsViewController* viewController = [[CommentsViewController alloc] init];
 				viewController.summary = self.summary;
 				viewController.title = NSLocalizedString(kCommentsText, kCommentsText);
 
-				if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-				{
-					UINavigationController* navigationController = self.navigationController;
-					[navigationController pushViewController:viewController animated:YES];
-				}
-				else
-				{
-					[delg pushViewControllerToStack:viewController];
-				}		
-				
+				[delg pushViewControllerToStack:viewController];
 				[viewController release];
 			}
 		} 

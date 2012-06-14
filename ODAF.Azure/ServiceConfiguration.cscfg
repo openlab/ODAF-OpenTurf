@@ -4,21 +4,23 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="DiagnosticsConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="ODAF" value="Server=tcp:xxx.database.windows.net;Database=xxx;User ID=xxx;Password=xxx;Trusted_Connection=False;Encrypt=True;" />
-      <Setting name="AppName" value="OpenTurf from settings" />
-      <Setting name="BitlyLogin" value="xxx" />
-      <Setting name="BitlyAPIKey" value="xxx" />
+      <Setting name="ODAF" value="Server=[ServerName].database.windows.net;database=odaf;User Id=[UserAdministrator];Password=[Password];MultipleActiveResultSets=True;" />
+      <Setting name="AppName" value="ODAF Openturf" />
+      <Setting name="BitlyLogin" value="[BitlyLogin]" />
+      <Setting name="BitlyAPIKey" value="[BitlyAPIkey]" />
       <Setting name="tokenExpiryMinutes" value="10080" />
       <Setting name="UseTokenExpiry" value="false" />
-      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=http;AccountName=xxx;AccountKey=xxx" />
-      <Setting name="AdminTwitterUser" value="xxx" />
+      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=https;AccountName=[StorageName];AccountKey=[StorageKey]" />
+      <Setting name="AdminTwitterUser" value="[AdminTwitterAccount]" />
+      <Setting name="TwitterAppId" value="[TwitterAppIdFromDataBase]" />
+      <Setting name="DevMode" value="false" />
     </ConfigurationSettings>
   </Role>
   <Role name="ODAF.SearchIndexRole">
     <Instances count="1" />
     <ConfigurationSettings>
+      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=https;AccountName=[StorageName];AccountKey=[StorageKey]" />
       <Setting name="DiagnosticsConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=http;AccountName=xxx;AccountKey=xxx" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

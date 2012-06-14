@@ -304,14 +304,9 @@ CGPathRef NewPathWithRect(CGRect rect)
 		
 		const CGFloat ROUND_RECT_CORNER_RADIUS = 5.0;
 		
-		CGFloat side = 150;
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		{
-			side = 170;
-		}
-		
-		rect.size.width = side;
-		rect.size.height = side;
+		//labelFrame.origin.x
+		rect.size.width = 150;
+		rect.size.height = 150;
 		rect.origin.x = (0.5 * self.frame.size.width) - (rect.size.width / 2);
 		rect.origin.y = (0.5 * self.frame.size.height) - (rect.size.height / 2);
 

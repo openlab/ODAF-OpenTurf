@@ -3,18 +3,20 @@
              x:Class="ODAF.SilverlightApp.App"
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl;assembly=Microsoft.Maps.MapControl"
              xmlns:vm="clr-namespace:Net.SyntaxC4.RedBitSoftware.ODAF.Search;assembly=Net.SyntaxC4.RedBitSoftware.ODAF.Search">
-
     <Application.Resources>
-        <ResourceDictionary >
-            <ResourceDictionary.MergedDictionaries >
-                <ResourceDictionary Source="Resources.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Assets/Styles.xaml"/>
                 <ResourceDictionary Source="Assets/CoreStyles.xaml"/>
                 <ResourceDictionary Source="Assets/SDKStyles.xaml"/>
-                <ResourceDictionary Source="Assets/ToolkitStyles.xaml"/>
+                <ResourceDictionary Source="Assets/ToolkitStyles.xaml"/>           
             </ResourceDictionary.MergedDictionaries>
-            <m:ApplicationIdCredentialsProvider ApplicationId="AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj" x:Key="MyCredentials" />
+            <!-- CHANGEME: Put in your Bing Maps Dev Key -->
+            <m:ApplicationIdCredentialsProvider ApplicationId="[BingCredentials]" x:Key="MyCredentials" />
             <vm:ViewModelLocator x:Key="Locator"/>
-        </ResourceDictionary>
+
+            <local:LocalizedStrings xmlns:local="clr-namespace:ODAF.SilverlightApp.Resources"
+                           x:Key="LocalizedStrings" />
+        </ResourceDictionary>   
     </Application.Resources>
 </Application>

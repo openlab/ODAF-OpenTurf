@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Maps.MapControl;
+using Microsoft.Maps.MapControl.ExtendedModes;
 
 namespace ODAF.SilverlightApp.VO
 {

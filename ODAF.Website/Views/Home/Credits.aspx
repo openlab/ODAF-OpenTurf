@@ -1,7 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/Views/Shared/ODMasterPage.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-   Open Data Application Framework (ODAF) Credits
+   Open Data Application Framework (ODAF) Openturf Credits
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
@@ -14,7 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-<h2>ODAF General Credits</h2>
+<h2>ODAF Openturf General Credits</h2>
 <ul>
     <li>Vancouver Open Data Catalogue <a href="http://data.vancouver.ca/">http://data.vancouver.ca/</a></li>
     <li>Microsoft Open Government Data Initiative <a href="http://ogdisdk.cloudapp.net/">http://ogdisdk.cloudapp.net/</a></li>
@@ -23,7 +23,7 @@
     <li>David Eaves <a href="http://eaves.ca/">http://eaves.ca/</a></li>
 </ul>
 
-<h2>ODAF Library Credits</h2>
+<h2>ODAF Openturf Library Credits</h2>
 <ul>
 <li>SubSonic (.NET) [<a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a>] <a href="http://subsonicproject.com/">http://subsonicproject.com/</a></li>
 <li>Route-me Library (iPhone) [<a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a>] <a href="http://code.google.com/p/route-me/">http://code.google.com/p/route-me/</a></li>

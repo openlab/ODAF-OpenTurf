@@ -38,7 +38,7 @@
  */
 @interface RMPath : RMMapLayer <RMMovingMapLayer>
 {
-	BOOL	isFirstPoint;
+	NSMutableArray *points;
 
 	/// This is the first point.
 	RMProjectedPoint projectedLocation;
@@ -61,12 +61,8 @@
 	 kCGPathEOFillStroke */
 	CGPathDrawingMode drawingMode;
 	
-	//Line cap and join styles
-	CGLineCap lineCap;
-	CGLineJoin lineJoin;	
 	BOOL scaleLineWidth;
 	BOOL enableDragging;
-	BOOL enableRotation;
 	
 	float renderedScale;
 	RMMapContents *contents;
@@ -77,13 +73,11 @@
 - (id) initForMap: (RMMapView*)map;
 
 @property CGPathDrawingMode drawingMode;
-@property CGLineCap lineCap;
-@property CGLineJoin lineJoin;
+
 @property float lineWidth;
 @property BOOL	scaleLineWidth;
 @property (nonatomic, assign) RMProjectedPoint projectedLocation;
 @property (assign) BOOL enableDragging;
-@property (assign) BOOL enableRotation;
 @property (readwrite, assign) UIColor *lineColor;
 @property (readwrite, assign) UIColor *fillColor;
 

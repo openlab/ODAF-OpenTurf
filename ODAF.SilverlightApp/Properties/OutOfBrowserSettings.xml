@@ -1,4 +1,4 @@
-<OutOfBrowserSettings ShortName="ODAF.SilverlightApp Application" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+<OutOfBrowserSettings ShortName="ODAF.SilverlightApp Application" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
   <OutOfBrowserSettings.Blurb>ODAF.SilverlightApp Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
     <WindowSettings Title="ODAF.SilverlightApp Application" />

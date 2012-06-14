@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ODAF.SilverlightApp.VO;
+using ODAF.SilverlightApp.Resources;
 
 
 namespace ODAF.SilverlightApp
@@ -20,15 +21,12 @@ namespace ODAF.SilverlightApp
         public PointDataSummary Data
         {
             get { return _data; }
-
-
             set
             {
                 _data = value;
                 UpdateView();
             }
         }
-
 
         public PointDataView ParentView { get; set; }
 
@@ -40,7 +38,7 @@ namespace ODAF.SilverlightApp
             
             UserComment noComments = new UserComment();
                         noComments.Comment = new Comment();
-                        noComments.Comment.Text= "No Comments";
+                        noComments.Comment.Text= PointDataViewAndSubViewsResource.NoComments;
                         EmptyList = new UserComment[1] { noComments };
             
         }
@@ -58,16 +56,16 @@ namespace ODAF.SilverlightApp
             {
                 if (Data.UserComments.Length == 1)
                 {
-                    tbCommentListLabel.Text = "1 Comment";
+                    tbCommentListLabel.Text = PointDataViewAndSubViewsResource.OneComment;
                 }
                 else
                 {
-                    tbCommentListLabel.Text = string.Format("{0} Comments", Data.UserComments.Length);
+                    tbCommentListLabel.Text = string.Format(PointDataViewAndSubViewsResource.XComments, Data.UserComments.Length);
                 }
             }
             else
             {
-                tbCommentListLabel.Text = "No Comments";
+                tbCommentListLabel.Text = PointDataViewAndSubViewsResource.NoComments;
             }
            
             lbComments.ItemsSource = Data.UserComments;
@@ -117,7 +115,6 @@ namespace ODAF.SilverlightApp
            
         }
 
-    
         private void TwitterImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             (App.Current.RootVisual as MainPage).ShowTweetWin(this.Data);

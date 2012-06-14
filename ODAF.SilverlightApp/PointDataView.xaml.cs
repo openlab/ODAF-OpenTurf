@@ -37,7 +37,7 @@ namespace ODAF.SilverlightApp
             set
             {
                 _currentSummary = value;
-                 UpdateData();
+                UpdateData();
             }
         }
 
@@ -76,7 +76,6 @@ namespace ODAF.SilverlightApp
 
         public UserControl CurrentView { get; set; }
 
-
         public PointDataView()
         {
             InitializeComponent();
@@ -89,14 +88,12 @@ namespace ODAF.SilverlightApp
             this.ratingViewBox.ParentView = this;
 
             CurrentView = this.infoViewBox;
-
         }
 
         public void HideView()
         {
             this.Visibility = Visibility.Collapsed;
         }
-
 
         void pinWheel_ViewStateChange(object sender, PinWheelViewStateChangeEventArgs e)
         {

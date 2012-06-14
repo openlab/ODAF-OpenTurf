@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF7BCB06-D550-4155-A6D3-24F6EDEAD9A7}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ODAF.WindowsPhone</RootNamespace>
+    <AssemblyName>ODAF.WindowsPhone</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>en,fr
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>ODAF.WindowsPhone.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>ODAF.WindowsPhone.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.30422.0</ExpressionBlendVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Hammock.WindowsPhone">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\Hammock.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Contracts">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\Microsoft.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls" />
+    <Reference Include="Microsoft.Phone.Controls.Maps, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e" />
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Newtonsoft.Json.WindowsPhone">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\Newtonsoft.Json.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TweetSharp.WindowsPhone">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\TweetSharp.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="TweetSharp.WindowsPhone.Fluent">
+      <HintPath>..\packages\ODAF-ODAF.WindowsPhone-Dependencies.1.0\lib\TweetSharp.WindowsPhone.Fluent.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityReverseConverter.cs" />
+    <Compile Include="Helpers\GeoMathHelper.cs" />
+    <Compile Include="Helpers\LocalizedStrings.cs" />
+    <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Resources\FacebookResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FacebookResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\FacebookResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FacebookResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MainResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MainResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TwitterResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwitterResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TwitterResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwitterResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CommentsService.cs" />
+    <Compile Include="Services\TwitpicService.cs" />
+    <Compile Include="ViewModels\FacebookViewModel.cs" />
+    <Compile Include="ViewModels\TwitterViewModel.cs" />
+    <Compile Include="Views\FacebookPage.xaml.cs">
+      <DependentUpon>FacebookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LayerModel.cs" />
+    <Compile Include="Models\PushpinModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DesignTimeLayerService.cs" />
+    <Compile Include="Services\DesignTimePushpinService.cs" />
+    <Compile Include="Services\LayerService.cs" />
+    <Compile Include="Services\PushpinService.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\TwitterPage.xaml.cs">
+      <DependentUpon>TwitterPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="Views\FacebookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TwitterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\camera.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\cible_black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\cible_white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\facebook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\twitter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\twitter2.png" />
+    <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\FacebookResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FacebookResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FacebookResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FacebookResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MainResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MainResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TwitterResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TwitterResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TwitterResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TwitterResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+</Project>

@@ -19,9 +19,6 @@
 
 @synthesize placeName, placeDescription, addButton, summary;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
 
 - (void)viewDidLoad 
 {
@@ -112,16 +109,8 @@
 	 
 - (void) close
 {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		NSNotification* notif = [NSNotification notificationWithName:ODClosePopover object:nil];
-		[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
-	}
-	else
-	{
-		VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
-		[delg.navigationController popViewControllerAnimated:YES];
-	}		
+	VanGuideAppDelegate* delg = (VanGuideAppDelegate*)[UIApplication sharedApplication].delegate;
+	[delg.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction) textFieldDidUpdate:(id) sender

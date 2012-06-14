@@ -14,19 +14,6 @@
 
 @synthesize webView, backButton, forwardButton, topToolbar, bottomToolbar;
 
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		return YES;
-	}
-	else
-	{
-		return NO;
-	}
-}
-
 - (void)viewDidLoad 
 {
     [super viewDidLoad];

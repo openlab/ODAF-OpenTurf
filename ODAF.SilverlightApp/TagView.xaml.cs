@@ -21,8 +21,6 @@ namespace ODAF.SilverlightApp
         public PointDataSummary Data
         {
             get { return _data; }
-
-
             set
             {
                 _data = value;
@@ -49,7 +47,7 @@ namespace ODAF.SilverlightApp
             }
             else
             {
-                tbDescription.Text = "This landmark has not been tagged.";
+                tbDescription.Text = ODAF.SilverlightApp.Resources.PointDataViewAndSubViewsResource.LandmarkNotTagged;
             }
 
             TagEntry.Text = "";
@@ -65,11 +63,9 @@ namespace ODAF.SilverlightApp
             }
         }
 
-
         private void TagSubmit_Click(object sender, RoutedEventArgs e)
         {
             ParentView.AddItemTag(this.Data.Guid, TagEntry.Text);
         }
-	}
-   
+    }
 }

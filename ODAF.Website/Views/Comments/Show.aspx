@@ -4,7 +4,9 @@
 <%@ Import Namespace="System.Configuration" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%> comment by <%=ViewData.Model.CommentAuthor %>
+    <%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName")%>
+    comment by
+    <%=ViewData.Model.CommentAuthor %>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
@@ -13,10 +15,10 @@
         
         body
         {
-            background:#40225F url(<%= ResolveUrl("~/images/background-tile-vertical.png")%>) repeat-y;
-            font-family: Helvetica;
+            background:#00A9DA;
+            font-family: Segoe UI;
             font-size:10pt;
-            color:#FFF;
+            color:#00A9DA;
             padding:0;
             margin:0;
         }
@@ -97,33 +99,36 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
-<div id="main-box">
-<img alt="<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%> logo" id="logo" src="<%=ResolveUrl("~/images/logo.png") %>"/>
-<% if (Request.Browser.IsMobileDevice && Request.Browser.Platform.Equals("iPhone OS"))
-   { %>
-    <a id="app-link" href="<%=(website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string).ToLower()%>://ViewComment/?<%=String.Format("SummaryId={0}&CommentId={1}", ViewData.Model.Comment.SummaryId, ViewData.Model.Comment.Id) %>">go to app</a>
-<% }
-   else
-   { %>
-    <a id="app-link" href="<%=ResolveUrl("~/") %>">go to app</a>
-<% } %>
-<div style="clear:both"></div>
-
-<div id="comment-box">
-    <div id="comment">
-        <%=Html.Encode(ViewData.Model.Comment) %>
-    </div>
-    <div id="author">
-        <img alt="User Image" id="avatar" src="<%=this.GetUserImageUrl(ViewData.Model.Comment.CreatedById) %>" />
-        <div id="name"><%=ViewData.Model.CommentAuthor %></div>
-        <div id="date"><%=ViewData.Model.Comment.CreatedOn.ToString() %></div>
-        <div id="location">
-            <%=Html.ActionLink<SummariesController>(c => c.ShowById(ViewData.Model.Comment.SummaryId, "html"), 
+    <div id="main-box">
+        <p style="font-family:Segoe UI Light; font-size:44pt; color:White">ODAF Openturf</p>
+        <%--<img alt="<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName")%> logo" id="logo"
+            src="<%=ResolveUrl("~/images/logo.png") %>" />--%>
+        <% if (Request.Browser.IsMobileDevice && Request.Browser.Platform.Equals("iPhone OS"))
+           { %>
+        <a id="app-link" href="<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName").ToLower()%>://ViewComment/?<%=String.Format("SummaryId={0}&CommentId={1}", ViewData.Model.Comment.SummaryId, ViewData.Model.Comment.Id) %>">
+            go to app</a>
+        <% }
+           else
+           { %>
+        <a id="app-link" href="<%=ResolveUrl("~/") %>">go to app</a>
+        <% } %>
+        <div style="clear: both">
+        </div>
+        <div id="comment-box">
+            <div id="comment">
+                <%=Html.Encode(ViewData.Model.Comment) %>
+            </div>
+            <div id="author">
+                <img alt="User Image" id="avatar" src="<%=this.GetUserImageUrl(ViewData.Model.Comment.CreatedById) %>" />
+                <div id="name">
+                    <%=ViewData.Model.CommentAuthor %></div>
+                <div id="date">
+                    <%=ViewData.Model.Comment.CreatedOn.ToString() %></div>
+                <div id="location">
+                    <%=Html.ActionLink<SummariesController>(c => c.ShowById(ViewData.Model.Comment.SummaryId, "html"), 
                 ViewData.Model.Comment.PointDataSummaries.Single().Name)%>
-         </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-
 </asp:Content>

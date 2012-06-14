@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using System.Windows.Messaging;
 using System.Windows.Browser;
 using System.IO;
+using System.Globalization;
 
 namespace ODAF.SilverlightApp.CloudService
 {
@@ -36,29 +37,24 @@ namespace ODAF.SilverlightApp.CloudService
         public long Id { get; set; }
     }
 
-
     public delegate void AuthUpdateEventHandler(UserController sender);
 
     public class UserController
     {
         public event AuthUpdateEventHandler AuthUpdate;
 
-        //public MainPage page;
-
         public string BaseURL { get; set; }
 
-        private LocalMessageReceiver receiver;
+        //private LocalMessageReceiver receiver;
 
         private TwitterAuthTokenResult oauthTokenResult;
 
         public TwitterUser currentUser;
 
-        private string AppId = "D5B672D4-7B1C-46cc-8643-FBE8334F4ADF";
+        private string AppId = ((App)Application.Current).twitterAppId;
 
         public UserController()
-        {
-
-        }
+        { }
 
         public void GetUser()
         {
@@ -83,45 +79,34 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
-        public void OnTwitterCallbackMessageReceived()
+        public void OnTwitterCallbackMessageReceived(string oauth_token)
         {
             // if we get here, we should have a token!
-            GetAccessToken(oauthTokenResult.oauth_token);
+            GetAccessToken(oauth_token);
         }
-
-
-        // RequestAuthToken
 
         public void RequestAuthToken()
         {
             WebClient client = new WebClient();
-            client.OpenReadCompleted +=
-                new OpenReadCompletedEventHandler(RequestAuthToken_Result);
-
+            client.OpenReadCompleted += RequestAuthToken_Result;
             client.OpenReadAsync(new Uri(BaseURL + "User/RequestAuthToken.json?appId=" + AppId));
         }
 
         private void RequestAuthToken_Result(object sender, OpenReadCompletedEventArgs e)
         {
             if (e.Error != null)
-            {
-
-            }
+            { }
             else
             {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TwitterAuthTokenResult));
                 oauthTokenResult = (TwitterAuthTokenResult)serializer.ReadObject(e.Result);
-
                 // TODO: Can we already be logged in?
-
                 //Authenticate(oauthTokenResult.oauth_token, oauthTokenResult.oauth_token_secret);
                 ScriptObject script = (ScriptObject)HtmlPage.Window.GetProperty("connectTW");
                 script.InvokeSelf(oauthTokenResult.link);
 
             }
         }
-
-        // GetAccessToken
 
         public void GetAccessToken(string req_token)
         {
@@ -139,14 +124,12 @@ namespace ODAF.SilverlightApp.CloudService
             if (e.Error != null)
             {
                 // TODO: Handle this somehow ...
+                MessageBox.Show("GetAccessToken_Result Error: " + e.Error.Message);
             }
             else
             {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TwitterAuthTokenResult));
-                TwitterAuthTokenResult res = (TwitterAuthTokenResult)serializer.ReadObject(e.Result);
-
-                this.oauthTokenResult.oauth_token = res.oauth_token;
-                this.oauthTokenResult.oauth_token_secret = res.oauth_token_secret;
+                this.oauthTokenResult = (TwitterAuthTokenResult)serializer.ReadObject(e.Result);
                 this.Authenticate(oauthTokenResult.oauth_token, oauthTokenResult.oauth_token_secret);
             }
         }
@@ -159,6 +142,7 @@ namespace ODAF.SilverlightApp.CloudService
                 new OpenReadCompletedEventHandler(Authenticate_Result);
             client.OpenReadAsync(new Uri(BaseURL + "User/Authenticate.json?oauth_token=" + oauth_token + "&oauth_token_secret=" + oauth_token_secret + "&appId=" + AppId));
         }
+
         private void Authenticate_Result(object sender, OpenReadCompletedEventArgs e)
         {
             if (e.Error != null)
@@ -170,7 +154,6 @@ namespace ODAF.SilverlightApp.CloudService
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TwitterUser));
                 currentUser = (TwitterUser)serializer.ReadObject(e.Result);
                 AuthUpdate(this);
-
             }
         }
 
@@ -179,13 +162,11 @@ namespace ODAF.SilverlightApp.CloudService
         {
             WebRequest req = WebRequest.Create(BaseURL + "User/UpdateTwitterStatus.json");
             req.Headers["TWStatus"] = status; // note, status is already encoded
-            req.Headers["TWLat"] = lat.ToString();
-            req.Headers["TWLon"] = lon.ToString();
-
+            req.Headers["TWLat"] = lat.ToString(CultureInfo.InvariantCulture);
+            req.Headers["TWLon"] = lon.ToString(CultureInfo.InvariantCulture);
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
             req.BeginGetRequestStream(UpdateTwitterStatusPostRequest, req);
-
         }
 
         void UpdateTwitterStatusPostRequest(IAsyncResult asyncResult)
@@ -196,10 +177,10 @@ namespace ODAF.SilverlightApp.CloudService
 
             if(req.Headers["TWStatus"] != null)
             {
-                writer.Write("&status=" + req.Headers["TWStatus"]);
                 writer.Write("&lat=" + req.Headers["TWLat"]);
                 writer.Write("&lng=" + req.Headers["TWLon"]);
-
+                writer.Write("&status=" + req.Headers["TWStatus"]);
+                
                 writer.Close();
                 reqStream.Close();
                 req.BeginGetResponse(OnUpdateTwitterStatusResult, req);
@@ -213,7 +194,6 @@ namespace ODAF.SilverlightApp.CloudService
         void OnUpdateTwitterStatusResult(IAsyncResult asyncResult)
         {
             string result = "";
-
             WebRequest request = (WebRequest)asyncResult.AsyncState;
             // Get the response stream.
             WebResponse response = null;
@@ -234,27 +214,12 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
-        private void UpdateTwitterStatus_Result(object sender, DownloadStringCompletedEventArgs e)
-        {
-
-        }
-
         public bool IsAuthenticated
         {
             get
             {
                 return ( currentUser != null && currentUser.Id > 0 );
-            }
-
-            
+            }   
         }
-
-
-
-
-
-
-
-
     }
 }

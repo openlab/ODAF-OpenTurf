@@ -16,7 +16,7 @@
     <AssemblyName>ODAF.SilverlightApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>
+    <SupportedCultures>en,fr
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
@@ -39,6 +39,10 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -51,16 +55,13 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>Bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
@@ -81,26 +82,28 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.SL4">
-      <HintPath>..\Dependencies\MVVM Light\Silverlight 3\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.Extras.SL4, Version=3.0.0.30106, Culture=neutral, PublicKeyToken=e951d4eb83d0126f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\MVVM Light\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.SL4">
-      <HintPath>..\Dependencies\MVVM Light\Silverlight 3\GalaSoft.MvvmLight.SL4.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.SL4, Version=3.0.0.30091, Culture=neutral, PublicKeyToken=918f02b0f4b4b116, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\MVVM Light\GalaSoft.MvvmLight.SL4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl">
-      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.dll</HintPath>
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.Common">
-      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.Common.dll</HintPath>
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Windows.Controls.WatermarkedTextBox">
-      <HintPath>..\Dependencies\Microsoft.Windows.Controls.WatermarkedTextBox.dll</HintPath>
+    <Reference Include="Microsoft.Maps.MapControl.ExtendedModes">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.ExtendedModes.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Composition">
-      <HintPath>..\Dependencies\MEF\System.ComponentModel.Composition.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition.Initialization">
-      <HintPath>..\Dependencies\MEF\System.ComponentModel.Composition.Initialization.dll</HintPath>
+    <Reference Include="Microsoft.Windows.Controls.WatermarkedTextBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Windows.Controls.WatermarkedTextBox.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Services.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Json, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -114,21 +117,37 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Theming.ExpressionDark, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=4.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -158,6 +177,57 @@
     <Compile Include="CloudService\UserController.cs" />
     <Compile Include="PointDataViewCreate.xaml.cs">
       <DependentUpon>PointDataViewCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CreatePointViewResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatePointViewResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CreatePointViewResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatePointViewResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LocalizedStrings.cs" />
+    <Compile Include="Resources\MainPageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainPageResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MainPageResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainPageResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PointDataViewAndSubViewsResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PointDataViewAndSubViewsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PointDataViewAndSubViewsResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PointDataViewAndSubViewsResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TwitterUserBadgeResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwitterUserBadgeResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TwitterUserBadgeResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwitterUserBadgeResource.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserControls\UserControlsViewsResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserControlsViewsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserControls\UserControlsViewsResource.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserControlsViewsResource.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="Service References\GeocodeService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -224,10 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Resource Include="Assets\Styles.xaml">
+    <Page Include="Assets\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Resource>
+    </Page>
     <Page Include="Assets\ToolkitStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -274,18 +344,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="RatingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -301,6 +359,10 @@
     <Page Include="TwitterUserBadge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ConfirmDeleteWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -322,39 +384,58 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UserControls\ConfirmDeleteWin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Service References\VEGeoSearchService\Arrays1.xsd">
+    <None Include="Service References\GeocodeService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VEGeoSearchService\common1.xsd">
+    <None Include="Service References\GeocodeService\common.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VEGeoSearchService\contracts1.wsdl" />
-    <None Include="Service References\VEGeoSearchService\contracts1.xsd">
+    <None Include="Service References\GeocodeService\contracts.wsdl" />
+    <None Include="Service References\GeocodeService\contracts.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VEGeoSearchService\ODAF.SilverlightApp.VEGeoSearchService.SearchResponse1.datasource">
+    <None Include="Service References\GeocodeService\geocode.wsdl" />
+    <None Include="Service References\GeocodeService\geocode.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\ODAF.SilverlightApp.GeocodeService.GeocodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\VEGeoSearchService\search1.wsdl" />
-    <None Include="Service References\VEGeoSearchService\search1.xsd">
+    <None Include="Service References\GeocodeService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VEGeoSearchService\service1.xsd">
-      <SubType>Designer</SubType>
+    <Resource Include="Images\searchIcon.png" />
+    <Resource Include="Images\dropDown.png" />
+    <Resource Include="Images\github.png" />
+    <Content Include="Service References\ServiceReferences.ClientConfig" />
+    <None Include="Service References\VEGeoSearchService\configuration91.svcinfo" />
+    <None Include="Service References\VEGeoSearchService\configuration.svcinfo" />
+    <None Include="Service References\VEGeoSearchService\ODAF.SilverlightApp.VEGeoSearchService.SearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <Resource Include="Images\dropDown.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\searchIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Images\openTurfLogo.png" />
+    <None Include="Service References\VEGeoSearchService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\VEGeoSearchService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VEGeoSearchService\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VEGeoSearchService\contracts.wsdl" />
+    <None Include="Service References\VEGeoSearchService\contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VEGeoSearchService\search.wsdl" />
+    <None Include="Service References\VEGeoSearchService\search.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VEGeoSearchService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon_comment.png" />
@@ -367,15 +448,6 @@
     <Resource Include="Images\icon_tag_hover.png" />
     <Resource Include="Images\radial_bg.png" />
     <Resource Include="Images\radial_selected.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\button_hover.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\button_pressed.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\list_item.png" />
@@ -400,50 +472,15 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\TwitterSignin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\OutOfBrowserSettings.xml" />
-    <Resource Include="Images\Twitter.png" />
+    <None Include="Properties\OutOfBrowserSettings.xml">
+      <SubType>Designer</SubType>
+    </None>
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\AzureLogo_gs.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\nitobi-avatar-bw.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\CancelButton.png" />
     <Resource Include="Images\CancelButtonPressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\GeocodeService\" />
-    <WCFMetadataStorage Include="Service References\VEGeoSearchService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\GeocodeService\Arrays.xsd" />
-    <None Include="Service References\GeocodeService\common.xsd" />
-    <None Include="Service References\GeocodeService\contracts.wsdl" />
-    <None Include="Service References\GeocodeService\contracts.xsd" />
-    <None Include="Service References\GeocodeService\geocode.wsdl" />
-    <None Include="Service References\GeocodeService\geocode.xsd" />
-    <None Include="Service References\GeocodeService\ODAF.SilverlightApp.GeocodeService.GeocodeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\GeocodeService\service.xsd" />
-    <None Include="Service References\GeocodeService\configuration91.svcinfo" />
-    <None Include="Service References\GeocodeService\configuration.svcinfo" />
-    <None Include="Service References\GeocodeService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\VEGeoSearchService\configuration91.svcinfo" />
-    <None Include="Service References\VEGeoSearchService\configuration.svcinfo" />
-    <None Include="Service References\VEGeoSearchService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Service References\ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -463,16 +500,77 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components\Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components.csproj">
+    <Resource Include="Images\Twitter128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\GeocodeService\" />
+    <WCFMetadataStorage Include="Service References\VEGeoSearchService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components\Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components.csproj">
       <Project>{E2FDD650-FB65-46D2-A6C3-4E4992DCC332}</Project>
       <Name>Net.SyntaxC4.RedBitSoftware.ODAF.Search.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Net.SyntaxC4.RedBitSoftware.ODAF\Net.SyntaxC4.RedBitSoftware.ODAF.Search.csproj">
+    <ProjectReference Include="..\Libraries\Net.SyntaxC4.RedBitSoftware.ODAF\Net.SyntaxC4.RedBitSoftware.ODAF.Search.csproj">
       <Project>{8909DBD1-F459-4BFB-A9D3-10A040851826}</Project>
       <Name>Net.SyntaxC4.RedBitSoftware.ODAF.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CreatePointViewResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreatePointViewResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CreatePointViewResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreatePointViewResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MainPageResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainPageResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MainPageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainPageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PointDataViewAndSubViewsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PointDataViewAndSubViewsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PointDataViewAndSubViewsResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PointDataViewAndSubViewsResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TwitterUserBadgeResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TwitterUserBadgeResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TwitterUserBadgeResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TwitterUserBadgeResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserControls\UserControlsViewsResource.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserControlsViewsResource.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserControls\UserControlsViewsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserControlsViewsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

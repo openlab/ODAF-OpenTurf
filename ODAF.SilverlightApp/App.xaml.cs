@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace ODAF.SilverlightApp
 {
@@ -19,7 +20,8 @@ namespace ODAF.SilverlightApp
         public string pageRootUrl = "/";
         public string pointDataSummaryId = "";
         public string appName = "OpenTurf";
-
+        public string twitterAppId = "";
+        public string GeoCodeServiceCredentials = "AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj"; 
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -35,7 +37,7 @@ namespace ODAF.SilverlightApp
             Uri pageURI = System.Windows.Browser.HtmlPage.Document.DocumentUri;
             string portString = (pageURI.Port != 80) ? ( ":" + pageURI.Port ) : "";
 
-            pageRootUrl = pageURI.Scheme + "://" + pageURI.Host + portString +(pageURI.LocalPath.Substring(0, pageURI.LocalPath.LastIndexOf("/") + 1));
+            pageRootUrl = pageURI.Scheme + "://" + pageURI.Host + portString + "/";// +(pageURI.LocalPath.Substring(0, pageURI.LocalPath.LastIndexOf("/") + 1));
 
             if (e.InitParams.ContainsKey("pointDataUrl"))
             {
@@ -49,10 +51,15 @@ namespace ODAF.SilverlightApp
             {
                 pointDataSummaryId = e.InitParams["PointDataSummaryId"];
             }
-            if (e.InitParams.ContainsKey("AppName"))
+            if (e.InitParams.ContainsKey("appName"))
             {
-                appName = e.InitParams["AppName"];
+                appName = e.InitParams["appName"];
             }
+            if (e.InitParams.ContainsKey("twitterAppId"))
+            {
+                twitterAppId = e.InitParams["twitterAppId"];
+            }
+
             this.RootVisual = new MainPage();
         }
 
