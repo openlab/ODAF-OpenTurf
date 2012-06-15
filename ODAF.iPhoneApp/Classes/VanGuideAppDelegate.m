@@ -52,21 +52,15 @@
 	self.viewController = aController;
 	[aController release];
 	
-	NSString* splashImageName = @"Default";
-	CGFloat splashDelay = 1.0;
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		splashImageName = @"Default-Portrait";
-	} 
-
-	UIImage* image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:splashImageName ofType:@"png"]];
+	UIImage* image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default" ofType:@"png"]];
 	self.splashScreen = [[UIImageView alloc] initWithImage:image];
 	[image release];
-	[window addSubview:splashScreen];
 	
+	[window addSubview:splashScreen];
+		
 	[self performSelector:@selector(prereqCheck) withObject:nil afterDelay:0.1];
 	[self performSelector:@selector(tempCleanup) withObject:nil afterDelay:0.3];
-	[self performSelector:@selector(afterSplash) withObject:nil afterDelay:splashDelay];
+	[self performSelector:@selector(afterSplash) withObject:nil afterDelay:0.7];
 }
 
 - (void) prereqCheck
@@ -98,17 +92,12 @@
 
 - (void) afterSplash
 {
-	CATransition* animation = nil;
+	[self.splashScreen removeFromSuperview];
 	
-	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-	{
-		[self.splashScreen removeFromSuperview];
-		
-		[CATransaction begin];
-		animation = [CATransition animation];
-		animation.type = kCATransitionFade;
-		animation.duration = 1.0;
-	}
+	[CATransaction begin];
+	CATransition* animation = [CATransition animation];
+	animation.type = kCATransitionFade;
+	animation.duration = 0.65;
 	
 	self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.viewController];	
 	self.navigationController.navigationBar.tintColor = [UIColor colorWithHexString:[[Utils sharedInstance] getConfigSetting:kConfigKeyTintColourRGB]];
@@ -117,12 +106,9 @@
 	[window addSubview:[self.navigationController view]];
 	[window bringSubviewToFront:self.navigationController.view];
 	
-	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-	{
-		// Commit the animation
-		[[window layer] addAnimation:animation forKey:@"frame.size"];
-		[CATransaction commit];
-	}
+	// Commit the animation
+	[[window layer] addAnimation:animation forKey:@"frame.size"];
+	[CATransaction commit];
 	
     [window makeKeyAndVisible];
 }

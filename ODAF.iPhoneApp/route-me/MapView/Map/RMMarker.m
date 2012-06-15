@@ -33,7 +33,6 @@
 
 @synthesize projectedLocation;
 @synthesize enableDragging;
-@synthesize enableRotation;
 @synthesize data;
 @synthesize label;
 @synthesize textForegroundColor;
@@ -54,7 +53,6 @@
         textForegroundColor = [UIColor blackColor];
         textBackgroundColor = [UIColor clearColor];
 		enableDragging = YES;
-		enableRotation = YES;
     }
     return self;
 }

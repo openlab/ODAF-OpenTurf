@@ -9,7 +9,7 @@
       
       <script type="text/javascript">
          var map = null;
-
+		 // CHANGEME: Put in the Lat and Long of your City's viewport below
          var Vanc = new VELatLong(49.241810639098816, -123.06404113769532);
 
          var pinPoint = null;
@@ -27,7 +27,7 @@
          {
             map = new VEMap('myMap');
             map.LoadMap(Vanc, 10, VEMapStyle.Aerial, false, VEMapMode.Mode2D, true, 1);
-            map.SetCredentials("AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj");
+            map.SetCredentials("CHANGEME: Put in your Bing Maps Credentials here");
 
 
 //            communityCentersShape.SetTitle("Hello Kitty");
@@ -169,7 +169,6 @@
 	    }
 
 	    function onFireHallsLoaded() {
-	    
 	    /*
 	        var imgUrl = "http://read.pudn.com/downloads122/sourcecode/web/519499/GoogleMapControl/icons/FireTruck.png"; 
 	        var custIcon = new VECustomIconSpecification();
@@ -183,9 +182,6 @@
 
 	        }
 	        */
-
-
-
 	    }
 
 	    function onShapeInfo(e) 
@@ -202,10 +198,6 @@
 	            document.getElementById("label").innerText = "";
 	        }
 	    }
-
-
-
-
 
          function getInfo()
          {

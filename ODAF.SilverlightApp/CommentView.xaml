@@ -1,109 +1,110 @@
-﻿<UserControl
+﻿<UserControl x:Class="ODAF.SilverlightApp.CommentView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ODAF.SilverlightApp.CommentView">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource ControlBackgroundBrush}">
-    	<Grid  Margin="4">
-    		<StackPanel x:Name="CommentOutput" Orientation="Vertical" Margin="0">
-    			<TextBlock x:Name="tbTitle" 
+        <Grid  Margin="50,4,50,0">
+            <StackPanel x:Name="CommentOutput" Orientation="Vertical" Margin="0">
+                <TextBlock x:Name="tbTitle" 
     				FontWeight="Bold" 
     				TextAlignment="Left"
-    				Margin="0"><Run Text="Comments"/></TextBlock>
-                        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">-->
-    			<Grid>
-    				<Grid.ColumnDefinitions>
-    					<ColumnDefinition Width="200"/>
-    					<ColumnDefinition Width="*"/>
-    				</Grid.ColumnDefinitions>
+    				Margin="0" TextWrapping="Wrap" ><Run Text="{Binding Path=PointDataViewAndSubViewsResource.Comments, Source={StaticResource LocalizedStrings}}"/></TextBlock>
+                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-    				<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" >
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" >
 
 
-    					<TextBlock x:Name="tbCommentListLabel" 
+                        <TextBlock x:Name="tbCommentListLabel" 
     						VerticalAlignment="Center" 
     						Margin="4" 
     						Width="164"
-    						Text="No Comments"/>
+    						Text="{Binding Path=PointDataViewAndSubViewsResource.NoComments, Source={StaticResource LocalizedStrings}}"/>
 
-    					<Image x:Name="tweetImage" 
+                        <Image x:Name="tweetImage" 
     						Source="Images/Twitter.png" 
     						Visibility="Collapsed"  
     						Stretch="UniformToFill"
     						Width="24" Height="24"
     						HorizontalAlignment="Right"
-    						ToolTipService.ToolTip="Tweet about this landmark."
+    						ToolTipService.ToolTip="{Binding Path=PointDataViewAndSubViewsResource.TweetAboutThisLandmark, Source={StaticResource LocalizedStrings}}"
     						MouseLeftButtonUp="TwitterImage_MouseLeftButtonUp"/>
 
-    				</StackPanel>
-    				<Grid Grid.Column="1">   
-    					<HyperlinkButton x:Name="AddBtn" 
+                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <HyperlinkButton x:Name="AddBtn" 
     						Visibility="Collapsed"
     						HorizontalAlignment="Right" 
     						Click="AddBtn_Click" 
-    						Content="[+] Add a Comment" />
-                                
-    					<TextBlock x:Name="signinHint" 
-    						HorizontalAlignment="Right"
-    						Foreground="Gray"><Run Text="Sign in to add a comment."/></TextBlock>
+    						Content="{Binding Path=PointDataViewAndSubViewsResource.AddCommentPlus, Source={StaticResource LocalizedStrings}}" />
 
-    				</Grid>
-    			</Grid>
-                        <!--</StackPanel>-->
-    			<ListBox x:Name="lbComments"
+                        <TextBlock x:Name="signinHint" 
+    						HorizontalAlignment="Right"
+                            TextWrapping="Wrap"
+    						Foreground="Gray"><Run Text="{Binding Path=PointDataViewAndSubViewsResource.SignInToComment, Source={StaticResource LocalizedStrings}}"/></TextBlock>
+
+                    </Grid>
+                </Grid>
+                <!--</StackPanel>-->
+                <ListBox x:Name="lbComments"
     				Margin="10" MinHeight="175" MaxHeight="175" >
-    				<ListBox.ItemTemplate>
-    					<DataTemplate>
-    						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0">
-    							<Image Width="32" Height="32" 
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0">
+                                <Image Width="32" Height="32" 
     								HorizontalAlignment="Left" 
     								VerticalAlignment="Top" 
     								Source="{Binding CreatorProfileImageUrl}"/>
-    							<StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
-                                            
-    								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" 
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
+
+                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap" 
     									Width="280"/>
-    								<Grid Width="280" >
-                                                
-    									<TextBlock Text="{Binding CommentAuthor}" 
+                                    <Grid Width="280" >
+
+                                        <TextBlock Text="{Binding CommentAuthor}" 
     										Foreground="#999"
     										TextAlignment="Left"/>
-    									<TextBlock Text="{Binding FormattedDate}"
+                                        <TextBlock Text="{Binding FormattedDate}"
     										Foreground="#999"
     										TextAlignment="Right"/>
-    								</Grid>
-    							</StackPanel>
-    						</StackPanel>
-    					</DataTemplate>
-    				</ListBox.ItemTemplate>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
 
-    			</ListBox>
-    		</StackPanel>
-                    
-    		<StackPanel x:Name="CommentEntry" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0" d:IsHidden="True">
-    			<TextBlock FontWeight="Bold" TextAlignment="Left"><Run Text="Add Comment"/></TextBlock>
-    			<TextBox x:Name="tbCommentEntry" 
+                </ListBox>
+            </StackPanel>
+
+            <StackPanel x:Name="CommentEntry" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0">
+                <TextBlock FontWeight="Bold" TextAlignment="Left"><Run Text="{Binding Path=PointDataViewAndSubViewsResource.AddComment, Source={StaticResource LocalizedStrings}}"/></TextBlock>
+                <TextBox x:Name="tbCommentEntry" 
     				TextWrapping="Wrap" 
     				VerticalScrollBarVisibility="Auto" 
     				Margin="0,8,0,8" 
     				AcceptsReturn="True"
     				MaxLength="1000" MaxHeight="175" MinHeight="175"/>
-    			<StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
     				Margin="0,4,0,4" HorizontalAlignment="Right">
-    				<CheckBox x:Name="cbAutoTweet"
-    					Width="208"
-    					Content="also post to twitter"/>
-                            
-    				<Button Content="Save" 
-    					Width="72"
+                    <CheckBox x:Name="cbAutoTweet"
+                                      IsChecked="True"
+                                      FontSize="12"
+                                      Width="208"
+                                      Content="{Binding Path=PointDataViewAndSubViewsResource.AlsoPostToTwitter, Source={StaticResource LocalizedStrings}}"
+                                      Style="{StaticResource LittleCheckBoxStyle}"/>
+
+                    <Button Content="{Binding Path=PointDataViewAndSubViewsResource.Save, Source={StaticResource LocalizedStrings}}" 
     					Margin="4,0,4,0"
     					Click="Save_Click"/>
-    				<Button Content="Cancel" 
-    					Width="72"
+                    <Button Content="{Binding Path=PointDataViewAndSubViewsResource.Cancel, Source={StaticResource LocalizedStrings}}" 
     					Click="Cancel_Click"/>
-    			</StackPanel>
+                </StackPanel>
 
-    		</StackPanel>
-    	</Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

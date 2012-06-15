@@ -4,7 +4,9 @@
     xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation" 
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Brushes.xaml"/>
@@ -268,6 +270,369 @@
         <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
 
+
+
+    <!-- RegionFeedRadioButton -->
+    <Style TargetType="RadioButton" x:Key="RegionFeedRadioButton">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Background" Value="{StaticResource RadioCheckBoxBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RadioCheckBoxBrush}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
+        <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid VerticalAlignment="Center" Height="25">
+
+                        <vsm:VisualStateManager.VisualStateGroups>
+                            <vsm:VisualStateGroup x:Name="CommonStates">
+                                <vsm:VisualState x:Name="Normal"/>
+                                <vsm:VisualState x:Name="MouseOver" />
+                                <vsm:VisualState x:Name="Pressed"/>
+                                <vsm:VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To=".55"/>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="CheckStates">
+                                <vsm:VisualState x:Name="Checked">
+                                    <Storyboard>
+
+                                        <DoubleAnimation Storyboard.TargetName="CheckedBox" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" To="1"/>
+
+                                    </Storyboard>
+                                </vsm:VisualState>
+                                <vsm:VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CheckedBox" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" To="0" />
+                                        <DoubleAnimation Storyboard.TargetName="UnCheckedBox" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" To="1" />
+                                    </Storyboard>
+                                </vsm:VisualState>
+                                <vsm:VisualState x:Name="Indeterminate"/>
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="FocusStates">
+                                <vsm:VisualState x:Name="Focused"/>
+                                <vsm:VisualState x:Name="Unfocused" />
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="ValidationStates">
+                                <vsm:VisualState x:Name="Valid"/>
+                                <vsm:VisualState x:Name="InvalidUnfocused">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                                <vsm:VisualState x:Name="InvalidFocused">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="validationTooltip" Storyboard.TargetProperty="IsOpen">
+                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <sys:Boolean>True</sys:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                        </vsm:VisualStateManager.VisualStateGroups>
+
+                        <!-- Content Grid -->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="18"/>
+                                <!--<ColumnDefinition Width="24"/>-->
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Width="16" Height="16" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <Ellipse x:Name="UnCheckedBox" Fill="{TemplateBinding Background}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0" />
+                                <Ellipse x:Name="CheckedBox" Fill="{StaticResource RadioCheckBoxCheckBrush}" Stroke="{TemplateBinding Background}" StrokeThickness="11" Width="16" Height="16" Margin="-10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            </Grid>
+
+
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2"  Width="16" Height="16" Grid.Column="0">
+                                <Border x:Name="ValidationErrorElement" Margin="1" BorderThickness="1" CornerRadius="1" BorderBrush="#FFDB000C" Visibility="Collapsed"
+                              ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="validationTooltip" 
+                                   Template="{StaticResource ValidationToolTipTemplate}"
+                                   DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                   Placement="Right" 
+                                   PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                            <ToolTip.Triggers>
+                                                <EventTrigger RoutedEvent="Canvas.Loaded">
+                                                    <EventTrigger.Actions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="validationTooltip" Storyboard.TargetProperty="IsHitTestVisible">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" >
+                                                                        <DiscreteObjectKeyFrame.Value>
+                                                                            <sys:Boolean>true</sys:Boolean>
+                                                                        </DiscreteObjectKeyFrame.Value>
+                                                                    </DiscreteObjectKeyFrame>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger.Actions>
+                                                </EventTrigger>
+                                            </ToolTip.Triggers>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                    <Grid Width="10" Height="10" HorizontalAlignment="Right" Margin="0,-4,-4,0" VerticalAlignment="Top" Background="Transparent">
+                                        <Path Margin="0,3,0,0" Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="#FFDC000C"/>
+                                        <Path Margin="0,3,0,0" Data="M 0,0 L2,0 L 7,5 L7,7" Fill="#ffffff"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <TextBlock x:Name="contentPresenter" 
+                                   Text="{Binding Title}"
+                                   TextWrapping="Wrap"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Grid.Column="1"
+                                   Margin="2"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   />
+                        </Grid>
+                        <!-- End Content Grid -->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="ButtonBase" TargetType="ButtonBase">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource BorderThickness}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMediumLarge}"/>
+        <Setter Property="Padding" Value="10,3,10,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BackgroundBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ForegroundBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ForegroundBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" Margin="{StaticResource TouchTargetOverhang}">
+                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadioButtonCheckBoxBase" BasedOn="{StaticResource ButtonBase}" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{StaticResource RadioCheckBoxBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RadioCheckBoxBrush}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
+        <Setter Property="FontFamily" Value="Segoe UI, Lucida Sans Unicode, Verdana"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <Style x:Key="LittleCheckBoxStyle" BasedOn="{StaticResource RadioButtonCheckBoxBase}" TargetType="CheckBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="CheckBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxPressedBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="CheckBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxPressedBorderBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxCheckBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="IndeterminateMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxCheckBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="CheckBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxDisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="CheckBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxCheckDisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="IndeterminateMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RadioCheckBoxCheckDisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DisabledBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="CheckMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="IndeterminateMark">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Margin="{StaticResource TouchTargetLargeOverhang}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="CheckBackground" BorderBrush="{TemplateBinding Background}" BorderThickness="{StaticResource BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="Left" Height="16" IsHitTestVisible="False" VerticalAlignment="Center" Width="16" />
+                            <Rectangle x:Name="IndeterminateMark" Fill="{StaticResource RadioCheckBoxCheckBrush}" HorizontalAlignment="Center" Height="16" IsHitTestVisible="False" Grid.Row="0" Visibility="Collapsed" VerticalAlignment="Center" Width="16"/>
+                            <Path x:Name="CheckMark" Data="M0,119 L31,92 L119,185 L267,0 L300,24 L122,250 z" Fill="{StaticResource RadioCheckBoxCheckBrush}" HorizontalAlignment="Center" Height="8.5" IsHitTestVisible="False" Stretch="Fill" StrokeThickness="2" StrokeLineJoin="Round" Visibility="Collapsed" VerticalAlignment="Center" Width="12" Margin="-4,0,0,0"/>
+                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="5,0,0,0" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="lbPointFeedsItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="TabNavigation" Value="Local"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid x:Name="grid" Background="{TemplateBinding Background}" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <CompositeTransform/>
+                        </Grid.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".35" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="fillColor"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="contentPresenter"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected"/>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".75" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="fillColor2"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="LayoutStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="AfterLoaded"/>
+                                <VisualState x:Name="BeforeLoaded">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To="-300" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="BeforeUnloaded">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To="300" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="fillColor" Fill="#FFBADDE9" IsHitTestVisible="False" Opacity="0" RadiusY="1" RadiusX="1"/>
+                        <Rectangle x:Name="fillColor2" Fill="#FFBADDE9" IsHitTestVisible="False" Opacity="0" RadiusY="1" RadiusX="1"/>
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"/>
+                        <Rectangle x:Name="FocusVisualElement" RadiusY="1" RadiusX="1" Stroke="#FF6DBDD1" StrokeThickness="1" Visibility="Collapsed"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- **STYLE UPDATES FOR NAV TEMPLATE** -->
     <!-- ********************************** -->
     <Style x:Key="NavContentBorderStyle" TargetType="Border">
@@ -322,4 +687,45 @@
         <Setter Property="TextOptions.TextHintingMode" Value="Animated" />
     </Style>
 
+    <Style x:Key="HyperlinkButtonStyleWrapped" TargetType="HyperlinkButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="HyperlinkButton">
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="tbNormal">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="tbUnderlined">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <TextBlock x:Name="tbNormal" Margin="0" TextWrapping="Wrap" FontFamily="{TemplateBinding FontFamily}" Text="{TemplateBinding Content}" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="tbUnderlined" Margin="0" TextWrapping="Wrap" FontFamily="{TemplateBinding FontFamily}" Text="{TemplateBinding Content}" TextDecorations="Underline" d:LayoutOverrides="Width, Height" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    
 </ResourceDictionary>

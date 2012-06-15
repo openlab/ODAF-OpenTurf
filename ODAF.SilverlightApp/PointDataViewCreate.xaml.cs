@@ -52,21 +52,16 @@ namespace ODAF.SilverlightApp
 
         public MainPage MainPage { get; set; }
 
-
         public Pushpin Pin { get; set; }
         
-
         public PointDataViewCreate()
         {
             InitializeComponent();
-
             this.createViewBox.ParentView = this;
         }
 
         protected void UpdateData()
-        {
-
-        }
+        { }
 
         public void Cancel()
         {

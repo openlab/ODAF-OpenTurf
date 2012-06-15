@@ -21,10 +21,6 @@
 
 @synthesize tvCell, summary, comments, addButton, needsUpdate, currentMode, currentPage, pageSize, moreIndexPath;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
-
 - (id) init
 {
 	if (self = [super initWithStyle:UITableViewStylePlain]) {
@@ -88,16 +84,7 @@
 	AddCommentViewController* viewController = [[AddCommentViewController alloc] init];
 	viewController.summary = self.summary;
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		UINavigationController* navigationController = self.navigationController;
-		[navigationController pushViewController:viewController animated:YES];
-	}
-	else
-	{
-		[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-	}		
-	
+	[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 	[viewController release];
 }
 
@@ -418,17 +405,7 @@
 		CommentDetailsViewController* viewController = [[CommentDetailsViewController alloc] init];
 		viewController.aggregateComment = aggregateComment;
 		viewController.title = NSLocalizedString(kCommentText, kCommentText);
-		
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		{
-			UINavigationController* navigationController = self.navigationController;
-			[navigationController pushViewController:viewController animated:YES];
-		}
-		else
-		{
-			[delg pushViewControllerToStack:viewController];
-		}		
-		
+		[delg pushViewControllerToStack:viewController];
 		[viewController release];
 	} 
 	else 

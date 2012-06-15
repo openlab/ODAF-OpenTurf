@@ -9,17 +9,14 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Maps.MapControl;
+using Microsoft.Maps.MapControl.ExtendedModes;
 using System.Collections.Generic;
 
 namespace ODAF.SilverlightApp.VO
 {
     public class PlaceMarkRegion
     {
-        public string description
-        {
-            get;
-            set;
-        }
+        public string description { get; set; }
         public List<Location> coordList { get; set; }
         public string coords
         {
@@ -27,14 +24,8 @@ namespace ODAF.SilverlightApp.VO
             set
             {
                 coordList = new List<Location>();
-                // Note kml 2.2 defines coord like this: "D,D,D D,D,D D,D,D ..."
-                // While 2.1 defines them like this: "D,D,D,D,D,D,D ..."
-
-                string temp = value.Replace("\n", "").Replace(", ",",").Replace(" ", ",");
-
-                string[] strCoords = temp.Split(',');
-                //System.Diagnostics.Debug.WriteLine("strCoordsstrCoords:" + strCoords.Length);
-                for (int n = 0; (n + 3) < strCoords.Length; n += 3)
+                string[] strCoords = value.Split(',');
+                for (int n = 0; n < strCoords.Length; n += 3)
                 {
                     Location loc = new Location(double.Parse(strCoords[n + 1]), double.Parse(strCoords[n]), double.Parse(strCoords[n + 2]));
                     coordList.Add(loc);

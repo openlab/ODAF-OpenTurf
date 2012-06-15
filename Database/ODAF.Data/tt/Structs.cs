@@ -73,6 +73,16 @@ namespace ODAF.Data {
 	                MaxLength = 255
                 });
 
+                Columns.Add(new DatabaseColumn("oauth_service_id", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Int32,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = true,
+	                MaxLength = 0
+                });
+
                 Columns.Add(new DatabaseColumn("UserRole", this)
                 {
 	                IsPrimaryKey = false,
@@ -110,16 +120,6 @@ namespace ODAF.Data {
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("oauth_service_id", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = true,
 	                MaxLength = 0
                 });
 
@@ -207,6 +207,18 @@ namespace ODAF.Data {
       			}
 		    }
             
+            public IColumn oauth_service_id{
+                get{
+                    return this.GetColumn("oauth_service_id");
+                }
+            }
+				
+   			public static string oauth_service_idColumn{
+			      get{
+        			return "oauth_service_id";
+      			}
+		    }
+            
             public IColumn UserRole{
                 get{
                     return this.GetColumn("UserRole");
@@ -252,18 +264,6 @@ namespace ODAF.Data {
    			public static string TokenExpiryColumn{
 			      get{
         			return "TokenExpiry";
-      			}
-		    }
-            
-            public IColumn oauth_service_id{
-                get{
-                    return this.GetColumn("oauth_service_id");
-                }
-            }
-				
-   			public static string oauth_service_idColumn{
-			      get{
-        			return "oauth_service_id";
       			}
 		    }
             
@@ -313,7 +313,7 @@ namespace ODAF.Data {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
@@ -358,6 +358,16 @@ namespace ODAF.Data {
 	                MaxLength = 255
                 });
 
+                Columns.Add(new DatabaseColumn("oauth_service_id", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Int32,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
                 Columns.Add(new DatabaseColumn("UserRole", this)
                 {
 	                IsPrimaryKey = false,
@@ -392,16 +402,6 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("oauth_service_id", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
@@ -512,6 +512,18 @@ namespace ODAF.Data {
       			}
 		    }
             
+            public IColumn oauth_service_id{
+                get{
+                    return this.GetColumn("oauth_service_id");
+                }
+            }
+				
+   			public static string oauth_service_idColumn{
+			      get{
+        			return "oauth_service_id";
+      			}
+		    }
+            
             public IColumn UserRole{
                 get{
                     return this.GetColumn("UserRole");
@@ -557,18 +569,6 @@ namespace ODAF.Data {
    			public static string TokenExpiryColumn{
 			      get{
         			return "TokenExpiry";
-      			}
-		    }
-            
-            public IColumn oauth_service_id{
-                get{
-                    return this.GetColumn("oauth_service_id");
-                }
-            }
-				
-   			public static string oauth_service_idColumn{
-			      get{
-        			return "oauth_service_id";
       			}
 		    }
             
@@ -717,16 +717,6 @@ namespace ODAF.Data {
 	                MaxLength = 1000
                 });
 
-                Columns.Add(new DatabaseColumn("CreatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = true,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
                 Columns.Add(new DatabaseColumn("oauth_service_name", this)
                 {
 	                IsPrimaryKey = false,
@@ -735,6 +725,16 @@ namespace ODAF.Data {
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 50
+                });
+
+                Columns.Add(new DatabaseColumn("CreatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
+	                IsNullable = true,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
                 });
                     
                 
@@ -837,18 +837,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn CreatedOn{
-                get{
-                    return this.GetColumn("CreatedOn");
-                }
-            }
-				
-   			public static string CreatedOnColumn{
-			      get{
-        			return "CreatedOn";
-      			}
-		    }
-            
             public IColumn oauth_service_name{
                 get{
                     return this.GetColumn("oauth_service_name");
@@ -858,6 +846,18 @@ namespace ODAF.Data {
    			public static string oauth_service_nameColumn{
 			      get{
         			return "oauth_service_name";
+      			}
+		    }
+            
+            public IColumn CreatedOn{
+                get{
+                    return this.GetColumn("CreatedOn");
+                }
+            }
+				
+   			public static string CreatedOnColumn{
+			      get{
+        			return "CreatedOn";
       			}
 		    }
             
@@ -902,7 +902,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
+	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -1014,7 +1014,7 @@ namespace ODAF.Data {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
@@ -1033,7 +1033,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
+	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -1184,23 +1184,23 @@ namespace ODAF.Data {
                 SchemaName = "";
                 
 
-                Columns.Add(new DatabaseColumn("PointDataSourceId", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = true,
-	                MaxLength = 0
-                });
-
                 Columns.Add(new DatabaseColumn("PointDataFeedId", this)
                 {
 	                IsPrimaryKey = true,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
 	                IsNullable = false,
 	                AutoIncrement = true,
 	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
+                Columns.Add(new DatabaseColumn("PointDataSourceId", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Int64,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = true,
 	                MaxLength = 0
                 });
 
@@ -1264,6 +1264,16 @@ namespace ODAF.Data {
 	                MaxLength = 0
                 });
 
+                Columns.Add(new DatabaseColumn("Active", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Boolean,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
                 Columns.Add(new DatabaseColumn("UpdatedOn", this)
                 {
 	                IsPrimaryKey = false,
@@ -1283,32 +1293,10 @@ namespace ODAF.Data {
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
-
-                Columns.Add(new DatabaseColumn("Active", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Boolean,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
                     
                 
                 
             }
-            
-            public IColumn PointDataSourceId{
-                get{
-                    return this.GetColumn("PointDataSourceId");
-                }
-            }
-				
-   			public static string PointDataSourceIdColumn{
-			      get{
-        			return "PointDataSourceId";
-      			}
-		    }
             
             public IColumn PointDataFeedId{
                 get{
@@ -1319,6 +1307,18 @@ namespace ODAF.Data {
    			public static string PointDataFeedIdColumn{
 			      get{
         			return "PointDataFeedId";
+      			}
+		    }
+            
+            public IColumn PointDataSourceId{
+                get{
+                    return this.GetColumn("PointDataSourceId");
+                }
+            }
+				
+   			public static string PointDataSourceIdColumn{
+			      get{
+        			return "PointDataSourceId";
       			}
 		    }
             
@@ -1394,6 +1394,18 @@ namespace ODAF.Data {
       			}
 		    }
             
+            public IColumn Active{
+                get{
+                    return this.GetColumn("Active");
+                }
+            }
+				
+   			public static string ActiveColumn{
+			      get{
+        			return "Active";
+      			}
+		    }
+            
             public IColumn UpdatedOn{
                 get{
                     return this.GetColumn("UpdatedOn");
@@ -1415,18 +1427,6 @@ namespace ODAF.Data {
    			public static string CreatedOnColumn{
 			      get{
         			return "CreatedOn";
-      			}
-		    }
-            
-            public IColumn Active{
-                get{
-                    return this.GetColumn("Active");
-                }
-            }
-				
-   			public static string ActiveColumn{
-			      get{
-        			return "Active";
       			}
 		    }
             
@@ -1447,22 +1447,22 @@ namespace ODAF.Data {
                 SchemaName = "";
                 
 
-                Columns.Add(new DatabaseColumn("PointDataSourceId", this)
+                Columns.Add(new DatabaseColumn("PointDataFeedId", this)
                 {
 	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
 
-                Columns.Add(new DatabaseColumn("PointDataFeedId", this)
+                Columns.Add(new DatabaseColumn("PointDataSourceId", this)
                 {
 	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
@@ -1527,6 +1527,16 @@ namespace ODAF.Data {
 	                MaxLength = 0
                 });
 
+                Columns.Add(new DatabaseColumn("Active", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Boolean,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
                 Columns.Add(new DatabaseColumn("UpdatedOn", this)
                 {
 	                IsPrimaryKey = false,
@@ -1547,16 +1557,6 @@ namespace ODAF.Data {
 	                MaxLength = 0
                 });
 
-                Columns.Add(new DatabaseColumn("Active", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Boolean,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
                 Columns.Add(new DatabaseColumn("DataSourceName", this)
                 {
 	                IsPrimaryKey = false,
@@ -1571,18 +1571,6 @@ namespace ODAF.Data {
                 
             }
             
-            public IColumn PointDataSourceId{
-                get{
-                    return this.GetColumn("PointDataSourceId");
-                }
-            }
-				
-   			public static string PointDataSourceIdColumn{
-			      get{
-        			return "PointDataSourceId";
-      			}
-		    }
-            
             public IColumn PointDataFeedId{
                 get{
                     return this.GetColumn("PointDataFeedId");
@@ -1592,6 +1580,18 @@ namespace ODAF.Data {
    			public static string PointDataFeedIdColumn{
 			      get{
         			return "PointDataFeedId";
+      			}
+		    }
+            
+            public IColumn PointDataSourceId{
+                get{
+                    return this.GetColumn("PointDataSourceId");
+                }
+            }
+				
+   			public static string PointDataSourceIdColumn{
+			      get{
+        			return "PointDataSourceId";
       			}
 		    }
             
@@ -1667,6 +1667,18 @@ namespace ODAF.Data {
       			}
 		    }
             
+            public IColumn Active{
+                get{
+                    return this.GetColumn("Active");
+                }
+            }
+				
+   			public static string ActiveColumn{
+			      get{
+        			return "Active";
+      			}
+		    }
+            
             public IColumn UpdatedOn{
                 get{
                     return this.GetColumn("UpdatedOn");
@@ -1688,18 +1700,6 @@ namespace ODAF.Data {
    			public static string CreatedOnColumn{
 			      get{
         			return "CreatedOn";
-      			}
-		    }
-            
-            public IColumn Active{
-                get{
-                    return this.GetColumn("Active");
-                }
-            }
-				
-   			public static string ActiveColumn{
-			      get{
-        			return "Active";
       			}
 		    }
             
@@ -1766,17 +1766,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Boolean,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("CreatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = false,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -1785,7 +1775,17 @@ namespace ODAF.Data {
                 Columns.Add(new DatabaseColumn("PointDataSourceId", this)
                 {
 	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = true,
+	                MaxLength = 0
+                });
+
+                Columns.Add(new DatabaseColumn("CreatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
@@ -1844,18 +1844,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn CreatedOn{
-                get{
-                    return this.GetColumn("CreatedOn");
-                }
-            }
-				
-   			public static string CreatedOnColumn{
-			      get{
-        			return "CreatedOn";
-      			}
-		    }
-            
             public IColumn PointDataSourceId{
                 get{
                     return this.GetColumn("PointDataSourceId");
@@ -1865,6 +1853,18 @@ namespace ODAF.Data {
    			public static string PointDataSourceIdColumn{
 			      get{
         			return "PointDataSourceId";
+      			}
+		    }
+            
+            public IColumn CreatedOn{
+                get{
+                    return this.GetColumn("CreatedOn");
+                }
+            }
+				
+   			public static string CreatedOnColumn{
+			      get{
+        			return "CreatedOn";
       			}
 		    }
             
@@ -1889,8 +1889,8 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int64,
-	                IsNullable = false,
-	                AutoIncrement = true,
+	                IsNullable = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
@@ -1899,7 +1899,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.String,
-	                IsNullable = false,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 255
@@ -1909,7 +1909,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.String,
-	                IsNullable = false,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 50
@@ -1919,7 +1919,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Boolean,
-	                IsNullable = false,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -1929,7 +1929,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = false,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -1938,14 +1938,14 @@ namespace ODAF.Data {
                 Columns.Add(new DatabaseColumn("PointDataSourceId", this)
                 {
 	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
-	                IsNullable = false,
+	                DataType = DbType.Int64,
+	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
 
-                Columns.Add(new DatabaseColumn("Summaries", this)
+                Columns.Add(new DatabaseColumn("Expr1", this)
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int32,
@@ -2041,15 +2041,15 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn Summaries{
+            public IColumn Expr1{
                 get{
-                    return this.GetColumn("Summaries");
+                    return this.GetColumn("Expr1");
                 }
             }
 				
-   			public static string SummariesColumn{
+   			public static string Expr1Column{
 			      get{
-        			return "Summaries";
+        			return "Expr1";
       			}
 		    }
             
@@ -2085,7 +2085,7 @@ namespace ODAF.Data {
                 Columns.Add(new DatabaseColumn("PointDataSourceId", this)
                 {
 	                IsPrimaryKey = true,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
 	                IsNullable = false,
 	                AutoIncrement = true,
 	                IsForeignKey = true,
@@ -2142,26 +2142,6 @@ namespace ODAF.Data {
 	                MaxLength = 1000
                 });
 
-                Columns.Add(new DatabaseColumn("UpdatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("CreatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
                 Columns.Add(new DatabaseColumn("Active", this)
                 {
 	                IsPrimaryKey = false,
@@ -2180,6 +2160,26 @@ namespace ODAF.Data {
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 500
+                });
+
+                Columns.Add(new DatabaseColumn("UpdatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
+                Columns.Add(new DatabaseColumn("CreatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
                 });
                     
                 
@@ -2258,30 +2258,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn UpdatedOn{
-                get{
-                    return this.GetColumn("UpdatedOn");
-                }
-            }
-				
-   			public static string UpdatedOnColumn{
-			      get{
-        			return "UpdatedOn";
-      			}
-		    }
-            
-            public IColumn CreatedOn{
-                get{
-                    return this.GetColumn("CreatedOn");
-                }
-            }
-				
-   			public static string CreatedOnColumn{
-			      get{
-        			return "CreatedOn";
-      			}
-		    }
-            
             public IColumn Active{
                 get{
                     return this.GetColumn("Active");
@@ -2306,6 +2282,30 @@ namespace ODAF.Data {
       			}
 		    }
             
+            public IColumn UpdatedOn{
+                get{
+                    return this.GetColumn("UpdatedOn");
+                }
+            }
+				
+   			public static string UpdatedOnColumn{
+			      get{
+        			return "UpdatedOn";
+      			}
+		    }
+            
+            public IColumn CreatedOn{
+                get{
+                    return this.GetColumn("CreatedOn");
+                }
+            }
+				
+   			public static string CreatedOnColumn{
+			      get{
+        			return "CreatedOn";
+      			}
+		    }
+            
                     
         }
         
@@ -2326,9 +2326,9 @@ namespace ODAF.Data {
                 Columns.Add(new DatabaseColumn("PointDataSourceId", this)
                 {
 	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
+	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
                 });
@@ -2383,26 +2383,6 @@ namespace ODAF.Data {
 	                MaxLength = 1000
                 });
 
-                Columns.Add(new DatabaseColumn("UpdatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("CreatedOn", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.DateTime,
-	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
                 Columns.Add(new DatabaseColumn("Active", this)
                 {
 	                IsPrimaryKey = false,
@@ -2421,6 +2401,26 @@ namespace ODAF.Data {
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 500
+                });
+
+                Columns.Add(new DatabaseColumn("UpdatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
+                });
+
+                Columns.Add(new DatabaseColumn("CreatedOn", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.DateTime,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
                 });
 
                 Columns.Add(new DatabaseColumn("Feeds", this)
@@ -2519,30 +2519,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn UpdatedOn{
-                get{
-                    return this.GetColumn("UpdatedOn");
-                }
-            }
-				
-   			public static string UpdatedOnColumn{
-			      get{
-        			return "UpdatedOn";
-      			}
-		    }
-            
-            public IColumn CreatedOn{
-                get{
-                    return this.GetColumn("CreatedOn");
-                }
-            }
-				
-   			public static string CreatedOnColumn{
-			      get{
-        			return "CreatedOn";
-      			}
-		    }
-            
             public IColumn Active{
                 get{
                     return this.GetColumn("Active");
@@ -2564,6 +2540,30 @@ namespace ODAF.Data {
    			public static string DescriptionColumn{
 			      get{
         			return "Description";
+      			}
+		    }
+            
+            public IColumn UpdatedOn{
+                get{
+                    return this.GetColumn("UpdatedOn");
+                }
+            }
+				
+   			public static string UpdatedOnColumn{
+			      get{
+        			return "UpdatedOn";
+      			}
+		    }
+            
+            public IColumn CreatedOn{
+                get{
+                    return this.GetColumn("CreatedOn");
+                }
+            }
+				
+   			public static string CreatedOnColumn{
+			      get{
+        			return "CreatedOn";
       			}
 		    }
             
@@ -2618,6 +2618,26 @@ namespace ODAF.Data {
 	                MaxLength = 0
                 });
 
+                Columns.Add(new DatabaseColumn("Guid", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.String,
+	                IsNullable = true,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 100
+                });
+
+                Columns.Add(new DatabaseColumn("Name", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.String,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 255
+                });
+
                 Columns.Add(new DatabaseColumn("Description", this)
                 {
 	                IsPrimaryKey = false,
@@ -2702,7 +2722,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
+	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -2712,30 +2732,10 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("Guid", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.String,
-	                IsNullable = true,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 100
-                });
-
-                Columns.Add(new DatabaseColumn("Name", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.String,
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
-	                MaxLength = 255
+	                MaxLength = 0
                 });
 
                 Columns.Add(new DatabaseColumn("CreatedById", this)
@@ -2761,6 +2761,30 @@ namespace ODAF.Data {
    			public static string IdColumn{
 			      get{
         			return "Id";
+      			}
+		    }
+            
+            public IColumn Guid{
+                get{
+                    return this.GetColumn("Guid");
+                }
+            }
+				
+   			public static string GuidColumn{
+			      get{
+        			return "Guid";
+      			}
+		    }
+            
+            public IColumn Name{
+                get{
+                    return this.GetColumn("Name");
+                }
+            }
+				
+   			public static string NameColumn{
+			      get{
+        			return "Name";
       			}
 		    }
             
@@ -2881,30 +2905,6 @@ namespace ODAF.Data {
    			public static string ModifiedOnColumn{
 			      get{
         			return "ModifiedOn";
-      			}
-		    }
-            
-            public IColumn Guid{
-                get{
-                    return this.GetColumn("Guid");
-                }
-            }
-				
-   			public static string GuidColumn{
-			      get{
-        			return "Guid";
-      			}
-		    }
-            
-            public IColumn Name{
-                get{
-                    return this.GetColumn("Name");
-                }
-            }
-				
-   			public static string NameColumn{
-			      get{
-        			return "Name";
       			}
 		    }
             
@@ -2942,9 +2942,29 @@ namespace ODAF.Data {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = true,
+	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
+                });
+
+                Columns.Add(new DatabaseColumn("Guid", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.String,
+	                IsNullable = true,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 100
+                });
+
+                Columns.Add(new DatabaseColumn("Name", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.String,
+	                IsNullable = false,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 255
                 });
 
                 Columns.Add(new DatabaseColumn("Description", this)
@@ -3031,7 +3051,7 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
+	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -3041,30 +3061,10 @@ namespace ODAF.Data {
                 {
 	                IsPrimaryKey = false,
 	                DataType = DbType.DateTime,
-	                IsNullable = true,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("Guid", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.String,
-	                IsNullable = true,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 100
-                });
-
-                Columns.Add(new DatabaseColumn("Name", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.String,
 	                IsNullable = false,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
-	                MaxLength = 255
+	                MaxLength = 0
                 });
 
                 Columns.Add(new DatabaseColumn("CreatedById", this)
@@ -3072,16 +3072,6 @@ namespace ODAF.Data {
 	                IsPrimaryKey = false,
 	                DataType = DbType.Int64,
 	                IsNullable = false,
-	                AutoIncrement = false,
-	                IsForeignKey = false,
-	                MaxLength = 0
-                });
-
-                Columns.Add(new DatabaseColumn("Comments", this)
-                {
-	                IsPrimaryKey = false,
-	                DataType = DbType.Int32,
-	                IsNullable = true,
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 0
@@ -3095,6 +3085,16 @@ namespace ODAF.Data {
 	                AutoIncrement = false,
 	                IsForeignKey = false,
 	                MaxLength = 30
+                });
+
+                Columns.Add(new DatabaseColumn("Comments", this)
+                {
+	                IsPrimaryKey = false,
+	                DataType = DbType.Int32,
+	                IsNullable = true,
+	                AutoIncrement = false,
+	                IsForeignKey = false,
+	                MaxLength = 0
                 });
                     
                 
@@ -3110,6 +3110,30 @@ namespace ODAF.Data {
    			public static string IdColumn{
 			      get{
         			return "Id";
+      			}
+		    }
+            
+            public IColumn Guid{
+                get{
+                    return this.GetColumn("Guid");
+                }
+            }
+				
+   			public static string GuidColumn{
+			      get{
+        			return "Guid";
+      			}
+		    }
+            
+            public IColumn Name{
+                get{
+                    return this.GetColumn("Name");
+                }
+            }
+				
+   			public static string NameColumn{
+			      get{
+        			return "Name";
       			}
 		    }
             
@@ -3233,30 +3257,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn Guid{
-                get{
-                    return this.GetColumn("Guid");
-                }
-            }
-				
-   			public static string GuidColumn{
-			      get{
-        			return "Guid";
-      			}
-		    }
-            
-            public IColumn Name{
-                get{
-                    return this.GetColumn("Name");
-                }
-            }
-				
-   			public static string NameColumn{
-			      get{
-        			return "Name";
-      			}
-		    }
-            
             public IColumn CreatedById{
                 get{
                     return this.GetColumn("CreatedById");
@@ -3269,18 +3269,6 @@ namespace ODAF.Data {
       			}
 		    }
             
-            public IColumn Comments{
-                get{
-                    return this.GetColumn("Comments");
-                }
-            }
-				
-   			public static string CommentsColumn{
-			      get{
-        			return "Comments";
-      			}
-		    }
-            
             public IColumn screen_name{
                 get{
                     return this.GetColumn("screen_name");
@@ -3290,6 +3278,18 @@ namespace ODAF.Data {
    			public static string screen_nameColumn{
 			      get{
         			return "screen_name";
+      			}
+		    }
+            
+            public IColumn Comments{
+                get{
+                    return this.GetColumn("Comments");
+                }
+            }
+				
+   			public static string CommentsColumn{
+			      get{
+        			return "Comments";
       			}
 		    }
             

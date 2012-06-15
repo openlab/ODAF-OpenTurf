@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CloudSettingsResolver")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("CloudSettingsResolver")]
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2012")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a3a2f251-cb31-4a22-b363-28ad88a5f788")]
+[assembly: Guid("4c4bdce7-ea45-4145-a972-4a77c52dda64")]
 
 // Version information for an assembly consists of the following four values:
 //

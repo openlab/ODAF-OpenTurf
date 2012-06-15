@@ -113,7 +113,7 @@
 			}
 		}
 		
-		if(oldestImage) [self removeTile:[oldestImage tile]];
+		[self removeTile:[oldestImage tile]];
 	}
 }
 

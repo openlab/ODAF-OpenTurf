@@ -18,8 +18,7 @@ freev2(void **v, int nrows) {
 vector2(int nrows, int ncols, int size) {
 	void **s;
 
-	s = (void **)pj_malloc(sizeof(void *) * nrows);
-	if (s) {
+	if (s = (void **)pj_malloc(sizeof(void *) * nrows)) {
 		int rsize, i;
 
 		rsize = size * ncols;

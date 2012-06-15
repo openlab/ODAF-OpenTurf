@@ -30,22 +30,8 @@
 @synthesize mapView, toolbar, currentMarker, newMarker, callout, currentLocationButton, homeButton;
 @synthesize zPosition, currentLocationMarker, locationManager, imageDownloadsInProgress, undoManager, undoMarker;
 
+
 #pragma mark -
-
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		if (self.popoverController != nil && [self.popoverController isPopoverVisible]) {
-			if (![[self.popoverController contentViewController] isKindOfClass:[FlipsideViewController class]]) {
-				[self.popoverController presentPopoverFromRect:[self.currentMarker frame] 
-														inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny 
-													  animated:YES];
-			}
-		}
-	}
-}
-
 
 - (void) viewDidLoad 
 {
@@ -61,6 +47,7 @@
 	[self.mapView setDelegate:self];
 	self.mapView.contents.tileSource = [[RMVirtualEarthSource alloc] initWithRoadThemeUsingAccessKey:BING_MAPS_DEV_KEY];
 
+	[self goToHomeLocation];
 	self.zPosition = 100000;// so that the current marker is on top
 	
 	// Register for UserSummaryAdded notif
@@ -74,8 +61,6 @@
 		[[NSNotificationQueue defaultQueue] enqueueNotification:self.pendingNotification postingStyle: NSPostASAP];
 		self.pendingNotification = nil;
 	}
-	
-	[self performSelector:@selector(goToHomeLocation) withObject:nil afterDelay:0.3];
 }
 
 - (void) didReceiveMemoryWarning 
@@ -296,21 +281,11 @@
 {
 	NSDictionary* mapSettings = [[Utils sharedInstance] getConfigSetting:kConfigKeyMapSettings];
 	CLLocationCoordinate2D c2d;
+	c2d.latitude = [[mapSettings objectForKey:kConfigKeyMapInitialLatitude] floatValue];
+	c2d.longitude = [[mapSettings objectForKey:kConfigKeyMapInitialLongitude] floatValue];
 
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		self.mapView.contents.zoom = [[mapSettings objectForKey:kConfigKeyMapInitialZoomiPad] floatValue];
-		c2d.latitude = [[mapSettings objectForKey:kConfigKeyMapInitialLatitudeiPad] floatValue];
-		c2d.longitude = [[mapSettings objectForKey:kConfigKeyMapInitialLongitudeiPad] floatValue];
-	}
-	else
-	{
-		self.mapView.contents.zoom = [[mapSettings objectForKey:kConfigKeyMapInitialZoom] floatValue];
-		c2d.latitude = [[mapSettings objectForKey:kConfigKeyMapInitialLatitude] floatValue];
-		c2d.longitude = [[mapSettings objectForKey:kConfigKeyMapInitialLongitude] floatValue];
-	}
-	
 	[self.mapView moveToLatLong:c2d];
+	self.mapView.contents.zoom = [[mapSettings objectForKey:kConfigKeyMapInitialZoom] floatValue];
 	self.homeButton.style = UIBarButtonItemStyleDone;
 }
 
@@ -413,9 +388,7 @@
 
 - (void) singleTapOnMap: (RMMapView*) map At: (CGPoint) point
 {
-	//DebugNSLog(@"Clicked on Map - Zoom: %f New location: X:%lf Y:%lf", self.mapView.contents.zoom, point.x, point.y);
-	CLLocationCoordinate2D coordinate = [mapView.contents pixelToLatLong:point];
-	DebugNSLog(@"Clicked on Map - Zoom: %f Lat: %lf Lng: %lf", self.mapView.contents.zoom, coordinate.latitude, coordinate.longitude);
+	DebugNSLog(@"Clicked on Map - New location: X:%lf Y:%lf", point.x, point.y);
 	
 	[self.currentMarker hideLabel];
 	self.currentMarker.label = nil;
@@ -476,22 +449,7 @@
 		viewController.summary.Guid = [[Utils sharedInstance] generateUUID];
 		viewController.summary.Tag = @"";
 		
-		///////////////////
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		{
-			UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-			id popover = [[NSClassFromString(@"UIPopoverController") alloc] initWithContentViewController:navigationController];
-			self.popoverController = popover;          // we retain a pointer so we can release later or re-use
-			
-			[popover presentPopoverFromRect:[marker frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-			[popover release];          // retained in   self.popoverController
-		}
-		else
-		{
-			[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-		}		
-		/////////////////
-		
+		[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 		[viewController release];
 	} 
 	else 
@@ -500,24 +458,7 @@
 		viewController.annotation = (MapAnnotation*)self.currentMarker.data;
 		
 		viewController.title = NSLocalizedString(kDetailsText, kDetailsText);
-
-		
-		///////////////////
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		{
-			UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-			id popover = [[NSClassFromString(@"UIPopoverController") alloc] initWithContentViewController:navigationController];
-			self.popoverController = popover;          // we retain a pointer so we can release later or re-use
-			
-			[popover presentPopoverFromRect:[marker frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-			[popover release];          // retained in   self.popoverController
-		}
-		else
-		{
-			[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
-		}		
-		/////////////////
-		
+		[[VanGuideAppDelegate sharedApplicationDelegate] pushViewControllerToStack:viewController];
 		[viewController release];
 	}
 }

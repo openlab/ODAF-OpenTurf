@@ -28,15 +28,15 @@ namespace ODAF.SilverlightApp
                 _currentUser = value;
                 if (_currentUser != null)
                 {
-                    screenNameText.Text = "Welcome \n" + _currentUser.screen_name;
+                    screenNameText.Text = ODAF.SilverlightApp.Resources.TwitterUserBadgeResource.Welcome + " \n" + _currentUser.screen_name;
                     userImage.Source = new BitmapImage(new Uri(_currentUser.profile_image_url, UriKind.Absolute));
-                    twitterImage.Visibility = Visibility.Collapsed;
+                    twitterImageStackPanel.Visibility = Visibility.Collapsed;
                     screenNameText.Visibility = Visibility.Visible;
                     userImage.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    twitterImage.Visibility = Visibility.Visible;
+                    twitterImageStackPanel.Visibility = Visibility.Visible;
                     screenNameText.Visibility = Visibility.Collapsed;
                     userImage.Visibility = Visibility.Collapsed;
                 }

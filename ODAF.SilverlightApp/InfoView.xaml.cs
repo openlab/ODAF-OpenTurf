@@ -22,8 +22,6 @@ namespace ODAF.SilverlightApp
         public PointDataSummary Data
         {
             get { return _data; }
-
-
             set
             {
                 _data = value;
@@ -31,13 +29,10 @@ namespace ODAF.SilverlightApp
             }
         }
 
-       
-
         public InfoView()
         {
             InitializeComponent();
         }
-
 
         public void Show()
         {
@@ -46,7 +41,6 @@ namespace ODAF.SilverlightApp
 
         public void UpdateView()
         {
-            
             tbTitle.Text = Data.Name;
             if (Data.Description != null && Data.Description.Length > 0)
             {
@@ -77,15 +71,10 @@ namespace ODAF.SilverlightApp
                     spOwnerButtons.Visibility = Visibility.Collapsed;
                 }
             }
-
-            
         }
-
-     
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-
             ParentView.MainPage.EditLandmark(ParentView.CurrentPlaceMark);
         }
 

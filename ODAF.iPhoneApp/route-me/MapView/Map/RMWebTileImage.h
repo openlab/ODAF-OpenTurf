@@ -30,23 +30,10 @@
 
 static const NSUInteger kWebTileRetries = 30;
 
-extern NSString *RMWebTileImageErrorDomain;
-
-extern NSString *RMWebTileImageHTTPResponseCodeKey;
-enum {
-    RMWebTileImageErrorUnexpectedHTTPResponse,
-    RMWebTileImageErrorZeroLengthResponse,
-    RMWebTileImageErrorNotFoundResponse
-};
-
-extern NSString *RMWebTileImageNotificationErrorKey;
-
-
-
 /// RMTileImage subclass: a tile image loaded from a URL.
 @interface RMWebTileImage : RMTileImage {
-    NSUInteger retries;
-    NSError *lastError;
+        NSUInteger retries;
+        NSInteger retryCode;
 
 	NSURL *url;
 	NSURLConnection *connection;

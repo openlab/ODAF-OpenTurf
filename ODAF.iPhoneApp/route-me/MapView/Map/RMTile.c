@@ -77,7 +77,8 @@ RMTileRect RMTileRectRound(RMTileRect rect)
 {
 	rect.size.width = ceilf(rect.size.width + rect.origin.offset.x);
 	rect.size.height = ceilf(rect.size.height + rect.origin.offset.y);
-	rect.origin.offset = CGPointZero;
+	rect.origin.offset.x = 0;
+	rect.origin.offset.y = 0;
 	
 	return rect;
 }

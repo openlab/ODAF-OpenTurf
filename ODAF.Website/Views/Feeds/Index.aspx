@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Views/Shared/ODDocsMasterPage.Master" Inherits="Views_Feeds_Index" Codebehind="Index.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-ODAF REST API for Feeds
+ODAF Openturf REST API for Feeds
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">

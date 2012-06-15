@@ -3,15 +3,15 @@
 <%@ Import Namespace="vancouveropendata.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%> Location - <%=ViewData.Model.Name %>
+<%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName")%> Location - <%=ViewData.Model.Name %>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
     <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0" />
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2"></script>
     <script type="text/javascript">
-
-        var Vanc = new VELatLong(49.241810639098816, -123.06404113769532);
+        // CHANGEME: Put in the Lat and Long of your City's viewport below
+        var Vanc = new VELatLong(48.8566140, 2.3522219);
         var map = null;
         
         var id = "<%=ViewData.Model.Guid %>";
@@ -56,7 +56,7 @@
         function GetMap() {
             map = new VEMap("BingMap");
             map.LoadMap(Vanc, 10, VEMapStyle.Aerial, false, VEMapMode.Mode2D, true, 1);
-            map.SetCredentials("AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj");
+            map.SetCredentials("AgvaTLQNWQ-IHj1qZ3ifYTpnm_W1T5OWn2HsyU76OwuMtZEeh8zIqmNSnkOn0SX4");
             
             pointToShow = new VEPushpin(id, coords, icon, title, description);
             map.AddPushpin(pointToShow);
@@ -69,12 +69,12 @@
           
       body
       {
-      	 background-color:#333;
-      	 margin: 0;
-      	 padding: 0;
-      	 font-family:Trebuchet MS;
-      	 color:#ddd;
-      	 width: 100%;
+         background-color:#00A9DA;
+         margin: 0;
+         padding: 0;
+         font-family:Segoe UI;
+         color:#ddd;
+         width: 100%;
       }
       
       h1 {
@@ -128,7 +128,7 @@
 
 <body onload="GetMap();" onorientationchange="UpdateOrientation();">
     <div>
-        <h1 class="truncate"><%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string%> - <%=ViewData.Model.Name %></h1>
+        <h1 class="truncate"><%=website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName")%> - <%=ViewData.Model.Name %></h1>
         <h2 class="truncate"><%=ViewData.Model.Description %></h2>
     </div>
     <div id="BingMap">
@@ -172,7 +172,7 @@
             %>
             <% if (Request.Browser.IsMobileDevice && Request.Browser.Platform.Equals("iPhone OS"))
                { %>
-                <a id="app-link" href="<%=(website_mvc.Code.CloudSettingsResolver.GetConfigSetting("AppName") as string).ToLower()%>://ViewSummary/?<%=String.Format("SummaryId={0}", ViewData.Model.Id) %>"><%=comment_text%></a>
+                <a id="app-link" href="<%=(ConfigurationSettings.AppSettings["AppName"] as string).ToLower()%>://ViewSummary/?<%=String.Format("SummaryId={0}", ViewData.Model.Id) %>"><%=comment_text%></a>
             <% } else { %>
                <%=comment_text%>
             <%} %>

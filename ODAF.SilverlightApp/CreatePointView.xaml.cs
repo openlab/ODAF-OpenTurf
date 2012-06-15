@@ -25,9 +25,7 @@ namespace ODAF.SilverlightApp
 
         public PointDataSummary Data
         {
-            get { 
-                return _data; 
-            }
+            get { return _data; }
 
 
             set
@@ -48,14 +46,12 @@ namespace ODAF.SilverlightApp
 
         public void Show()
         {
-            UpdateView();
             this.Visibility = Visibility.Visible;
         }
 
         public void UpdateView()
         {
-            tbName.Text = this.Data.Name;
-            tbDescription.Text = this.Data.Description;
+
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -89,31 +85,14 @@ namespace ODAF.SilverlightApp
             temp.LayerId = this.ParentView.User.currentUser.user_id.ToString();
             temp.Latitude = this.ParentView.Pin.Location.Latitude;
             temp.Longitude = this.ParentView.Pin.Location.Longitude;
-            
             //temp.Tag = this.ParentView.User.currentUser.screen_name;
-            if (this.Data != null && this.Data.Guid != null)
-            {
-               // in this case we are only editing
-                temp.Guid = this.Data.Guid;
-                this.ParentView.CurrentSummary = temp;
-                temp.Id = this.Data.Id;
-                this.ParentView.Summary.EditPointDataSummary(temp);
-                
-                
-            }
-            else
-            {
-                temp.Guid = Guid.NewGuid().ToString();
-                this.ParentView.CurrentSummary = temp;
-                this.ParentView.Summary.CreatePointDataSummary(temp);
-
-                
-            }
+            temp.Guid = Guid.NewGuid().ToString();
 
             //"Description", "LayerId", "Latitude", "Longitude", "Tag", "Guid", "Name"
             //string name = this.tbName.Text
 
-
+            this.ParentView.CurrentSummary = temp;
+            this.ParentView.Summary.CreatePointDataSummary(temp);
 
             ClearForm();
             this.ParentView.Visibility = Visibility.Collapsed;

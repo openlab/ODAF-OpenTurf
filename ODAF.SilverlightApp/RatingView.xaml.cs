@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ODAF.SilverlightApp.VO;
+using ODAF.SilverlightApp.Resources;
 
 namespace ODAF.SilverlightApp
 {
@@ -21,7 +22,6 @@ namespace ODAF.SilverlightApp
         public PointDataSummary Data 
         {
             get { return _data; }
-
             set 
             {
                 _data = value;
@@ -40,7 +40,7 @@ namespace ODAF.SilverlightApp
         {
             if (e.NewValue.HasValue)
             {
-                int newRate =(int)(e.NewValue.Value * 100);
+                int newRate = (int)(e.NewValue.Value * 100);
                 ParentView.AddItemRating(this.Data.Guid, newRate);
             }
         }
@@ -70,19 +70,19 @@ namespace ODAF.SilverlightApp
             tbTitle.Text = Data.Name;
             if (Data.CurrentUserRating > 0)
             {
-                tbCurrentUserRating.Text = string.Format("You rated this landmark {0} stars", (Data.CurrentUserRating / 20));
+                tbCurrentUserRating.Text = string.Format(PointDataViewAndSubViewsResource.YouRatedThisLandmark, (Data.CurrentUserRating / 20));
                 rating.IsReadOnly = true;
             }
             else
             {
                 if (ParentView.User.IsAuthenticated)
                 {
-                    tbCurrentUserRating.Text = "Click a star to add your rating.";
+                    tbCurrentUserRating.Text = PointDataViewAndSubViewsResource.ClickAStarToAddYourRating;
                     rating.IsReadOnly = false;
                 }
                 else
                 {
-                    tbCurrentUserRating.Text = "You need to sign in to rate this landmark.";
+                    tbCurrentUserRating.Text = PointDataViewAndSubViewsResource.SignInToRateThisLandmark;
                     rating.IsReadOnly = true;
                 }
             }
@@ -107,17 +107,10 @@ namespace ODAF.SilverlightApp
                         rating = 80; break;
                     case "5":
                         rating = 100; break;
-
                 }
 
                 ParentView.AddItemRating(this.Data.Guid, rating);
             }
-
-        }
-
-        private void OnCloseButton(object sender, MouseButtonEventArgs e)
-        {
-            ParentView.HideView();
         }
     }
 }

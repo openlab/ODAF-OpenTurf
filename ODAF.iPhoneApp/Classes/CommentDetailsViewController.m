@@ -16,9 +16,6 @@
 @synthesize imageView, commentAuthor, subtitle, commentTextView;
 @synthesize aggregateComment, spinner, download, connection;
 
-- (CGSize) contentSizeForViewInPopoverView {
-	return CGSizeMake(kDefaultPopoverWidth, kDefaultPopoverHeight);
-}
 
 - (void)viewDidLoad 
 {

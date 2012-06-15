@@ -135,8 +135,7 @@ static paralist *
 get_defaults(paralist **start, paralist *next, char *name) {
 	FILE *fid;
 
-	fid = pj_open_lib("proj_def.dat", "rt");
-	if (fid) {
+	if (fid = pj_open_lib("proj_def.dat", "rt")) {
 		next = get_opt(start, fid, "general", next);
 		rewind(fid);
 		next = get_opt(start, fid, name, next);
@@ -156,12 +155,10 @@ get_init(paralist **start, paralist *next, char *name) {
 	FILE *fid;
 
 	(void)strncpy(fname, name, MAX_PATH_FILENAME + ID_TAG_MAX + 1);
-	opt = strrchr(fname, ':');
-	if (opt)
+	if (opt = strrchr(fname, ':'))
 		*opt++ = '\0';
 	else { pj_errno = -3; return(0); }
-	fid = pj_open_lib(fname, "rt");
-	if (fid)
+	if (fid = pj_open_lib(fname, "rt"))
 		next = get_opt(start, fid, opt, next);
 	else
 		return(0);
@@ -278,7 +275,7 @@ pj_init(int argc, char **argv) {
 
 	/* set defaults, unless inhibited */
 	if (!pj_param(start, "bno_defs").i)
-		get_defaults(&start, curr, name);
+		curr = get_defaults(&start, curr, name);
 	proj = (PJ *(*)(PJ *)) pj_list[i].proj;
 
 	/* allocate projection structure */
@@ -347,8 +344,7 @@ pj_init(int argc, char **argv) {
 
 	/* set units */
 	s = 0;
-	name = pj_param(start, "sunits").s;
-	if (name) { 
+	if (name = pj_param(start, "sunits").s) { 
 		for (i = 0; (s = pj_units[i].id) && strcmp(name, s) ; ++i) ;
 		if (!s) { pj_errno = -7; goto bum_call; }
 		s = pj_units[i].to_meter;
@@ -363,8 +359,7 @@ pj_init(int argc, char **argv) {
 
 	/* prime meridian */
 	s = 0;
-	name = pj_param(start, "spm").s;
-	if (name) { 
+	if (name = pj_param(start, "spm").s) { 
             const char *value = NULL;
             char *next_str = NULL;
 
@@ -418,7 +413,7 @@ bum_call: /* cleanup error return */
 void
 pj_free(PJ *P) {
 	if (P) {
-		paralist *t, *n;
+		paralist *t = P->params, *n;
 
 		/* free parameter list elements */
 		for (t = P->params; t; t = n) {

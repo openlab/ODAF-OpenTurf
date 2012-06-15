@@ -62,9 +62,14 @@ namespace vancouveropendata.Controllers
 
         protected object CreateErrorObject(Exception ex)
         {
-            // TODO: might not want to return StackTrace, but Message,
-            // depending on DevMode
-            return new { error = ex.StackTrace };
+            string message = ex.Message;
+            if (ex.InnerException != null)
+            {
+                message += ex.InnerException.Message;
+                if (ex.InnerException.InnerException != null)
+                    message += ex.InnerException.InnerException.Message;
+            }
+            return new { error = message };
         }
 
     }
