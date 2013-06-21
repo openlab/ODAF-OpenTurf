@@ -94,13 +94,13 @@
       <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.dll</HintPath>
+      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.Common">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.Common.dll</HintPath>
+      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.ExtendedModes">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\Microsoft.Maps.MapControl.ExtendedModes.dll</HintPath>
+      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.ExtendedModes.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Windows.Controls.WatermarkedTextBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Microsoft\Microsoft.Windows.Controls.WatermarkedTextBox.dll</HintPath>
@@ -121,28 +121,35 @@
       <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Data.4.2010.4\lib\sl4\System.Windows.Controls.Data.DataForm.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Data.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Data.4.2010.4\lib\sl4\System.Windows.Controls.Data.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-DataViz.4.2010.4\lib\sl4\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Input.4.2010.4\lib\sl4\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Layout.4.2010.4\lib\sl4\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Theming.ExpressionDark, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Theming.ExpressionDark">
+      <HintPath>..\packages\SilverlightToolkit-Theming.4.2010.4\lib\sl4\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Theming.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Theming.4.2010.4\lib\sl4\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Core.4.2010.4\lib\sl4\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=4.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ODAF-ODAF.SilverlightApp-Dependencies.1.0\lib\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals">
+      <HintPath>..\packages\SilverlightToolkit-Internals-Unofficial.1.0.0\lib\sl40\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
@@ -384,6 +391,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Service References\GeocodeService\Arrays.xsd">
       <SubType>Designer</SubType>
@@ -408,6 +416,8 @@
     <Resource Include="Images\searchIcon.png" />
     <Resource Include="Images\dropDown.png" />
     <Resource Include="Images\github.png" />
+    <Resource Include="Images\opendata_en.png" />
+    <Resource Include="Images\opendata_fr.png" />
     <Content Include="Service References\ServiceReferences.ClientConfig" />
     <None Include="Service References\VEGeoSearchService\configuration91.svcinfo" />
     <None Include="Service References\VEGeoSearchService\configuration.svcinfo" />

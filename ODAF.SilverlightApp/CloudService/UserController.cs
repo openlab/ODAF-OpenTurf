@@ -79,10 +79,10 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
-        public void OnTwitterCallbackMessageReceived(string oauth_token)
+        public void OnTwitterCallbackMessageReceived(string oauth_token, string oauth_verifier)
         {
             // if we get here, we should have a token!
-            GetAccessToken(oauth_token);
+            GetAccessToken(oauth_token, oauth_verifier);
         }
 
         public void RequestAuthToken()
@@ -108,12 +108,11 @@ namespace ODAF.SilverlightApp.CloudService
             }
         }
 
-        public void GetAccessToken(string req_token)
+        public void GetAccessToken(string oauth_token, string oauth_verifier)
         {
             WebClient client = new WebClient();
-            client.OpenReadCompleted +=
-                new OpenReadCompletedEventHandler(GetAccessToken_Result);
-            client.OpenReadAsync(new Uri(BaseURL + "User/GetAccessToken.json?oauth_token=" + req_token + "&appId=" + AppId));
+            client.OpenReadCompleted += new OpenReadCompletedEventHandler(GetAccessToken_Result);
+            client.OpenReadAsync(new Uri(BaseURL + "User/GetAccessToken.json?appId=" + AppId + "&oauth_token=" + oauth_token + "&oauth_verifier=" + oauth_verifier));
         }
 
         // Result	"{\"oauth_token\":\"15623120-KrsY3eOekxUe7nfIJe5B1YnEj9Y7WaMIWjFnQc6ej\",
@@ -138,9 +137,8 @@ namespace ODAF.SilverlightApp.CloudService
         public void Authenticate(string oauth_token, string oauth_token_secret)
         {
             WebClient client = new WebClient();
-            client.OpenReadCompleted +=
-                new OpenReadCompletedEventHandler(Authenticate_Result);
-            client.OpenReadAsync(new Uri(BaseURL + "User/Authenticate.json?oauth_token=" + oauth_token + "&oauth_token_secret=" + oauth_token_secret + "&appId=" + AppId));
+            client.OpenReadCompleted += new OpenReadCompletedEventHandler(Authenticate_Result);
+            client.OpenReadAsync(new Uri(BaseURL + "User/Authenticate.json?appId=" + AppId + "&oauth_token=" + oauth_token + "&oauth_token_secret=" + oauth_token_secret));
         }
 
         private void Authenticate_Result(object sender, OpenReadCompletedEventArgs e)
@@ -177,7 +175,7 @@ namespace ODAF.SilverlightApp.CloudService
 
             if(req.Headers["TWStatus"] != null)
             {
-                writer.Write("&lat=" + req.Headers["TWLat"]);
+                writer.Write("lat=" + req.Headers["TWLat"]);
                 writer.Write("&lng=" + req.Headers["TWLon"]);
                 writer.Write("&status=" + req.Headers["TWStatus"]);
                 

@@ -132,6 +132,9 @@
   <data name="Landmarks" xml:space="preserve">
     <value>Points de repère</value>
   </data>
+  <data name="LogoPath" xml:space="preserve">
+    <value>/ODAF.SilverlightApp;component/Images/opendata_fr.png</value>
+  </data>
   <data name="MapAttributes" xml:space="preserve">
     <value>Attributs de la carte</value>
   </data>

@@ -41,20 +41,17 @@
 				<ColumnDefinition Width="241"/>
 			</Grid.ColumnDefinitions>
 			<Grid.Background>
-				<LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
-					<GradientStop Color="#FF006F8F" Offset="0"/>
-					<GradientStop Color="#FF00A9DA" Offset="1"/>
-				</LinearGradientBrush>
+                <SolidColorBrush Color="#00A6E0" />
 			</Grid.Background>
 			
 			<StackPanel Orientation="Horizontal" Margin="5">
 
-
-                <TextBlock TextWrapping="Wrap" Text="ODAF"
+                <Image Source="{Binding Path=MainPageResource.LogoPath, Source={StaticResource LocalizedStrings}}" />
+                <!--<TextBlock TextWrapping="Wrap" Text="ODAF"
                            x:Name="txtTitle"
                            FontSize="38"
                            Foreground="White" 
-						   FontFamily="{StaticResource HeaderFontFamily}" />
+						   FontFamily="{StaticResource HeaderFontFamily}" />-->
             </StackPanel>
 			<TextBlock x:Name="tbPageURL" 
 					   Grid.Column="1"
@@ -77,7 +74,7 @@
 
         </Grid>
 
-        <ScrollViewer Background="White" Grid.Row="1" Margin="5,5,5,114" BorderThickness="0">
+        <ScrollViewer Background="White" Grid.Row="1" Margin="5,5,5,0" BorderThickness="0">
             <StackPanel>
                 <TextBlock Foreground="Black" 
 					       Text="{Binding Path=MainPageResource.Region, Source={StaticResource LocalizedStrings}}" 
@@ -191,7 +188,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <StackPanel Grid.Column="0" 
+        <!--<StackPanel Grid.Column="0" 
 					Grid.Row="1" 
 					Orientation="Vertical" 
 					HorizontalAlignment="Stretch"
@@ -228,7 +225,7 @@
                                  Style="{StaticResource HyperlinkButtonStyleWrapped}"/>
             </StackPanel>
 
-        </StackPanel>
+        </StackPanel>-->
 
 		<!--  MouseDoubleClick="Map_MouseDoubleClick"-->
 		<m:Map x:Name="OpenDataMap" CopyrightVisibility="Collapsed" 

@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="Assets/ToolkitStyles.xaml"/>           
             </ResourceDictionary.MergedDictionaries>
             <!-- CHANGEME: Put in your Bing Maps Dev Key -->
-            <m:ApplicationIdCredentialsProvider ApplicationId="[BingCredentials]" x:Key="MyCredentials" />
+            <m:ApplicationIdCredentialsProvider ApplicationId="Arbx5I-OOSF0V3sepNwPC1lgcLX8A_MXQEKffvnGlmIkIbkoeEYFALEjZeXYka8F" x:Key="MyCredentials" />
             <vm:ViewModelLocator x:Key="Locator"/>
 
             <local:LocalizedStrings xmlns:local="clr-namespace:ODAF.SilverlightApp.Resources"

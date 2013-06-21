@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Globalization;
+using System.Threading;
 
 namespace ODAF.SilverlightApp
 {
@@ -19,9 +20,10 @@ namespace ODAF.SilverlightApp
         public string regionDataUrl = "/";
         public string pageRootUrl = "/";
         public string pointDataSummaryId = "";
-        public string appName = "OpenTurf";
+        public string appName = "ODAF OpenTurf";
         public string twitterAppId = "";
-        public string GeoCodeServiceCredentials = "AiN8LzMeybPbj9CSsLqgdeCG86jg08SJsjm7pms3UNtNTe8YJHINtYVxGO5l4jBj"; 
+        public string GeoCodeServiceCredentials = "Arbx5I-OOSF0V3sepNwPC1lgcLX8A_MXQEKffvnGlmIkIbkoeEYFALEjZeXYka8F";
+
         public App()
         {
             this.Startup += this.Application_Startup;

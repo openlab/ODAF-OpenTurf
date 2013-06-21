@@ -6,9 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OtherHeadContent" runat="server">
     <script type="text/javascript">
         var oauth_token = '<%=this.ViewData["oauth_token"] %>';
-        var denied = '<%=this.ViewData["denied"]%>';
-
-
+        var oauth_verifier = '<%=this.ViewData["oauth_verifier"]%>';
 
         function doCallback() {
             // Note: this does not work in IE
@@ -28,9 +26,7 @@
         }
 
         function getParameter() {
-            var path = window.location.href;
-            var twOauth_token = path.substring(path.indexOf('oauth_token=') + 12);
-            window.opener.callbackTW(twOauth_token);
+            window.opener.callbackTW(oauth_token, oauth_verifier);
         }
 
 

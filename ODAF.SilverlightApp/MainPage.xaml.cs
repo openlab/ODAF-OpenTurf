@@ -49,7 +49,7 @@ namespace ODAF.SilverlightApp
 
 			BirdseyeMode.AddModeToNavigationBar(OpenDataMap);
 
-			txtTitle.Text = ((App)Application.Current).appName;
+			//txtTitle.Text = ((App)Application.Current).appName;
 			Uri baseUri = new Uri(((App)Application.Current).pageRootUrl);
 			BaseURL = ((App)Application.Current).pageRootUrl;
 			Service = new ServiceController(BaseURL);
@@ -231,9 +231,9 @@ namespace ODAF.SilverlightApp
 
 		// this callback is called from JavaScript after the user has logged in.
 		[ScriptableMember()]
-		public void OnJSTwitterCallback(string oauth_token)
+        public void OnJSTwitterCallback(string oauth_token, string oauth_verifier)
 		{
-			Service.User.OnTwitterCallbackMessageReceived(oauth_token);
+            Service.User.OnTwitterCallbackMessageReceived(oauth_token, oauth_verifier);
 		}
 
 		void User_AuthUpdate(UserController sender)

@@ -15,7 +15,7 @@
 
    <entry>
      <title>Bornes pour véhicules électriques</title>
-     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrancedataservice.cloudapp.net/v1/frOpenData/ParisElectricite/?$filter=info eq'BVE' &amp;format=kml"/>
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrance.cloudapp.net:8080/v1/frOpenData/ParisElectricite/?$filter=info eq'BVE' &amp;format=kml"/>
      <link rel="enclosure" type="image/png" href="images/Prise28.png"/>
      <id>2C8B8CF2-90DB-45f0-B8B4-A3D96DBEAFC3</id>
      <updated>2011-06-14T08:00:00Z</updated>
@@ -24,7 +24,7 @@
 
    <entry>
      <title>Toilettes publiques</title>
-     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrancedataservice.cloudapp.net/v1/frOpenData/Sanisettes/?$filter=&amp;format=kml"/>
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrance.cloudapp.net:8080/v1/frOpenData/Sanisettes/?$filter=&amp;format=kml"/>
      <link rel="enclosure" type="image/png" href="images/Toilettes28.png"/>
      <id>0C244261-26E3-49f9-8EE5-140145E90B6C</id>
      <updated>2011-06-14T08:00:00Z</updated>
@@ -33,7 +33,7 @@
 
    <entry>
      <title>Etablissements scolaires</title>
-     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrancedataservice.cloudapp.net/v1/frOpenData/ParisEtablissements/?$filter=&amp;format=kml"/>
+     <link rel="enclosure" type="application/vnd.google-earth.kml+xml" href="http://ogdifrance.cloudapp.net:8080/v1/frOpenData/ParisEtablissements/?$filter=&amp;format=kml"/>
      <link rel="enclosure" type="image/png" href="images/Education28.png"/>
      <id>F29526CF-9A53-44c8-B71A-2D4EAA739F2F</id>
      <updated>2011-06-14T08:00:00Z</updated>

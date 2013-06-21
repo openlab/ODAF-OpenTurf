@@ -26,7 +26,7 @@
     						Text="{Binding Path=PointDataViewAndSubViewsResource.NoComments, Source={StaticResource LocalizedStrings}}"/>
 
                         <Image x:Name="tweetImage" 
-    						Source="Images/Twitter.png" 
+    						Source="Images/Twitter128.png" 
     						Visibility="Collapsed"  
     						Stretch="UniformToFill"
     						Width="24" Height="24"

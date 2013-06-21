@@ -132,6 +132,9 @@
   <data name="Landmarks" xml:space="preserve">
     <value>LANDMARKS</value>
   </data>
+  <data name="LogoPath" xml:space="preserve">
+    <value>/ODAF.SilverlightApp;component/Images/opendata_en.png</value>
+  </data>
   <data name="MapAttributes" xml:space="preserve">
     <value>MAP ATTRIBUTES</value>
   </data>

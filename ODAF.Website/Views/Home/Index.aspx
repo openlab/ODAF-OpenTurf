@@ -84,9 +84,9 @@
         }
 
         // IE has a problem with this ???
-        function callbackTW(oauth_token) {
+        function callbackTW(oauth_token, oauth_verifier) {
             var plugin = document.getElementById('msodSLapp');
-            plugin.Content.Page.OnJSTwitterCallback(oauth_token);
+            plugin.Content.Page.OnJSTwitterCallback(oauth_token, oauth_verifier);
         }
 
     </script>

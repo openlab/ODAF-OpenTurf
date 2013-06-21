@@ -21,11 +21,9 @@ namespace vancouveropendata.Controllers
 {
     public class UserController : BaseController
     {
-        private const string TwitterOAuthAccessUrl = "http://twitter.com/oauth/access_token";
-        private const string TwitterOAuthAuthorizeUrl = "http://twitter.com/oauth/authorize?oauth_token={0}";
-        private const string TwitterOAuthRequestUrl = "http://twitter.com/oauth/request_token";
-        private const string TwitterVerifyCredentialsUrl = "http://api.twitter.com/1/account/verify_credentials.json";
-        private const string TwitterUpdateStatusUrl = "http://api.twitter.com/1/statuses/update.json";
+        private const string TwitterOAuthAuthorizeUrl = "https://api.twitter.com/oauth/authorize?oauth_token={0}";
+        private const string TwitterVerifyCredentialsUrl = "https://api.twitter.com/1.1/account/verify_credentials.json";
+        private const string TwitterUpdateStatusUrl = "https://api.twitter.com/1.1/statuses/update.json";
 
         private const string kOAuthToken = "oauth_token";
         private const string kOAuthTokenSecret = "oauth_token_secret";
@@ -38,7 +36,7 @@ namespace vancouveropendata.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult RequestAuthToken(string appId, string format)
+        public ActionResult RequestAuthToken(string appId)
         {
             object retVal = new { };
 
@@ -49,7 +47,8 @@ namespace vancouveropendata.Controllers
                 return Json(new { error = "Invalid or unknown appId" }, JsonRequestBehavior.AllowGet);
             }
 
-            string call_return = OAuth.GetRequestToken(TwitterOAuthRequestUrl, app.ConsumerKey, app.ConsumerSecret);
+            string call_return = OAuth.GetRequestToken(app.ConsumerKey, app.ConsumerSecret, app.CallbackUrl);
+
             var collection = HttpUtility.ParseQueryString(call_return);
             string token = collection[kOAuthToken];
             string token_secret = collection[kOAuthTokenSecret];
@@ -57,10 +56,7 @@ namespace vancouveropendata.Controllers
             if (token == null)
             {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                retVal = new
-                {
-                    error = call_return
-                };
+                retVal = new { error = call_return };
             }
             else
             {
@@ -76,7 +72,7 @@ namespace vancouveropendata.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult GetAccessToken(string appId, string format, string oauth_token)
+        public ActionResult GetAccessToken(string appId, string oauth_token, string oauth_verifier)
         {
             object retVal = new { };
 
@@ -87,8 +83,8 @@ namespace vancouveropendata.Controllers
                 return Json(new { error = "Invalid or unknown appId" }, JsonRequestBehavior.AllowGet);
             }
 
-            string call_return = OAuth.GetAccessToken(TwitterOAuthAccessUrl, app.ConsumerKey, app.ConsumerSecret,
-                                                       oauth_token, String.Empty);
+            string call_return = OAuth.GetAccessToken(app.ConsumerKey, app.ConsumerSecret, oauth_token, oauth_verifier);
+
             var collection = HttpUtility.ParseQueryString(call_return);
             string token = collection[kOAuthToken];
             string token_secret = collection[kOAuthTokenSecret];
@@ -168,7 +164,7 @@ namespace vancouveropendata.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Authenticate(string appId, string format, string oauth_token, string oauth_token_secret)
+        public ActionResult Authenticate(string appId, string oauth_token, string oauth_token_secret)
         {
             OAuthClientApp app = OAuthClientApp.Find(c => c.Guid.Equals(appId)).SingleOrDefault();
             if (app == null)
@@ -198,12 +194,13 @@ namespace vancouveropendata.Controllers
             }
 
             // verify credentials with Twitter
-            var verify = OAuth.GetProtectedResource(TwitterVerifyCredentialsUrl,
-                                                    "GET",
-                                                    app.ConsumerKey,
-                                                    app.ConsumerSecret,
-                                                    oauth_token,
-                                                    oauth_token_secret);
+            string verify = OAuth.GetProtectedResource(
+                "GET",
+                TwitterVerifyCredentialsUrl,
+                app.ConsumerKey,
+                app.ConsumerSecret,
+                oauth_token,
+                oauth_token_secret);
 
             HttpContext.Response.StatusCode = (int)NUrl.LastResponseStatusCode.GetValueOrDefault();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -302,8 +299,7 @@ namespace vancouveropendata.Controllers
                     ScreenName = "anonymous",
                     ImageUrl = VirtualPathUtility.ToAbsolute(
                     CloudSettingsResolver.GetConfigSetting("DefaultAvatarImage") as string)
-                }
-                , JsonRequestBehavior.AllowGet);
+                }, JsonRequestBehavior.AllowGet);
             }
 
             return View();
@@ -326,9 +322,7 @@ namespace vancouveropendata.Controllers
 
             if (useDefault)
             {
-                string location = VirtualPathUtility.ToAbsolute(
-                    CloudSettingsResolver.GetConfigSetting("DefaultAvatarImage") as string
-                    );
+                string location = VirtualPathUtility.ToAbsolute(CloudSettingsResolver.GetConfigSetting("DefaultAvatarImage") as string);
                 Response.Redirect(location);
             }
 
@@ -365,20 +359,15 @@ namespace vancouveropendata.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult AuthorizeReturn(string oauth_token, string oauth_verifier)
         {
-            // We just pass the data to the View
-            return View(new { oauth_token = oauth_token, denied = "", done = "" });
-        }
+            this.ViewData["oauth_token"] = oauth_token;
+            this.ViewData["oauth_verifier"] = oauth_verifier;
 
-        [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult AuthorizeReturnOld(string format, string oauth_token, string denied, string done)
-        {
-            // We just pass the data to the View
-            return View(new { oauth_token = oauth_token, denied = denied, done = done });
+            return View();
         }
 
         [Prerequisite(Authenticated = true)]
         [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Put | HttpVerbs.Get)]
-        public ActionResult UpdateTwitterStatus(string format, string status, decimal? lat, decimal? lng)
+        public ActionResult UpdateTwitterStatus(string status, decimal? lat, decimal? lng)
         {
             OAuthClientApp app = OAuthClientApp.Find(c => c.Id.Equals(AuthenticatedUser.oauth_service_id)).SingleOrDefault();
             if (app == null)
@@ -407,23 +396,23 @@ namespace vancouveropendata.Controllers
                 return Json(new { error = "Expired token." }, JsonRequestBehavior.AllowGet);
             }
 
-            string postUrl = String.Format("{0}?status={1}", TwitterUpdateStatusUrl, OAuthExtensions.EscapeUriDataStringRfc3986(status));
+            string postUrl = String.Format("{0}?status={1}", TwitterUpdateStatusUrl, status);
             if (lat != null && lng != null)
             {
                 postUrl = String.Format("{0}&lat={1}&long={2}", postUrl, lat.Value, lng.Value);
             }
 
-            // verify credentials with Twitter
-            var verify = OAuth.GetProtectedResource(postUrl,
-                                                    "POST",
-                                                    app.ConsumerKey,
-                                                    app.ConsumerSecret,
-                                                    AuthenticatedUser.oauth_token,
-                                                    AuthenticatedUser.oauth_token_secret);
+            string posted = OAuth.GetProtectedResource(
+                "POST",
+                postUrl,
+                app.ConsumerKey,
+                app.ConsumerSecret,
+                AuthenticatedUser.oauth_token,
+                AuthenticatedUser.oauth_token_secret);
 
             HttpContext.Response.StatusCode = (int)NUrl.LastResponseStatusCode.GetValueOrDefault();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            Dictionary<string, object> obj = serializer.DeserializeObject(verify) as Dictionary<string, object>;
+            Dictionary<string, object> obj = serializer.DeserializeObject(posted) as Dictionary<string, object>;
 
             return Json(obj, JsonRequestBehavior.AllowGet);
         }

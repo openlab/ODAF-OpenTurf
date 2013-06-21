@@ -32,7 +32,7 @@ namespace vancouveropendata.Controllers
                 var sources = from s in PointDataSource.Find(p => p.Active) orderby s.Title select new 
                 { 
                     Title = s.Title, 
-                    Description=s.Description, 
+                    Description = s.Description, 
                     Id = s.UniqueId, 
                     BoundaryPolygon = s.BoundaryPolygon
                 };
