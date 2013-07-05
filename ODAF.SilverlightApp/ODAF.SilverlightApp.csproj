@@ -142,7 +142,7 @@
     </Reference>
     <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Theming.ExpressionDark">
-      <HintPath>..\packages\SilverlightToolkit-Theming.4.2010.4\lib\sl4\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
+      <HintPath>..\Libraries\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Theming.Toolkit">
       <HintPath>..\packages\SilverlightToolkit-Theming.4.2010.4\lib\sl4\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
