@@ -52,8 +52,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SubSonic.Core, Version=3.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Dependencies\Subsonic\SubSonic.Core.dll</HintPath>
+    <Reference Include="SubSonic.Core">
+      <HintPath>..\..\Libraries\Dependencies\Subsonic\SubSonic.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

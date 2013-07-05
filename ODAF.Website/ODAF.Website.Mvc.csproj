@@ -43,11 +43,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Lucene.Net, Version=2.9.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\Lucene.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\Libraries\Dependencies\Lucene\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc">
+      <HintPath>..\Libraries\Dependencies\Microsoft\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
@@ -273,7 +273,7 @@
     <Content Include="Views\Home\Index.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudSettingsResolver\CloudSettingsResolver.csproj">
+    <ProjectReference Include="..\Libraries\CloudSettingsResolver\CloudSettingsResolver.csproj">
       <Project>{0A2384DB-6FF1-47CF-8CC6-BDEBE79757F4}</Project>
       <Name>CloudSettingsResolver</Name>
     </ProjectReference>

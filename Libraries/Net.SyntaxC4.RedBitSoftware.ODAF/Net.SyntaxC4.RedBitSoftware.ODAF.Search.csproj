@@ -78,22 +78,20 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.SL4, Version=3.0.0.30106, Culture=neutral, PublicKeyToken=e951d4eb83d0126f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\MVVM Light\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.Extras.SL4">
+      <HintPath>..\Dependencies\MVVM Light\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.SL4, Version=3.0.0.30091, Culture=neutral, PublicKeyToken=918f02b0f4b4b116, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\MVVM Light\GalaSoft.MvvmLight.SL4.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.SL4">
+      <HintPath>..\Dependencies\MVVM Light\GalaSoft.MvvmLight.SL4.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Maps.MapControl, Version=1.0.1.0, Culture=neutral, PublicKeyToken=498d0d22d7936b73, processorArchitecture=MSIL">
-      <HintPath>..\..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.dll</HintPath>
+    <Reference Include="Microsoft.Maps.MapControl">
+      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Maps.MapControl.Common, Version=1.0.1.0, Culture=neutral, PublicKeyToken=498d0d22d7936b73, processorArchitecture=MSIL">
-      <HintPath>..\..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.Common.dll</HintPath>
+    <Reference Include="Microsoft.Maps.MapControl.Common">
+      <HintPath>..\Dependencies\Bing Maps\Microsoft.Maps.MapControl.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Windows.Controls.WatermarkedTextBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Dependencies\Microsoft\Microsoft.Windows.Controls.WatermarkedTextBox.dll</HintPath>
+    <Reference Include="Microsoft.Windows.Controls.WatermarkedTextBox">
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Windows.Controls.WatermarkedTextBox.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
