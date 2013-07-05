@@ -10,7 +10,6 @@
       <Setting name="BitlyAPIKey" value="[BitlyAPIKey]" />
       <Setting name="tokenExpiryMinutes" value="10080" />
       <Setting name="UseTokenExpiry" value="false" />
-      <Setting name="BlobStorageEndpoint" value="DefaultEndpointsProtocol=https;AccountName=[StorageName];AccountKey=[StorageKey]" />
       <Setting name="AdminTwitterUser" value="[AdminUser]" />
       <Setting name="TwitterAppId" value="c1ec2c57-742b-415b-84a6-4d8ae5b53e9" />
       <Setting name="DevMode" value="false" />

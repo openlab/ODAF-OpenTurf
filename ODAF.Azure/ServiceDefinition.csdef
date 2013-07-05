@@ -16,7 +16,6 @@
       <Setting name="BitlyAPIKey" />
       <Setting name="tokenExpiryMinutes" />
       <Setting name="UseTokenExpiry" />
-      <Setting name="BlobStorageEndpoint" />
       <Setting name="AdminTwitterUser" />
       <Setting name="TwitterAppId" />
       <Setting name="DevMode" />
