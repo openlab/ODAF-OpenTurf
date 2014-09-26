@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TintColourRGB</key>
+	<string>39114E</string>
+	<key>ButtonColourGradientHighRGB</key>
+	<string>6B4D7A</string>
+	<key>ButtonColourGradientLowRGB</key>
+	<string>330F46</string>
+	<key>PointDataSourcesFile</key>
+	<string>PointSources.xml</string>
+	<key>RegionDataSourcesFile</key>
+	<string>RegionSources.xml</string>
+	<key>CommunityDataSourcesFile</key>
+	<string>CommunitySources.xml</string>
+	<key>LoadRemoteSources</key>
+	<true/>
+	<key>WebAppUrl</key>
+	<string>http://odafrance.cloudapp.net</string>
+	<key>UseMapKit</key>
+	<false/>
+	<key>ClientAppId</key>
+	<string>d92f9082-7e7e-4a5e-bd1e-2cab62c8cf1c</string>
+	<key>ReachableUrl</key>
+	<string>odafrance.cloudapp.net</string>
+	<key>DevMode</key>
+	<false/>
+	<key>MapSettings</key>
+	<dict>
+		<key>MapInitialLatitude</key>
+		<real>48.856924</real>
+		<key>MapInitialLongitude</key>
+		<real>2.341209</real>
+		<key>MapInitialZoom</key>
+		<real>10.6</real>
+		<key>MapCurrentLocationZoom</key>
+		<integer>16</integer>
+		<key>MapViewCommentZoom</key>
+		<integer>13</integer>
+	</dict>
+	<key>DevSettings</key>
+	<dict>
+		<key>ClientAppId</key>
+		<string>d92f9082-7e7e-4a5e-bd1e-2cab62c8cf1c</string>
+		<key>WebAppUrl</key>
+		<string>http://odafrance.cloudapp.net</string>
+		<key>ReachableUrl</key>
+		<string>odafrance.cloudapp.net</string>
+	</dict>
+</dict>
+</plist>

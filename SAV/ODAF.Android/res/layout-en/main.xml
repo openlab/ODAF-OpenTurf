@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    		
+	<TableRow android:layout_weight="5" android:layout_height="0dp">
+			<com.google.android.maps.MapView
+			    android:id="@+id/mapview"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:clickable="true"
+			    android:apiKey="0n_YfdJ4QriPllbuhcESFABjLULgJnZjuZArqXQ"
+			/>		
+	</TableRow>
+	
+    <TableRow android:layout_weight="1">
+    
+    	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+    		<Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="GPS" android:id="@+id/gpsButton"/>
+			<Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Unzoom" android:id="@+id/dezoomButton"/>
+			<Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Data" android:id="@+id/selectDataSourcesButton"/>
+    	</LinearLayout>
+   		 		
+	</TableRow>	
+
+</TableLayout>

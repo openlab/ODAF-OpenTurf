@@ -1,0 +1,85 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="ODAF.WindowsPhone.Views.TwitterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:converters="clr-namespace:ODAF.WindowsPhone.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ODAF.WindowsPhone.ViewModels"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.Resources>
+        <vm:TwitterViewModel x:Key="TwitterViewModel" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter" />
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{StaticResource TwitterViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,5">
+            <TextBlock x:Name="ApplicationTitle" Text="ODAF OPENTURF" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="twitter &amp; twitpic" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="62" />
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1">
+            <StackPanel Name="TwitterAuthenticationPanel" Visibility="{Binding HasUserAlreadyAuthorizedApp, Converter={StaticResource BoolToVisibilityReverseConverter}, Mode=TwoWay}">
+                <phone:WebBrowser Name="Browser" Height="290" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=TwitterResource.PinCode, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" Width="200"/>
+                    <TextBox Width="230" Text="{Binding TwitterCodePin, Mode=TwoWay}" InputScope="Number"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=TwitterResource.Username, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}"  VerticalAlignment="Center" Width="200"/>
+                    <TextBox Width="230" Text="{Binding TwitterUsername, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=TwitterResource.Password, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}"  VerticalAlignment="Center"  Width="200"/>
+                    <PasswordBox Width="230" Password="{Binding TwitterPassword, Mode=TwoWay}"/>
+                </StackPanel>
+                <Button Content="{Binding Path=TwitterResource.Authenticate, Source={StaticResource LocalizedStrings}}" Command="{Binding AuthenticateUserCommand, Mode=OneWay}" />
+            </StackPanel>
+
+            <!--<StackPanel Visibility="Visible">-->
+            <StackPanel Name="TwitterStackPanel" Visibility="{Binding HasUserAlreadyAuthorizedApp, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}">
+                <ProgressBar IsIndeterminate="{Binding IsUploading}" />
+                <Grid>
+                    <TextBlock Text="{Binding Path=TwitterResource.TakePictureAndTweet, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextAccentStyle}" TextWrapping="Wrap"/>
+                    <Image Source="{Binding TwitpicImage}" Stretch="Fill" Height="310" />
+                </Grid>
+                <TextBox Text="{Binding Tweet, Mode=TwoWay}" AcceptsReturn="True" Height="160" TextWrapping="Wrap" />
+                <Button Command="{Binding SendTweetCommand, Mode=OneWay}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=TwitterResource.Tweet, Source={StaticResource LocalizedStrings}}"  VerticalAlignment="Center"/>
+                            <Image Source="/ODAF.WindowsPhone;component/Images/twitter2.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+                      
+        </Grid>
+    </Grid>
+ 
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Back" Click="BackIconButton_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Images/camera.png" Text="Photo" Click="PhotoIconButton_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Images/delete.png" Text="Reset" Click="ResetIconButton_Click" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,64 @@
+﻿@using ODAF.Website.Resources.Views.Admin
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="twelve columns">
+        <fieldset class="menutabview" id="sources">
+            <legend>@_Sources.SourcesList</legend>
+
+            <div class="row">
+                <div class="twelve columns">
+                    <div class="right">
+                        <a href="#" class="tiny button" data-reveal-id="addSourceModal">@_Sources.AddSource</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="twelve columns">
+                    <div id="noSource" class="centered">
+                        @_Sources.NoSource
+                    </div>
+
+                    <table class="menutabviewlist" id="sourceList">
+                        <thead>
+                            <tr>
+                                <td class="colAction"></td>
+                                <td class="colAction"></td>
+                                <td class="colUniqueId">@_Sources.UniqueId</td>
+                                <td class="colTitle">@_Sources.Title</td>
+                                <td class="colActive">@_Sources.Active</td>
+                                <td class="colFeeds">@_Sources.Feeds</td>
+                                <td class="colLayers">@_Sources.Layers</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="model">
+                                <td class="colAction remove">
+                                    <a href="#" title="@_Sources.Delete">
+                                        <i class="icon-enclosed-remove"></i>
+                                    </a>
+                                </td>
+                                <td class="colAction edit">
+                                    <a href="#" title="@_Sources.Edit">
+                                        <i class="icon-enclosed-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="colUniqueId"></td>
+                                <td class="colTitle"></td>
+                                <td class="colActive"></td>
+                                <td class="colFeeds"></td>
+                                <td class="colLayers"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+

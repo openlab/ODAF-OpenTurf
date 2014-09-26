@@ -1,0 +1,52 @@
+﻿@using ODAF.Website.Resources.Views.Admin
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="twelve columns">
+        <fieldset class="menutabview" id="comments">
+            <legend>@_Comments.CommentsList</legend>
+
+
+            <div class="row">
+                <div class="twelve columns">
+                    <div id="noComment" class="centered">
+                        @_Comments.NoComment
+                    </div>
+
+                    <table class="menutabviewlist" id="commentList">
+                        <thead>
+                            <tr>
+                                <td class="colAction"></td>
+                                <td class="colUser">@_Comments.User</td>
+                                <td class="colPlacemark">@_Comments.Placemark</td>
+                                <td class="colComment">@_Comments.Comment</td>
+                                <td class="colCreated">@_Comments.Created</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="model">
+                                <td class="colAction remove">
+                                    <a href="#" title="@_Comments.Delete">
+                                        <i class="icon-enclosed-remove"></i>
+                                    </a>
+                                </td>
+                                <td class="colUser"></td>
+                                <td class="colPlacemark"></td>
+                                <td class="colComment"></td>
+                                <td class="colCreated"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+
+
+

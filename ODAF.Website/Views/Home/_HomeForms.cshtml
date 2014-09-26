@@ -1,0 +1,41 @@
+﻿@*@model ODAF.Website.Models.ConfigEntity*@
+@using ODAF.Website.Resources.Views.Home
+
+
+@{
+    Layout = null;
+}
+
+
+
+
+<form id="landmarkForm" onsubmit="return false">
+    <div id="addLandmarkModal" class="reveal-modal">
+        <h2>@Index.AddLandmark</h2>
+
+        <div class="alert-box alert model-alert" >
+            @Index.MissingLandmarkField
+            <a href="" class="close">&times;</a>
+        </div>
+
+        <label for="addLandmarkTitle">@Index.Name<span class="has-tip tip-top noradius" title="@Index.TextTooltip"><i class="icon-general-idea"></i></span><span class="mandatory">*</span></label>
+        <input type="text" class="landmarkTitle" id="addLandmarkTitle" required />
+
+        <label for="addLandmarkDescription"> @Index.Description </label>
+        <input type="text" class="landmarkDescription" id="addLandmarkDescription" />
+
+        <div class="right" style="margin-left:10px;">
+            <input type="submit" id="validAddLandmark" class="success radius button" value="@Index.Ok" />
+        </div>
+
+        <div class="right">
+            <input type="submit" id="validCancelLandmark" class=" radius button" value="@Index.Cancel" />
+        </div>
+
+        <span>@Index.DragPin</span>
+
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+</form>
+
+

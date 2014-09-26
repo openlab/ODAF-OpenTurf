@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>VanGuide - Community Data Sources</title>
+	<subtitle></subtitle>
+	<link href="http://vanguide.cloudapp.net" rel="self" />
+	<id>BFC3E520-ED14-42B0-B7BA-D25B10201167</id>
+	<updated>2009-07-01T08:00:00Z</updated>
+	<author>
+		<name>Nitobi Software Inc.</name>
+		<email>support@nitobi.com</email>
+	</author>
+ 
+	<entry>
+		<title>Shared Landmarks</title>
+		<link rel="self" href="http://vanguide.cloudapp.net" />
+		<link rel="enclosure" type="text/json" href="http://vanguide.cloudapp.net/Summaries/ShowForCommunityByActivity.json/?page=%d&amp;page_size=%d"/>
+		<id>B6CCD1E8-1D0B-45CF-9CAC-17CEA5529A4B</id>
+		<updated></updated>
+		<summary>This shows all the landmarks in the community, with only ones that have been modified recently shown.</summary>
+	</entry>
+ 
+
+</feed>

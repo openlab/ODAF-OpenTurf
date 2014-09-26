@@ -1,0 +1,74 @@
+﻿@using ODAF.Website.Resources.Views.Admin
+
+@{
+    ViewBag.Title = "ODAF OpenTurf - Admin";
+}
+
+
+@section scripts {
+    <script src="@Url.Content("~/Content/Scripts/Admin/Index.js")"></script>
+}
+
+<div id="admin">
+    <div class="row">
+        <div class="six columns">
+            <h1>@Index.PageTitle</h1>
+        </div>
+
+        <div class="six columns" style="vertical-align: bottom;">
+            <div id="signOut" class="right">
+                <div>
+                    <h5>@(!string.IsNullOrEmpty(ViewBag.AdminFullName) ? ViewBag.AdminFullName : Index.Administrator)</h5>
+                </div>
+                <div>
+                    <a href="/">@Index.OdafOpenTurf</a>
+                </div>
+                <div>
+                    <a href="/Admin/Logout">@Index.SignOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "saveConfig" }))
+    {
+        @Html.ValidationSummary(true)
+
+        @Html.Hidden("RowKey", Request.Url.Authority)
+
+        <div class="row">
+            <div class="three columns">
+                <dl class="vertical tabs">
+                    <dd class="active"><a href="#adminMenu1">@Index.Users</a></dd>
+                    <dd><a href="#adminMenu2">@Index.Sources</a></dd>
+                    <dd ><a href="#adminMenu3">@Index.Feeds</a></dd>
+                    <dd><a href="#adminMenu4">@Index.Placemarks</a></dd>
+                    <dd ><a href="#adminMenu5">@Index.Comments</a></dd>
+                </dl>
+            </div>
+
+            <div class="nine columns">
+                <ul class="tabs-content">
+                    <li class="active" id="adminMenu1Tab">
+                        @{Html.RenderPartial("_Users");}
+                    </li>
+                    <li id="adminMenu2Tab">
+                        @{Html.RenderPartial("_Sources");}
+                    </li>
+                    <li  id="adminMenu3Tab">
+                        @{Html.RenderPartial("_Feeds");}
+                    </li>
+                    <li id="adminMenu4Tab">
+                        @{Html.RenderPartial("_Placemarks");}
+                    </li>
+                    <li id="adminMenu5Tab">
+                        @{Html.RenderPartial("_Comments");}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+
+   @{Html.RenderPartial("_ModalForms");}
+</div>
